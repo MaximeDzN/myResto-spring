@@ -28,7 +28,7 @@ public class FileService {
     }
 
     public void saveImage(Image image, String filename) {
-        String path = String.format("/%s",uploadPath);
+        String path = String.format("%s",uploadPath);
         Path root = Paths.get(path);
         try {
             Files.createDirectories(root);
@@ -37,11 +37,12 @@ public class FileService {
             Files.write(imagePath,imageByte);
         } catch (IOException e){
             //TODO Manage exception
+            e.printStackTrace();
         }
     }
 
     public void deleteImage(Image image) {
-        Path imagePath = Paths.get(String.format("%s/%s",uploadPath,image.getPath()));
+        Path imagePath = Paths.get(image.getPath());
         try {
             Files.delete(imagePath);
         } catch (IOException e) {
