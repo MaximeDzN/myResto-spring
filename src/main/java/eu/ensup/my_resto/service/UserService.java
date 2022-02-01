@@ -5,6 +5,8 @@ import eu.ensup.my_resto.model.UserDTO;
 import eu.ensup.my_resto.repos.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,11 +18,8 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class UserService implements UserDetailsService {
 
-    private final UserRepository userRepository;
-
-    public UserService(final UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    private UserRepository userRepository;
 
     public List<UserDTO> findAll() {
         return userRepository.findAll()

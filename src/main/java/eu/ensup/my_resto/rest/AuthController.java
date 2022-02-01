@@ -4,20 +4,19 @@ package eu.ensup.my_resto.rest;
 import eu.ensup.my_resto.model.LoginDTO;
 import eu.ensup.my_resto.model.RegisterDTO;
 import eu.ensup.my_resto.service.AuthService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping(value = "/auth")
 public class AuthController {
 
-    private final AuthService authService;
+    @Autowired
+    private AuthService authService;
 
-    public AuthController(final AuthService authService){
-        this.authService = authService;
-    }
 
     @PostMapping("signup")
     public ResponseEntity<Void> signup(@RequestBody RegisterDTO registerDTO){

@@ -1,13 +1,10 @@
 package eu.ensup.my_resto.service;
 
-import eu.ensup.my_resto.domain.Image;
 import eu.ensup.my_resto.domain.User;
-import eu.ensup.my_resto.model.ImageDTO;
 import eu.ensup.my_resto.model.LoginDTO;
 import eu.ensup.my_resto.model.RegisterDTO;
 import eu.ensup.my_resto.model.Roles;
 import eu.ensup.my_resto.repos.UserRepository;
-import eu.ensup.my_resto.security.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,11 +22,6 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtProvider jwtProvider;
 
 
     public void signup(RegisterDTO registerDTO) {
@@ -37,9 +29,7 @@ public class AuthService {
     }
 
     public String signin(LoginDTO loginDTO) {
-        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authenticate);
-        return jwtProvider.generateToken(authenticate);
+        return "pwet";
     }
 
 
