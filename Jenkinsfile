@@ -11,8 +11,9 @@ pipeline {
     
         stage('Terraform init') {           
             steps {
+                sh 'terraform -help'
                 sh 'echo ${AWS_ACCES_KEY_ID}'
-                sh 'Terraform init -input=false'
+                sh 'terraform init -input=false'
             }
         }
     
