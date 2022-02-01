@@ -2,8 +2,10 @@ package eu.ensup.my_resto.rest;
 
 import eu.ensup.my_resto.model.ItemDTO;
 import eu.ensup.my_resto.service.ItemService;
+
 import java.util.List;
 import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +46,7 @@ public class ItemController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateItem(@PathVariable final Long id,
-            @RequestBody @Valid final ItemDTO itemDTO) {
+                                           @RequestBody @Valid final ItemDTO itemDTO) {
         itemService.update(id, itemDTO);
         return ResponseEntity.ok().build();
     }
