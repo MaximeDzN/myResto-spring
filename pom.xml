@@ -8,10 +8,10 @@
         <version>2.6.3</version>
         <relativePath /><!-- lookup parent from repository -->
     </parent>
-    <groupId>io.bootify</groupId>
-    <artifactId>my-app</artifactId>
+    <groupId>eu.ensup</groupId>
+    <artifactId>my-resto</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>my-app</name>
+    <name>my-resto</name>
 
     <properties>
         <java.version>11</java.version>
