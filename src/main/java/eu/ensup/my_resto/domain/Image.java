@@ -26,9 +26,7 @@ public class Image {
 
     @Column(name = "\"path\"")
     private String path;
-
-    @OneToOne(mappedBy = "image", fetch = FetchType.LAZY)
-    private Item image;
+    
 
     @Column(nullable = false, updatable = false)
     private OffsetDateTime dateCreated;

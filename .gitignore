@@ -6,7 +6,7 @@ target/
 application-local.yml
 *.log
 node_modules/
-
+images/
 ### STS ###
 .apt_generated
 .classpath

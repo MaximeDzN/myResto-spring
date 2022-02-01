@@ -15,11 +15,13 @@ import javax.persistence.PreUpdate;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
 @Entity
 @Getter
 @Setter
+@ToString
 public class Item {
 
     @Id
@@ -42,10 +44,9 @@ public class Item {
     @Column(nullable = false, length = 50)
     private String category;
 
-    @ManyToMany(mappedBy = "items")
-    private Set<Order> itemOrders;
 
-    @OneToOne
+
+    @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "image_id")
     private Image image;
 

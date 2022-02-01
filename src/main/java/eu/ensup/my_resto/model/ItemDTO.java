@@ -2,12 +2,16 @@ package eu.ensup.my_resto.model;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import eu.ensup.my_resto.domain.Image;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
 @Getter
 @Setter
+@ToString
 public class ItemDTO {
 
     private Long id;
@@ -28,6 +32,6 @@ public class ItemDTO {
     @NotNull
     private String category;
 
-    private Long image;
+    private Image image;
 
 }

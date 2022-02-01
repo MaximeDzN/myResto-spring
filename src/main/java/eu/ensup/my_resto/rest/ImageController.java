@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping(value = "/images", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/images")
 public class ImageController {
 
     private final ImageService imageService;
