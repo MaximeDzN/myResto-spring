@@ -3,7 +3,6 @@ pipeline {
 
     tools {
 		maven 'maven'
-		terraform 'terraform'
 	}
 
     environment {
@@ -17,9 +16,9 @@ pipeline {
         stage('Terraform init') {           
             steps {
                 sh 'mvn -version'
-                sh 'terraform -help'
+                // sh 'terraform -help'
                 sh 'echo ${AWS_ACCES_KEY_ID}'
-                sh 'terraform init -input=false'
+                // sh 'terraform init -input=false'
             }
         }
     
