@@ -42,7 +42,7 @@ public class Item {
     @Column(nullable = false, length = 50)
     private String category;
 
-    @ManyToMany(mappedBy = "itemItems")
+    @ManyToMany(mappedBy = "items")
     private Set<Order> itemOrders;
 
     @OneToOne

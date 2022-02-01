@@ -66,7 +66,7 @@ public class OrderService {
         orderDTO.setAddress(order.getAddress());
         orderDTO.setPrice(order.getPrice());
         orderDTO.setUser(order.getUser() == null ? null : order.getUser().getId());
-        orderDTO.setItems(order.getItemItems() == null ? null : order.getItemItems().stream()
+        orderDTO.setItems(order.getItems() == null ? null : order.getItems().stream()
                 .map(item -> item.getId())
                 .collect(Collectors.toList()));
         return orderDTO;
@@ -86,7 +86,7 @@ public class OrderService {
             if (items.size() != orderDTO.getItems().size()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "one of items not found");
             }
-            order.setItemItems(items.stream().collect(Collectors.toSet()));
+            order.setItems(items.stream().collect(Collectors.toSet()));
         }
         return order;
     }
