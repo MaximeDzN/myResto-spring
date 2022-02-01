@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,6 +38,9 @@ public class Item {
 
     @Column(nullable = false)
     private Double price;
+
+    @Column(nullable = false, length = 50)
+    private String category;
 
     @ManyToMany(mappedBy = "itemItems")
     private Set<Order> itemOrders;

@@ -25,6 +25,9 @@ public class ItemDTO {
     @NotNull
     private Double price;
 
+    @NotNull
+    private String category;
+
     private Long image;
 
 }
