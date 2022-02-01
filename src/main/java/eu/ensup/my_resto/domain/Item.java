@@ -2,16 +2,7 @@ package eu.ensup.my_resto.domain;
 
 import java.time.OffsetDateTime;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -44,6 +35,8 @@ public class Item {
     @Column(nullable = false, length = 50)
     private String category;
 
+    @OneToMany(mappedBy = "item")
+    private Set<OrderItem> orders;
 
 
     @OneToOne(orphanRemoval = true)

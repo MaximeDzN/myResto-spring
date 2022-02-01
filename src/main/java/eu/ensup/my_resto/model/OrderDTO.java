@@ -3,6 +3,7 @@ package eu.ensup.my_resto.model;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,6 +27,6 @@ public class OrderDTO {
 
     private Long user;
 
-    private List<Long> items;
+    private List<ItemDTO> items;
 
 }
