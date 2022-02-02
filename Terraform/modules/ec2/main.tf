@@ -18,11 +18,10 @@ resource "aws_instance" "myresto-ec2" {
     Name = "${var.ec2_name}-ec2"
   }
 
-  provisioner "local-exec" {
-    when       = destroy
-    command    = "echo The server's IP address is ${self.private_ip} > toto.txt"
-    on_failure = continue
-    
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt update -y",
+    ] 
     connection {
       type        = "ssh"
       user        = "${var.utilisateur_ssh}"
