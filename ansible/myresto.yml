@@ -20,7 +20,7 @@
         repo: 'https://github.com/MaximeDzN/myResto-spring.git'
         version: 'DevOps'
         dest: '/home/ubuntu/myResto-spring'
-    - name: "Build an image and push it to a private repo"
+    - name: "Build an image for MyResto"
       docker_image:
         build:
           path: /home/ubuntu/myResto-spring/Docker
@@ -28,12 +28,8 @@
         tag: latest
         push: no
         source: build
+    - name: "docker-compose up database"
+      command: "docker-compose -f /home/ubuntu/myResto-spring/Docker/docker-compose.yml up -d docker-mysql"
 
-    # - name: "set image docker"
-    #   command: "docker build -t myresto ./Docker/"
-
-    # - name: "docker-compose up database"
-    #   command: "docker-compose -f /home/ubuntu/MyResto/Docker/docker-compose.yml up -d docker-mysql"
-
-    # - name: "docker-compose up for phpmyadmin and springboot app"
-    #   command: "docker-compose -f /home/ubuntu/MyResto/Docker/docker-compose.yml up -d"
+    - name: "docker-compose up for phpmyadmin and springboot app"
+      command: "docker-compose -f /home/ubuntu/myResto-spring/Docker/docker-compose.yml up -d"
