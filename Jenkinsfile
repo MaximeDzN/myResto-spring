@@ -64,7 +64,7 @@ pipeline {
                         sh 'cp $MyResto MyResto.pem'
                     }
                 }
-                dir("app") {
+                dir("Terraform/app") {
                         sh'terraform init -input=false'
                 }
             }
@@ -78,7 +78,7 @@ pipeline {
             }
             
             steps {
-                dir("app") {
+                dir("Terraform/app") {
                     sh "terraform plan -input=false -out tfplan "
                     sh 'terraform show -no-color tfplan > tfplan.txt'
                 }
@@ -96,7 +96,7 @@ pipeline {
            }
            
             steps {
-                dir("app") {
+                dir("Terraform/app") {
                     script {
                         def plan = readFile 'tfplan.txt'
                         input message: "Voulez vous vraiment appliquer le plan?",
@@ -114,7 +114,7 @@ pipeline {
             }
             
             steps {
-                dir("app") {
+                dir("Terraform/app") {
                     sh "terraform apply -input=false tfplan"
                 }
             }
@@ -126,7 +126,7 @@ pipeline {
             }
         
             steps {
-                dir("app") {
+                dir("Terraform/app") {
                     sh "terraform destroy --auto-approve"
                 }
             }
