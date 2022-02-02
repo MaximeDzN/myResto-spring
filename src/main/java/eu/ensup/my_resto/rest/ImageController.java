@@ -2,6 +2,7 @@ package eu.ensup.my_resto.rest;
 
 import eu.ensup.my_resto.model.ImageDTO;
 import eu.ensup.my_resto.service.ImageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,23 +18,22 @@ import java.util.List;
 
 
 @Controller
+@RequestMapping("images")
 public class ImageController {
 
-    private final ImageService imageService;
+    @Autowired
+    private  ImageService imageService;
 
     @Value("${upload.path}")
     public String uploadPath;
 
-    public ImageController(final ImageService imageService) {
-        this.imageService = imageService;
-    }
 
     @GetMapping
     public ResponseEntity<List<ImageDTO>> getAllImages() {
         return ResponseEntity.ok(imageService.findAll());
     }
 
-    @GetMapping("images/{filename}")
+    @GetMapping("{filename}")
     public ResponseEntity<byte[]> getImage(@PathVariable String filename) throws IOException {
         byte[] file = Files.readAllBytes(Paths.get(String.format("%s/%s",uploadPath,filename)));
         return ResponseEntity
