@@ -22,7 +22,7 @@
         dest: /home/ubuntu/MyResto
 
     - name: "set image docker"
-      command: "docker build -t myresto ."
+      command: "pws && ls && docker build -t myresto /home/ubuntu/MyResto/Dockerfile"
 
     - name: "docker-compose up database"
       command: "docker-compose -f /home/ubuntu/MyResto/docker-compose.yml up -d docker-mysql"
