@@ -18,17 +18,17 @@ resource "aws_instance" "myresto-ec2" {
     Name = "${var.ec2_name}-ec2"
   }
 
-  provisioner "remote-exec" {
+  provisioner "local-exec" {
     when = destroy
     inline = [
       "ls"
     ]
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = file("../../../.aws/${var.cle_ssh}.pem")
-      host        = "${self.public_ip}"
-    }
+    # connection {
+    #   type        = "ssh"
+    #   user        = "ubuntu"
+    #   private_key = file("../../../.aws/${var.cle_ssh}.pem")
+    #   host        = "${self.public_ip}"
+    # }
   }
 
 
@@ -37,12 +37,12 @@ resource "aws_instance" "myresto-ec2" {
     inline = [
       "sudo apt update -y",
     ] 
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = file("../../../.aws/${var.cle_ssh}.pem")
-      host        = "${self.public_ip}"
-    }
+    # connection {
+    #   type        = "ssh"
+    #   user        = "ubuntu"
+    #   private_key = file("../../../.aws/${var.cle_ssh}.pem")
+    #   host        = "${self.public_ip}"
+    # }
   }
 }
 
