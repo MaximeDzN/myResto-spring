@@ -19,13 +19,13 @@
       git:
         repo: 'https://github.com/MaximeDzN/myResto-spring.git'
         version: 'DevOps'
-        dest: /home/{{ ansible_user }}/MyResto
+        dest: /home/ubuntu/MyResto
 
     - name: "set image docker"
       command: "docker build -t myresto ."
 
     - name: "docker-compose up database"
-      command: "docker-compose -f /home/{{ ansible_user }}/MyResto/docker-compose.yml up -d docker-mysql"
+      command: "docker-compose -f /home/ubuntu/MyResto/docker-compose.yml up -d docker-mysql"
 
     - name: "docker-compose up for phpmyadmin and springboot app"
-      command: "docker-compose -f /home/{{ ansible_user }}/MyResto/docker-compose.yml up -d"
+      command: "docker-compose -f /home/ubuntu/MyResto/docker-compose.yml up -d"
