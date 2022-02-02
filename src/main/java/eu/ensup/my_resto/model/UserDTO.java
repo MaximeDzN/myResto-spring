@@ -16,10 +16,6 @@ public class UserDTO {
     @Size(max = 100)
     private String username;
 
-    @NotNull
-    @Size(max = 100)
-    private String password;
-
     @Size(max = 80)
     private String role;
 

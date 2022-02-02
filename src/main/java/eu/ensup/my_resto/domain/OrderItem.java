@@ -1,20 +1,21 @@
 package eu.ensup.my_resto.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@Setter
+@Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class OrderItem {
+
     @Id
-    Long id;
+    @Column(nullable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
@@ -24,5 +25,5 @@ public class OrderItem {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    private Long quantity;
+    private Integer quantity;
 }
