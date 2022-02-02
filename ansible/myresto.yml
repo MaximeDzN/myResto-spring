@@ -29,7 +29,7 @@
         push: no
         source: build
     - name: "docker-compose up database"
-      command: "docker-compose -f /home/ubuntu/myResto-spring/Docker/docker-compose.yml up -d docker-mysql"
+      command: "docker-compose -f /home/ubuntu/myResto-spring/Docker/docker-compose.yaml up -d docker-mysql"
 
     - name: "docker-compose up for phpmyadmin and springboot app"
-      command: "docker-compose -f /home/ubuntu/myResto-spring/Docker/docker-compose.yml up -d"
+      command: "docker-compose -f /home/ubuntu/myResto-spring/Docker/docker-compose.yaml up -d"
