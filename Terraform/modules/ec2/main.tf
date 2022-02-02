@@ -19,6 +19,21 @@ resource "aws_instance" "myresto-ec2" {
   }
 
   provisioner "remote-exec" {
+    when = destroy
+    inline = [
+      "ls"
+    ]
+    connection {
+      type        = "ssh"
+      user        = "ec2-user"
+      private_key = file("~/.ssh/id_rsa")
+      host        = self.triggers.public_ip
+    }
+  }
+
+
+  provisioner "remote-exec" {
+    when   = create
     inline = [
       "sudo apt update -y",
     ] 
