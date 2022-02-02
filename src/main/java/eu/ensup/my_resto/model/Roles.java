@@ -3,8 +3,8 @@ package eu.ensup.my_resto.model;
 
 public enum Roles {
 
-    USER("user"),
-    OWNER("owner");
+    USER("USER"),
+    OWNER("OWNER");
 
     private String role;
 

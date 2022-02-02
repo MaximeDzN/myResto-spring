@@ -44,8 +44,6 @@ public class Item {
     @Column(nullable = false, length = 50)
     private String category;
 
-
-
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "image_id")
     private Image image;

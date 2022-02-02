@@ -37,7 +37,6 @@ public class FileService {
             Files.write(imagePath,imageByte);
         } catch (IOException e){
             //TODO Manage exception
-            e.printStackTrace();
         }
     }
 

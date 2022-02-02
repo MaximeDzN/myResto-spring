@@ -7,9 +7,12 @@ import eu.ensup.my_resto.model.OrderDTO;
 import eu.ensup.my_resto.repos.ItemRepository;
 import eu.ensup.my_resto.repos.OrderRepository;
 import eu.ensup.my_resto.repos.UserRepository;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -19,19 +22,24 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class OrderService {
 
-    private final OrderRepository orderRepository;
-    private final UserRepository userRepository;
-    private final ItemRepository itemRepository;
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private ItemRepository itemRepository;
 
-    public OrderService(final OrderRepository orderRepository, final UserRepository userRepository,
-            final ItemRepository itemRepository) {
-        this.orderRepository = orderRepository;
-        this.userRepository = userRepository;
-        this.itemRepository = itemRepository;
-    }
 
     public List<OrderDTO> findAll() {
         return orderRepository.findAll()
+                .stream()
+                .map(order -> mapToDTO(order, new OrderDTO()))
+                .collect(Collectors.toList());
+    }
+
+    public List<OrderDTO> findAllByUser(User user) {
+        System.out.println(user);
+        return orderRepository.findAllByUser(user)
                 .stream()
                 .map(order -> mapToDTO(order, new OrderDTO()))
                 .collect(Collectors.toList());

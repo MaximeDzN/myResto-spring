@@ -28,11 +28,6 @@ public class AuthService {
         userRepository.save(mapToEntity(registerDTO, new User()));
     }
 
-    public String signin(LoginDTO loginDTO) {
-        return "pwet";
-    }
-
-
     private String encodePassword(String password) {
         return passwordEncoder.encode(password);
     }

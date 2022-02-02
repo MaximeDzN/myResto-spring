@@ -24,10 +24,6 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("signin")
-    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO){
-        return ResponseEntity.ok(authService.signin(loginDTO));
-    }
 
 
 

@@ -33,7 +33,6 @@ public class ItemService {
 
     Random random = new Random();
 
-
     public List<ItemDTO> findAll() {
         return itemRepository.findAll()
                 .stream()
@@ -96,7 +95,7 @@ public class ItemService {
         return item;
     }
 
-    public String randomString() {
+    private String randomString() {
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'
         int targetStringLength = 15;
