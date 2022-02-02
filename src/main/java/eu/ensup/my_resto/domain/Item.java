@@ -1,6 +1,7 @@
 package eu.ensup.my_resto.domain;
 
 import java.time.OffsetDateTime;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -13,6 +14,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Item {
 
     @Id
@@ -58,5 +60,4 @@ public class Item {
     public void preUpdate() {
         lastUpdated = OffsetDateTime.now();
     }
-
 }

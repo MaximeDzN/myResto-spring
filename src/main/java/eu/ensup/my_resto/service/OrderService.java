@@ -27,12 +27,14 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
+    private final OrderItemRepository orderItemRepository;
 
     public OrderService(final OrderRepository orderRepository, final UserRepository userRepository,
-                        final ItemRepository itemRepository) {
+                        final ItemRepository itemRepository, OrderItemRepository orderItemRepository) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.itemRepository = itemRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
     public List<OrderDTO> findAll() {
@@ -52,7 +54,18 @@ public class OrderService {
         final Order order = new Order();
         mapToEntity(orderDTO, order);
         order.setStatus(Status.EN_ATTENTE.toString());
-        return orderRepository.save(order).getId();
+        Long id = orderRepository.save(order).getId();
+        order.setId(id);
+        final List<Item> items = itemRepository.findAllById(orderDTO.getItems().stream().map(orderItemsDTO -> orderItemsDTO.getId()).collect(Collectors.toList()));
+        final Set<OrderItem> orderItems = items.stream().map(item -> OrderItem
+                        .builder()
+                        .order(order)
+                        .item(item)
+                        .quantity(orderDTO.getItems().stream().filter(item1 -> item1.getId() == item.getId()).map(item2 -> item2.getQuantity()).collect(toSingleton()))
+                        .build())
+                .collect(Collectors.toSet());
+        orderItemRepository.saveAll(orderItems);
+        return id;
     }
 
     public void update(final Long id, final OrderDTO orderDTO) {
@@ -89,8 +102,8 @@ public class OrderService {
             order.setUser(user);
         }
         if (orderDTO.getItems() != null) {
-            final List<Item> items = itemRepository.findAllById(orderDTO.getItems().stream().map(item -> item.getId()).collect(Collectors.toList()));
-
+            final List<Item> items = itemRepository.findAllById(orderDTO.getItems().stream().map(orderItemsDTO -> orderItemsDTO.getId()).collect(Collectors.toList()));
+            System.out.println(items);
             if (items.size() != orderDTO.getItems().size()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "one of items not found");
             }
@@ -103,7 +116,7 @@ public class OrderService {
                     .build())
                 .collect(Collectors.toSet());
 
-            order.setOrderItems(orderItems);
+            order.setOrderItems(null);
         }
         return order;
     }
