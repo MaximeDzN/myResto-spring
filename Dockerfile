@@ -2,15 +2,15 @@ FROM adoptopenjdk/openjdk11:jdk-11.0.9_11-alpine-slim
 
 LABEL MAINTENER="Allan et Brice"
 
-RUN apt-get update -y && \
-    apt-get upgrade -y && \
-    apt-get install git -y && \
-    apt-get install maven -y && \
-    apt-get install bash -y
+RUN apk update && \
+    apk upgrade && \
+    apk add git && \
+    apk add maven && \
+    apk add bash
 
-RUN git clone https://github.com/brikema/GestionGlasses.git
+RUN git clone https://github.com/MaximeDzN/myResto-spring.git
 
-WORKDIR GestionGlasses
+WORKDIR myResto-spring
 
 RUN mvn clean package
 
