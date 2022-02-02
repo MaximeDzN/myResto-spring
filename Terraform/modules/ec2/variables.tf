@@ -48,3 +48,12 @@ variable "nom_ubuntu_ami" {
   default = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
 }
 
+variable "git_proprietaire" {
+  type    = string
+  default = "MaximeDzN"
+}
+
+variable "git_projet" {
+  type    = string
+  default = "myResto-spring"
+}
