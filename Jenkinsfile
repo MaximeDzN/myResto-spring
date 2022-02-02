@@ -30,16 +30,17 @@ pipeline {
                 }
             }
             steps {
-                script {
-                    def exists = fileExists 'Terraform/app/tfplan'
-                    if (exists) {
-                        echo 'Yes'
-                        dir("Terraform/app") {
-                            sh "terraform destroy --auto-approve"
-                        }                
-                    }
-                }
-                deleteDir()
+                echo "toto"
+                // script {
+                //     def exists = fileExists 'Terraform/app/tfplan'
+                //     if (exists) {
+                //         echo 'Yes'
+                //         dir("Terraform/app") {
+                //             sh "terraform destroy --auto-approve"
+                //         }                
+                //     }
+                // }
+                // deleteDir()
             }
         }
 
@@ -63,11 +64,11 @@ pipeline {
         }
            
         stage('Terraform init') {
-	        when {
-                not {
-                    equals expected: true, actual: params.destroy
-                }
-            }
+	        // when {
+            //     not {
+            //         equals expected: true, actual: params.destroy
+            //     }
+            // }
             steps {     
                 dir(".aws"){
                     withCredentials([file(credentialsId: 'MYRESTO_SSH', variable: 'MyResto')]) {
@@ -75,7 +76,7 @@ pipeline {
                     }
                 }
                 dir("Terraform/app") {
-                        sh'terraform init -input=false'
+                        sh'terraform init'
                 }
             }
         }
