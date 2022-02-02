@@ -17,33 +17,6 @@ module "ec2" {
   securite_groupe= "${module.sg.out_sg_nom}"
   ip_public = "${module.eip.out_eip_public_ip}"
   utilisateur_ssh = "ubuntu"
-
-  provisioner "remote-exec" {
-    when = destroy
-    inline = [
-      "ls"
-    ]
-    connection {
-      type        = "ssh"
-      user        = "${var.utilisateur_ssh}"
-      private_key = file("../../.aws/${var.cle_ssh}.pem")
-      host        = "${module.eip.out_eip_public_ip}"
-    }
-  }
-
-
-  provisioner "remote-exec" {
-    when   = create
-    inline = [
-      "sudo apt update -y",
-    ] 
-    connection {
-      type        = "ssh"
-      user        = "${var.utilisateur_ssh}"
-      private_key = file("../../.aws/${var.cle_ssh}.pem")
-      host        = "${module.eip.out_eip_public_ip}"
-    }
-  }
 }
 
 
