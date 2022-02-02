@@ -31,9 +31,14 @@ resource "aws_volume_attachment" "ebs_to_ec2" {
   volume_id   = var.volume_id
   instance_id = module.ec2.out_ec2_id
 
-    provisioner "remote-exec" {
+  provisioner "remote-exec" {
     inline = [
-      "ansible-playbook -i hosts.yml myresto.yml"
+      "sudo apt update -y",
+      "sudo apt install software-properties-common",
+      "sudo add-apt-repository --yes --update ppa:ansible/ansible",
+      "sudo apt install --yes ansible",
+      "git clone -b DevOps https://github.com/${var.git_proprietaire}/${var.git_projet}.git",
+      "cd ${var.git_projet}/ansible/",
     ] 
     connection {
       type        = "ssh"

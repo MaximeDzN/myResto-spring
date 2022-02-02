@@ -28,3 +28,8 @@ variable "git_projet" {
   type    = string
   default = "myResto-spring"
 }
+
+variable "git_proprietaire" {
+  type    = string
+  default = "MaximeDzN"
+}
