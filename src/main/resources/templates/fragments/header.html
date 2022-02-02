@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:fragment="head">
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,11 +37,11 @@
     <ul class="nav">
       <li class="active"><a th:href="@{/}">La carte</a></li>
       <!--<li><a href="profile.html">Mon compte</a></li>-->
-      <li><a th:href="@{/orders}">Commandes à préparer</a></li>
+      <li sec:authorize="isAuthenticated()"><a th:href="@{/orders}">Commandes à préparer</a></li>
       <!--<li><a href="manage_stock.html">Gérer les stocks</a></li>-->
-      <li><a th:href="@{/login}">Se connecter</a></li>
-      <li><a th:href="@{/register}">Créer un compte</a></li>
-      <li class="btn">Deconnexion</li>
+      <li sec:authorize="isAnonymous()"><a th:href="@{/login}">Se connecter</a></li>
+      <li sec:authorize="isAnonymous()"><a th:href="@{/register}">Créer un compte</a></li>
+      <li sec:authorize="isAuthenticated()" class="btn">Deconnexion</li>
     </ul>
 
 </header>
