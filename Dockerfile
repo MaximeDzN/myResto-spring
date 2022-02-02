@@ -1,6 +1,6 @@
-FROM openjdk:11-jdk-alpine
+FROM adoptopenjdk/openjdk11:jdk-11.0.9_11-alpine-slim
 
-LABEL MAINTENER="projet2"
+LABEL MAINTENER="Allan et Brice"
 
 RUN apk update && \
     apk upgrade && \
@@ -8,9 +8,9 @@ RUN apk update && \
     apk add maven && \
     apk add bash
 
-RUN git clone https://github.com/MaximeDzN/myResto-spring.git
+RUN git clone https://github.com/brikema/GestionGlasses.git
 
-WORKDIR myResto-spring
+WORKDIR GestionGlasses
 
 RUN mvn clean package
 
