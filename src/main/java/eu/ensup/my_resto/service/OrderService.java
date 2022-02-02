@@ -94,7 +94,7 @@ public class OrderService {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "one of items not found");
             }
 
-            order.setItems(orderItemList);
+            //order.setItems(orderItemList);
         }
         return order;
     }

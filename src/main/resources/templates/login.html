@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Login Form</title>
+    <meta charset="UTF-8">
+    <div th:replace="~{fragments/header :: head}"></div>
+    <title>Se connecter</title>
 </head>
 <body>
-<div class="container">
-    <div class="wrapper">
-        <div class="title"><span>Login Form</span></div>
-        <form th:action="@{/login}" th:object="${loginForm}" method="post">
-            <div class="row">
+<div th:replace="~{fragments/card :: card}"></div>
+<div th:replace="~{fragments/header :: header}"></div>
 
-                <input type="text" name="username">
-            </div>
-            <div class="row">
+<h1 class="main-title">Accéder à MyResto.fr</h1>
+<p class="sub-t">Vous devez vous connecter avant de pouvoir commander sur MyResto.fr</p>
 
-                <input type="password" name="password">
-            </div>
-            <div class="row button">
-                <input type="submit" value="Login">
-            </div>
-        </form>
+<form th:action="@{/login}" th:object="${loginForm}" method="post" class="form">
+    <div class="form-input-container">
+        <label>Adresse email :</label>
+        <input name="username" class="form-control form-full-w" type="text" placeholder="jeandupont@gmail.com">
     </div>
-</div>
+
+    <div class="form-input-container">
+        <label>Mot de passe :</label>
+        <input name="pwd" class="form-control form-full-w" type="password" placeholder="123456">
+    </div>
+
+    <input type="submit" class="btn" value="Se connecter">
+</form>
 </body>
 </html>
