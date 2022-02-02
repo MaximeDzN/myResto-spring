@@ -34,7 +34,7 @@ resource "aws_eip_association" "eip_assoc" {
 
 resource "aws_volume_attachment" "ebs_to_ec2" {
   device_name = "/dev/sdf"
-  volume_id   = module.ebs.out_volume_id
+  volume_id   = var.volume_id
   instance_id = module.ec2.out_ec2_id
 }
 

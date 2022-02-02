@@ -7,3 +7,8 @@ variable "auteur" {
   type    = string
   default = "groupe2"
 }
+
+variable "volume_id"{
+  type = string
+  default = "vol-0c840123584a1acce"
+}
