@@ -22,3 +22,9 @@ variable "cle_ssh" {
   type    = string
   default = "MyResto"
 }
+
+
+variable "git_projet" {
+  type    = string
+  default = "myResto-spring"
+}
