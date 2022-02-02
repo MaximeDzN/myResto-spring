@@ -37,19 +37,18 @@ public class ItemService {
     public List<ItemDTO> findAll() {
         return itemRepository.findAll()
                 .stream()
-                .map(item -> mapToDTO(item, new ItemDTO()))
+                .map(item -> mapToDTO(item))
                 .collect(Collectors.toList());
     }
 
     public ItemDTO get(final Long id) {
         return itemRepository.findById(id)
-                .map(item -> mapToDTO(item, new ItemDTO()))
+                .map(item -> mapToDTO(item))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     public Long create(final ItemDTO itemDTO) {
-        final Item item = new Item();
-        mapToEntity(itemDTO, item);
+        Item item = mapToEntity(itemDTO);
         if (item.getImage() != null) {
             String filename = randomString();
             fileService.saveImage(item.getImage(), filename);
@@ -63,8 +62,7 @@ public class ItemService {
     public void update(final Long id, final ItemDTO itemDTO) {
         final Item item = itemRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        mapToEntity(itemDTO, item);
-        itemRepository.save(item);
+        itemRepository.save(mapToEntity(itemDTO));
     }
 
     public void delete(final Long id) {
@@ -75,25 +73,25 @@ public class ItemService {
         }
     }
 
-    private ItemDTO mapToDTO(final Item item, final ItemDTO itemDTO) {
-        itemDTO.setId(item.getId());
-        itemDTO.setName(item.getName());
-        itemDTO.setQuantity(item.getQuantity());
-        itemDTO.setDescription(item.getDescription());
-        itemDTO.setPrice(item.getPrice());
-        itemDTO.setCategory(item.getCategory());
-        itemDTO.setImage(item.getImage());
-        return itemDTO;
+    private ItemDTO mapToDTO(final Item item) {
+        return ItemDTO.builder()
+        .id(item.getId())
+        .name(item.getName())
+        .quantity(item.getQuantity())
+        .description(item.getDescription())
+        .price(item.getPrice())
+        .category(item.getCategory())
+        .image(item.getImage()).build();
     }
 
-    private Item mapToEntity(final ItemDTO itemDTO, final Item item) {
-        item.setName(itemDTO.getName());
-        item.setQuantity(itemDTO.getQuantity());
-        item.setDescription(itemDTO.getDescription());
-        item.setCategory(itemDTO.getCategory());
-        item.setPrice(itemDTO.getPrice());
-        item.setImage(itemDTO.getImage());
-        return item;
+    private Item mapToEntity(final ItemDTO itemDTO) {
+        return Item.builder()
+        .name(itemDTO.getName())
+        .quantity(itemDTO.getQuantity())
+        .description(itemDTO.getDescription())
+        .category(itemDTO.getCategory())
+        .price(itemDTO.getPrice())
+        .image(itemDTO.getImage()).build();
     }
 
     public String randomString() {

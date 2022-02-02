@@ -32,8 +32,8 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "order")
-    private Set<OrderItem> items;
+    @OneToMany(mappedBy = "item")
+    private Set<OrderItem> orderItems;
 
     @Column(nullable = false, updatable = false)
     private OffsetDateTime dateCreated;

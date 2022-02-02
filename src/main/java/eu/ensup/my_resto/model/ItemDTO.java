@@ -4,6 +4,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import eu.ensup.my_resto.domain.Image;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,6 +13,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Builder
 public class ItemDTO {
 
     private Long id;
@@ -30,8 +32,8 @@ public class ItemDTO {
     private Double price;
 
     @NotNull
+    @Size(max = 50)
     private String category;
 
     private Image image;
-
 }

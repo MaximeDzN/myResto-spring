@@ -1,6 +1,8 @@
 package eu.ensup.my_resto.model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -27,6 +29,5 @@ public class OrderDTO {
 
     private Long user;
 
-    private List<ItemDTO> items;
-
+    private List<OrderItemsDTO> items;
 }

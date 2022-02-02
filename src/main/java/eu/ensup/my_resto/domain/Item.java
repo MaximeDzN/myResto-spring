@@ -4,15 +4,15 @@ import java.time.OffsetDateTime;
 import java.util.Set;
 import javax.persistence.*;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 
 @Entity
-@Getter
-@Setter
+@Data
 @ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Item {
 
     @Id
@@ -35,9 +35,8 @@ public class Item {
     @Column(nullable = false, length = 50)
     private String category;
 
-    @OneToMany(mappedBy = "item")
-    private Set<OrderItem> orders;
-
+    @OneToMany(mappedBy = "order")
+    private Set<OrderItem> orderItems;
 
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "image_id")

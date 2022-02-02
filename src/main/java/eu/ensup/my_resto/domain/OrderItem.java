@@ -9,20 +9,21 @@ import javax.persistence.*;
 
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class OrderItem {
+
     @Id
     Long id;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private Order order;
+    Order order;
 
     @ManyToOne
     @JoinColumn(name = "item_id")
-    private Item item;
+    Item item;
 
-    private Long quantity;
+    Integer quantity;
 }
