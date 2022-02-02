@@ -19,7 +19,8 @@ resource "aws_instance" "myresto-ec2" {
   }
 
   provisioner "local-exec" {
-    command = "echo MyResto est disponible sur cette url : http://${var.ip_public}:8080/ >> ip_connection.txt"
+    command = "rm -f ip_connection.txt"
+    command = "echo [masters] \n${var.ip_public}\n >> hosts.yml"
   }
 
   provisioner "remote-exec" {
@@ -54,9 +55,9 @@ resource "aws_instance" "myresto-ec2-worker1" {
     Name = "${var.ec2_name}-ec2-worker1"
   }
 
-  # provisioner "local-exec" {
-  #   command = "echo MyResto est disponible sur cette url : http://${var.ip_public}:8080/ >> ip_connection.txt"
-  # }
+  provisioner "local-exec" {
+    command = "echo [workers] \n${var.ip_public}\n >> hosts.yml"
+  }
 
   provisioner "remote-exec" {
     inline = [
@@ -90,9 +91,9 @@ resource "aws_instance" "myresto-ec2-worker2" {
     Name = "${var.ec2_name}-ec2-worker2"
   }
 
-  # provisioner "local-exec" {
-  #   command = "echo MyResto est disponible sur cette url : http://${var.ip_public}:8080/ >> ip_connection.txt"
-  # }
+  provisioner "local-exec" {
+    command = "echo ${var.ip_public}\n >> hosts.yml"
+  }
 
   provisioner "remote-exec" {
     inline = [
