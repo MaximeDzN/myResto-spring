@@ -30,7 +30,7 @@ resource "aws_volume_attachment" "ebs_to_ec2" {
   device_name = "/dev/sdf"
   volume_id   = var.volume_id
   instance_id = module.ec2.out_ec2_id
-
+  skip_destroy = true
   provisioner "remote-exec" {
     inline = [
       "sudo apt install software-properties-common",
