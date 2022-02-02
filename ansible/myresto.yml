@@ -20,6 +20,9 @@
         repo: 'https://github.com/MaximeDzN/myResto-spring.git'
         dest: /home/{{ ansible_user }}/MyResto
 
+    - name: "set image docker"
+      command: "docker build -t myresto ."
+
     - name: "docker-compose up database"
       command: "docker-compose -f /home/{{ ansible_user }}/MyResto/docker-compose.yml up -d docker-mysql"
 
