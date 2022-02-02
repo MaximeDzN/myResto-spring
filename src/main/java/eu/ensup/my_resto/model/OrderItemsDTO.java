@@ -8,6 +8,6 @@ import lombok.ToString;
 @Builder
 @ToString
 public class OrderItemsDTO {
-    private Long id;
+    private ItemDTO item;
     private Integer quantity;
 }

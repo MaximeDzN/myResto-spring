@@ -4,6 +4,7 @@ import eu.ensup.my_resto.domain.Item;
 import eu.ensup.my_resto.domain.Order;
 import eu.ensup.my_resto.domain.OrderItem;
 import eu.ensup.my_resto.domain.User;
+import eu.ensup.my_resto.model.ItemDTO;
 import eu.ensup.my_resto.model.OrderDTO;
 import eu.ensup.my_resto.model.OrderItemsDTO;
 import eu.ensup.my_resto.model.Status;
@@ -56,12 +57,12 @@ public class OrderService {
         order.setStatus(Status.EN_ATTENTE.toString());
         Long id = orderRepository.save(order).getId();
         order.setId(id);
-        final List<Item> items = itemRepository.findAllById(orderDTO.getItems().stream().map(orderItemsDTO -> orderItemsDTO.getId()).collect(Collectors.toList()));
+        final List<Item> items = itemRepository.findAllById(orderDTO.getItems().stream().map(orderItemsDTO -> orderItemsDTO.getItem().getId()).collect(Collectors.toList()));
         final Set<OrderItem> orderItems = items.stream().map(item -> OrderItem
                         .builder()
                         .order(order)
                         .item(item)
-                        .quantity(orderDTO.getItems().stream().filter(item1 -> item1.getId() == item.getId()).map(item2 -> item2.getQuantity()).collect(toSingleton()))
+                        .quantity(orderDTO.getItems().stream().filter(item1 -> item1.getItem().getId() == item.getId()).map(item2 -> item2.getQuantity()).collect(toSingleton()))
                         .build())
                 .collect(Collectors.toSet());
         orderItemRepository.saveAll(orderItems);
@@ -86,10 +87,21 @@ public class OrderService {
         orderDTO.setAddress(order.getAddress());
         orderDTO.setPrice(order.getPrice());
         orderDTO.setUser(order.getUser() == null ? null : order.getUser().getId());
-        List<OrderItemsDTO> items = new ArrayList<>();
-        order.getOrderItems().stream().map(orderItem -> items.add(OrderItemsDTO.builder().id(orderItem.getId()).quantity(orderItem.getQuantity()).build()));
-        orderDTO.setItems(items);
+        List<OrderItem> items = orderItemRepository.findAll().stream().filter(orderItem -> orderItem.getOrder().getId() == order.getId()).collect(Collectors.toList());
+        List<OrderItemsDTO> orderItemDTOS = items.stream().map(orderItem -> OrderItemsDTO.builder().item(mapToItemDTO(orderItem.getItem())).quantity(orderItem.getQuantity()).build()).collect(Collectors.toList());
+        orderDTO.setItems(orderItemDTOS);
         return orderDTO;
+    }
+
+    private ItemDTO mapToItemDTO(final Item item){
+        return ItemDTO.builder()
+                .id(item.getId())
+                .name(item.getName())
+                .quantity(item.getQuantity())
+                .description(item.getDescription())
+                .price(item.getPrice())
+                .category(item.getCategory())
+                .image(item.getImage()).build();
     }
 
     private Order mapToEntity(final OrderDTO orderDTO, final Order order) {
@@ -102,20 +114,11 @@ public class OrderService {
             order.setUser(user);
         }
         if (orderDTO.getItems() != null) {
-            final List<Item> items = itemRepository.findAllById(orderDTO.getItems().stream().map(orderItemsDTO -> orderItemsDTO.getId()).collect(Collectors.toList()));
+            final List<Item> items = itemRepository.findAllById(orderDTO.getItems().stream().map(orderItemsDTO -> orderItemsDTO.getItem().getId()).collect(Collectors.toList()));
             System.out.println(items);
             if (items.size() != orderDTO.getItems().size()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "one of items not found");
             }
-
-            final Set<OrderItem> orderItems = items.stream().map(item -> OrderItem
-                    .builder()
-                    .order(order)
-                    .item(item)
-                    .quantity(orderDTO.getItems().stream().filter(item1 -> item1.getId() == item.getId()).map(item2 -> item2.getQuantity()).collect(toSingleton()))
-                    .build())
-                .collect(Collectors.toSet());
-
             order.setOrderItems(null);
         }
         return order;
