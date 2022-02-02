@@ -10,5 +10,5 @@ variable "capacite_disque" {
 
 variable "zone_dispo" {
   type    = string
-  default = "us-east-1b"
+  default = "us-east-1"
 }
