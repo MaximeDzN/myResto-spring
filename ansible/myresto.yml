@@ -19,10 +19,15 @@
       git:
         repo: 'https://github.com/MaximeDzN/myResto-spring.git'
         version: 'DevOps'
-        dest: /home/ubuntu/MyResto
-    - name: "ls"
-      command: "ls"
-    
+        dest: '/home/ubuntu/myResto-spring'
+    - name: "Build an image and push it to a private repo"
+      docker_image:
+        build:
+          path: /home/ubuntu/myResto-spring/Docker
+        name: myresto
+        tag: latest
+        push: no
+        source: build
 
     # - name: "set image docker"
     #   command: "docker build -t myresto ./Docker/"
