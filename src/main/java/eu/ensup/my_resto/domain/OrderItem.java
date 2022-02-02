@@ -5,11 +5,11 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Data
+@Setter
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 public class OrderItem {
 
     @Id

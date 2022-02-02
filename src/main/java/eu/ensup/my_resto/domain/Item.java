@@ -9,12 +9,12 @@ import lombok.*;
 
 
 @Entity
-@Data
+@Setter
+@Getter
 @ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 public class Item {
 
     @Id
