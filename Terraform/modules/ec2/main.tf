@@ -25,9 +25,9 @@ resource "aws_instance" "myresto-ec2" {
     ]
     connection {
       type        = "ssh"
-      user        = "ec2-user"
-      private_key = file("~/.ssh/id_rsa")
-      host        = self.triggers.public_ip
+      user        = "${var.utilisateur_ssh}"
+      private_key = file("../../.aws/${var.cle_ssh}.pem")
+      host        = "${self.public_ip}"
     }
   }
 
