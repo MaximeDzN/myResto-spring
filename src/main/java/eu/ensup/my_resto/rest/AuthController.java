@@ -34,7 +34,4 @@ public class AuthController {
     public String viewLoginPage(){
         return "login";
     }
-
-
-
 }
