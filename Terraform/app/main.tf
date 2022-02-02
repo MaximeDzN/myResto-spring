@@ -19,6 +19,11 @@ module "ec2" {
   utilisateur_ssh = "ubuntu"
 }
 
+#Instanciation module ebs
+module "ebs" {
+  source        = "../modules/ebs"
+  auteur = "${var.auteur}"
+}
 
 
 resource "aws_eip_association" "eip_assoc" {
