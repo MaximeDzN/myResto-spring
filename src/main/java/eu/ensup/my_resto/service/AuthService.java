@@ -22,8 +22,6 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
-
     public void signup(RegisterDTO registerDTO) {
         userRepository.save(mapToEntity(registerDTO, new User()));
     }

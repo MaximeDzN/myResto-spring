@@ -45,6 +45,13 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
+    public List<OrderDTO> findAllByUser(User user) {
+        return orderRepository.findAllByUser(user)
+                .stream()
+                .map(order -> mapToDTO(order, new OrderDTO()))
+                .collect(Collectors.toList());
+    }
+
     public OrderDTO get(final Long id) {
         return orderRepository.findById(id)
                 .map(order -> mapToDTO(order, new OrderDTO()))

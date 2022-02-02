@@ -8,27 +8,32 @@ import eu.ensup.my_resto.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Controller
-@RequestMapping(value = "/auth")
 public class AuthController {
 
     @Autowired
     private AuthService authService;
 
+    @GetMapping("register")
+    public String viewRegisterPage() {
+        return "register";
+    }
 
-    @PostMapping("signup")
-    public ResponseEntity<Void> signup(@RequestBody RegisterDTO registerDTO){
+    @PostMapping("register")
+    public String signup(@ModelAttribute("registerForm") @Valid RegisterDTO registerDTO, BindingResult bindingResult){
         authService.signup(registerDTO);
-        return ResponseEntity.ok().build();
+        return "redirect:/";
     }
 
-    @PostMapping("signin")
-    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO){
-        return ResponseEntity.ok(authService.signin(loginDTO));
+    @GetMapping("login")
+    public String viewLoginPage(){
+        return "login";
     }
-
 
 
 

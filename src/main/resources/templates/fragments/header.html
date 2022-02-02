@@ -35,7 +35,7 @@
     <img th:src="@{img/menu.svg}" alt="" onclick="document.querySelector('header').classList.toggle('active');">
     <img th:src="@{img/card.svg}" alt="" id="card" onclick="document.querySelector('#modal_card').classList.toggle('active');">
     <ul class="nav">
-      <li class="active"><a href="index.html">La carte</a></li>
+      <li class="active"><a th:href="@{'/'}">La carte</a></li>
       <li><a href="profile.html">Mon compte</a></li>
       <li><a href="manage_orders.html">Commandes à préparer</a></li>
       <li><a href="manage_stock.html">Gérer les stocks</a></li>

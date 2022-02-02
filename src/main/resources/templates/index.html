@@ -8,10 +8,24 @@
 <div class="container text-center">
     <h1>Welcome to CodeJava.net</h1>
 </div>
-<div sec:authentication="name"></div>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Logout" />
-</form>
+<div sec:authorize="isAuthenticated()">
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout"/>
+    </form>
+</div>
+
+<th:block th:each="order : ${orders}">
+    <div class="">
+        <h4 th:text="${order.id}"></h4>
+        <div class="carousel-food_item_text-container">
+            <th:block th:each="i : ${order.items}">
+                <span th:text="${i.item.name}"></span>
+                <span th:text="${i.quantity}"></span>
+            </th:block>
+            <span th:text="${order.price}"></span>
+        </div>
+    </div>
+</th:block>
 
 </body>
 </html>

@@ -1,5 +1,6 @@
 package eu.ensup.my_resto.rest;
 
+import eu.ensup.my_resto.domain.User;
 import eu.ensup.my_resto.model.OrderDTO;
 import eu.ensup.my_resto.service.OrderService;
 import java.util.List;
@@ -8,6 +9,8 @@ import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +33,11 @@ public class OrderController {
 
     @GetMapping
     public ResponseEntity<List<OrderDTO>> getAllOrders() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OWNER"))){
+            //TODO À TEST AVEC LA CONNEXION
+            return ResponseEntity.ok(orderService.findAllByUser((User)auth.getPrincipal()));
+        }
         return ResponseEntity.ok(orderService.findAll());
     }
 
