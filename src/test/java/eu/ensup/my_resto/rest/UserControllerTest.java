@@ -3,6 +3,7 @@ package eu.ensup.my_resto.rest;
 import eu.ensup.my_resto.domain.User;
 import eu.ensup.my_resto.model.Roles;
 import eu.ensup.my_resto.model.UserDTO;
+import eu.ensup.my_resto.repos.UserRepository;
 import eu.ensup.my_resto.service.UserService;
 import io.swagger.v3.core.util.Json;
 import jdk.dynalink.linker.support.Guards;
@@ -16,6 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,6 +32,7 @@ import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 import org.testcontainers.shaded.com.github.dockerjava.core.MediaType;
 
 import java.util.Locale;
+import java.util.Properties;
 
 
 @SpringBootTest
@@ -41,6 +44,8 @@ import java.util.Locale;
     @MockBean
     private UserService userService;
 
+    @MockBean
+    private UserRepository userRepository;
 
     @Test
     void findAll() throws Exception {
@@ -57,8 +62,6 @@ import java.util.Locale;
         testUser.setPassword("123456");
         testUser.setRole(String.valueOf(Roles.USER));
 
-
-
          mockMvc.perform( MockMvcRequestBuilders
                 .post("/users")
                 .accept(String.valueOf(MediaType.APPLICATION_JSON))
@@ -70,10 +73,15 @@ import java.util.Locale;
 
     @Test
     void getUser() throws Exception {
-        createUser();
+        User testUser = new User();
+        testUser.setUsername("yamine");
+        testUser.setId(321L);
+        testUser.setPassword("123456");
+        testUser.setRole(String.valueOf(Roles.USER));
+
+        userRepository.save(testUser);
         mockMvc.perform(get("/users/321"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].username", is("yamine")));
+                .andExpect(status().isOk()).andReturn();
     }
 
     @Test
