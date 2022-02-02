@@ -127,7 +127,7 @@ pipeline {
             
             steps {
                 dir("Terraform/app") {
-                    sh "terraform apply -input=false tfplan"
+                    sh "terraform apply --auto-approve"
                 }
             }
         }
