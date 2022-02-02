@@ -103,7 +103,6 @@ public class OrderService {
 
         // update storage
         if(reqOrderIsCancelled && !repoOrderIsCancelled){ // The status has just changed
-            System.out.println(orderDTO.getItems());
             orderDTO.getItems().forEach(orderItem -> {
                 Item itemRepo = itemRepository.findById(orderItem.getItem().getId()).get();
                 itemRepo.setQuantity(itemRepo.getQuantity() + orderItem.getQuantity());
