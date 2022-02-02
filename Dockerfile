@@ -4,9 +4,9 @@ LABEL MAINTENER="projet2"
 
 RUN apt-get update && \
     apt-get upgrade && \
-    apt-get add git && \
-    apt-get add maven && \
-    apt-get add bash
+    apt-get install git && \
+    apt-get install maven && \
+    apt-get install bash
 
 RUN git clone https://github.com/MaximeDzN/myResto-spring.git
 
