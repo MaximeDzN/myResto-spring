@@ -34,7 +34,6 @@ public class ItemController {
     @GetMapping("/items")
     public String getAllItems(Model model) {
         var items = itemService.findAll();
-        System.out.println(items);
         model.addAttribute("items",items);
         return "product";
     }
