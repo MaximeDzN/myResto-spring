@@ -21,7 +21,7 @@ pipeline {
         GIT_BRANCH = "${params.ENV == 'prod' ? GIT_MAIN_BRANCH : GIT_TEST_BRANCH}"
     }
 
-    // stages {
+    stages {
 	//     stage('clean workspace & stop the last instance if running') {
     //         when {
     //             not {
@@ -133,12 +133,12 @@ pipeline {
         //         equals expected: true, actual: params.destroy
         //     }
         
-        //     steps {
-        //         dir("Terraform/app") {
-        //             sh "terraform destroy --auto-approve"
-        //         }
-        //     }
-        // }
+            steps {
+                dir("Terraform/app") {
+                    sh "terraform destroy --auto-approve"
+                }
+            }
+        }
 
     }
 }
