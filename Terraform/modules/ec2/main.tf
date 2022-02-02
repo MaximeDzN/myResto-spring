@@ -18,9 +18,10 @@ resource "aws_instance" "myresto-ec2" {
     Name = "${var.ec2_name}-ec2"
   }
 
-  provisioner "remote-exec" {
-    inline     = ["echo toto"]
-    when       = "destroy"
+  provisioner "local-exec" {
+    when       = destroy
+    command    = "echo The server's IP address is ${self.private_ip} > toto.txt"
+    on_failure = continue
     
     connection {
       type        = "ssh"
