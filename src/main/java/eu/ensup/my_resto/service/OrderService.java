@@ -17,6 +17,8 @@ import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
+
+import org.hibernate.boot.model.source.spi.SingularAttributeSourceToOne;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -70,6 +72,7 @@ public class OrderService {
                         .map(orderItemsDTO -> orderItemsDTO.getItem().getId())
                         .collect(Collectors.toList()));
 
+        // Update order and item registry
         final Set<OrderItem> orderItems = items.stream().map(item -> OrderItem
                         .builder()
                         .order(order)
@@ -78,13 +81,37 @@ public class OrderService {
                         .build())
                 .collect(Collectors.toSet());
         orderItemRepository.saveAll(orderItems);
+
+        // Update storage
+        orderItems.forEach(orderItem -> {
+           Item item = itemRepository.findById(orderItem.getItem().getId()).get();
+           item.setQuantity(item.getQuantity() - orderItem.getQuantity());
+           itemRepository.save(item);
+        });
+
         return id;
     }
 
     public void update(final Long id, final OrderDTO orderDTO) {
         final Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        Boolean reqOrderIsCancelled = orderDTO.getStatus().equals(Status.ANNULEE.toString());
+        Boolean repoOrderIsCancelled = order.getStatus().equals(Status.ANNULEE.toString());
+
         mapToEntity(orderDTO, order);
+
+        // update storage
+        if(reqOrderIsCancelled && !repoOrderIsCancelled){ // The status has just changed
+            System.out.println(orderDTO.getItems());
+            orderDTO.getItems().forEach(orderItem -> {
+                Item itemRepo = itemRepository.findById(orderItem.getItem().getId()).get();
+                itemRepo.setQuantity(itemRepo.getQuantity() + orderItem.getQuantity());
+                itemRepository.save(itemRepo);
+            });
+
+            order.setStatus(Status.TERMINEE.toString());
+        }
         orderRepository.save(order);
     }
 
