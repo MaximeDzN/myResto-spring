@@ -1,6 +1,7 @@
 package eu.ensup.my_resto.service;
 
 import eu.ensup.my_resto.domain.User;
+import eu.ensup.my_resto.model.Roles;
 import eu.ensup.my_resto.model.UserDTO;
 import eu.ensup.my_resto.repos.UserRepository;
 import java.util.List;
@@ -37,6 +38,7 @@ public class UserService implements UserDetailsService {
     public Long create(final UserDTO userDTO) {
         final User user = new User();
         mapToEntity(userDTO, user);
+        user.setRole(Roles.USER.toString());
         return userRepository.save(user).getId();
     }
 
