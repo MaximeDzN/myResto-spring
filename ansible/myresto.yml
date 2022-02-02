@@ -18,6 +18,7 @@
     - name: "Download data from git repo"
       git:
         repo: 'https://github.com/MaximeDzN/myResto-spring.git'
+        version: 'DevOps'
         dest: /home/{{ ansible_user }}/MyResto
 
     - name: "set image docker"
