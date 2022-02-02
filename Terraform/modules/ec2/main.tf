@@ -17,5 +17,19 @@ resource "aws_instance" "myresto-ec2" {
   tags = {
     Name = "${var.ec2_name}-ec2"
   }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt update -y",
+    ] 
+    connection {
+      type        = "ssh"
+      user        = "${var.utilisateur_ssh}"
+      private_key = file("../../.aws/${var.cle_ssh}.pem")
+      host        = "${self.public_ip}"
+    }
+  }
+
+
 }
 

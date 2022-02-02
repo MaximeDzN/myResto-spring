@@ -33,7 +33,6 @@ resource "aws_volume_attachment" "ebs_to_ec2" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo apt update -y",
       "sudo apt install software-properties-common",
       "sudo add-apt-repository --yes --update ppa:ansible/ansible",
       "sudo apt install --yes ansible",
