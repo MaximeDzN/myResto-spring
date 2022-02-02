@@ -22,25 +22,26 @@ pipeline {
     }
 
     stages {
-	//     stage('clean workspace & stop the last instance if running') {
-    //         when {
-    //             not {
-    //                 equals expected: true, actual: params.destroy
-    //             }
-    //         }
-    //         steps {
-    //             script {
-    //                 def exists = fileExists 'Terraform/app/tfplan'
-    //                 if (exists) {
-    //                     echo 'Yes'
-    //                     dir("Terraform/app") {
-    //                         sh "terraform destroy --auto-approve"
-    //                     }                
-    //                 }
-    //             }
-    //             deleteDir()
-    //         }
-    //     }
+
+	    stage('clean workspace & stop the last instance if running') {
+            when {
+                not {
+                    equals expected: true, actual: params.destroy
+                }
+            }
+            steps {
+                script {
+                    def exists = fileExists 'Terraform/app/tfplan'
+                    if (exists) {
+                        echo 'Yes'
+                        dir("Terraform/app") {
+                            sh "terraform destroy --auto-approve"
+                        }                
+                    }
+                }
+                deleteDir()
+            }
+        }
 
         stage('récupération du code source et récupération de la bonne branch') {
 	        when {
@@ -79,19 +80,21 @@ pipeline {
             }
         }
 
-        // stage('Terraform Plan') {
-        //     when {
-        //         not {
-        //             equals expected: true, actual: params.destroy
-        //         }
-        //     }
+        stage('Terraform Plan') {
+            when {
+                not {
+                    equals expected: true, actual: params.destroy
+                }
+            }
             
-        //     steps {
-        //         dir("Terraform/app") {
-        //             sh "terraform plan --auto-approve "
-        //         }
-        //     }
-        // }
+            steps {
+                dir("Terraform/app") {
+                    sh 'terraform plan ----auto-approve'
+                    // sh "terraform plan -input=false -out tfplan "
+                    // sh 'terraform show -no-color tfplan > tfplan.txt'
+                }
+            }
+        }
 
         // stage('Terraform validation') {
         //     when {
@@ -114,24 +117,24 @@ pipeline {
         //     }
         // }
 
-        // stage('Terraform Apply') {
-        //     when {
-        //         not {
-        //             equals expected: true, actual: params.destroy
-        //         }
-        //     }
+        stage('Terraform Apply') {
+            when {
+                not {
+                    equals expected: true, actual: params.destroy
+                }
+            }
             
-        //     steps {
-        //         dir("Terraform/app") {
-        //             sh "terraform apply --auto-approve"
-        //         }
-        //     }
-        // }
+            steps {
+                dir("Terraform/app") {
+                    sh "terraform apply -input=false tfplan"
+                }
+            }
+        }
         
-        // stage('Terraform Destroy') {
-        //     when {
-        //         equals expected: true, actual: params.destroy
-        //     }
+        stage('Terraform Destroy') {
+            when {
+                equals expected: true, actual: params.destroy
+            }
         
             steps {
                 dir("Terraform/app") {
