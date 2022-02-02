@@ -2,11 +2,11 @@ FROM openjdk:11.0-slim
 
 LABEL MAINTENER="projet2"
 
-RUN apt-get update && \
-    apt-get upgrade && \
-    apt-get install git && \
-    apt-get install maven && \
-    apt-get install bash
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install git -y && \
+    apt-get install maven -y && \
+    apt-get install bash -y
 
 RUN git clone https://github.com/MaximeDzN/myResto-spring.git
 
