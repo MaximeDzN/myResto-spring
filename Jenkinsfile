@@ -31,15 +31,15 @@ pipeline {
             }
             steps {
                 echo "toto"
-                // script {
-                //     def exists = fileExists 'Terraform/app/tfplan'
-                //     if (exists) {
-                //         echo 'Yes'
-                //         dir("Terraform/app") {
-                //             sh "terraform destroy --auto-approve"
-                //         }                
-                //     }
-                // }
+                script {
+                    dir(".aws") {
+                        deleteDir()
+                    }  
+                    dir(".aws@tmp") {
+                        deleteDir()
+                    }                  
+                }
+    
                 // deleteDir()
             }
         }
@@ -90,7 +90,7 @@ pipeline {
             
             steps {
                 dir("Terraform/app") {
-                    sh 'terraform plan ----auto-approve'
+                    sh 'terraform plan --auto-approve'
                     // sh "terraform plan -input=false -out tfplan "
                     // sh 'terraform show -no-color tfplan > tfplan.txt'
                 }
