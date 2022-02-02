@@ -54,7 +54,7 @@ public class OrderService {
     public Long create(final OrderDTO orderDTO) {
         final Order order = new Order();
         mapToEntity(orderDTO, order);
-        order.setStatus(Status.EN_ATTENTE.toString());
+        order.setStatus(String.valueOf(Status.EN_ATTENTE));
         Long id = orderRepository.save(order).getId();
         order.setId(id);
         final List<Item> items = itemRepository.findAllById(orderDTO.getItems().stream().map(orderItemsDTO -> orderItemsDTO.getItem().getId()).collect(Collectors.toList()));
@@ -62,7 +62,7 @@ public class OrderService {
                         .builder()
                         .order(order)
                         .item(item)
-                        .quantity(orderDTO.getItems().stream().filter(item1 -> item1.getItem().getId() == item.getId()).map(item2 -> item2.getQuantity()).collect(toSingleton()))
+                        .quantity(orderDTO.getItems().stream().filter(item1 -> Objects.equals(item1.getItem().getId(), item.getId())).map(OrderItemsDTO::getQuantity).collect(toSingleton()))
                         .build())
                 .collect(Collectors.toSet());
         orderItemRepository.saveAll(orderItems);
@@ -87,7 +87,7 @@ public class OrderService {
         orderDTO.setAddress(order.getAddress());
         orderDTO.setPrice(order.getPrice());
         orderDTO.setUser(order.getUser() == null ? null : order.getUser().getId());
-        List<OrderItem> items = orderItemRepository.findAll().stream().filter(orderItem -> orderItem.getOrder().getId() == order.getId()).collect(Collectors.toList());
+        List<OrderItem> items = orderItemRepository.findAll().stream().filter(orderItem -> Objects.equals(orderItem.getOrder().getId(), order.getId())).collect(Collectors.toList());
         List<OrderItemsDTO> orderItemDTOS = items.stream().map(orderItem -> OrderItemsDTO.builder().item(mapToItemDTO(orderItem.getItem())).quantity(orderItem.getQuantity()).build()).collect(Collectors.toList());
         orderDTO.setItems(orderItemDTOS);
         return orderDTO;
@@ -113,14 +113,7 @@ public class OrderService {
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found"));
             order.setUser(user);
         }
-        if (orderDTO.getItems() != null) {
-            final List<Item> items = itemRepository.findAllById(orderDTO.getItems().stream().map(orderItemsDTO -> orderItemsDTO.getItem().getId()).collect(Collectors.toList()));
-            System.out.println(items);
-            if (items.size() != orderDTO.getItems().size()) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "one of items not found");
-            }
-            order.setOrderItems(null);
-        }
+        order.setOrderItems(null);
         return order;
     }
 
@@ -137,41 +130,3 @@ public class OrderService {
     }
 
 }
-
-/**
- * L'utilisation d'un Stream implique généralement trois choses :
- *
- * Une source qui va alimenter le Stream avec les éléments à traiter
- * Un ensemble d'opérations intermédiaires qui vont décrire les traitements à effectuer
- * Une opération terminale qui va exécuter les opérations et produire le résultat
- * Les opérations proposées par un Stream sont des opérations communes :
- *
- * Pour filtrer des données
- * Pour rechercher une correspondance avec des éléments
- * Pour transformer des éléments
- * Pour réduire les éléments et produire un résultat
- * Pour filtrer des données, un Stream propose plusieurs opérations :
- *
- * filter(Predicate) : renvoie un Stream qui contient les éléments pour lesquels l'évaluation du Predicate passé en paramètre vaut true
- * distinct() : renvoie un Stream qui ne contient que les éléments uniques (elle retire les doublons). La comparaison se fait grâce à l'implémentation de la méthode equals()
- * limit(n) : renvoie un Stream que ne contient comme éléments que le nombre fourni en paramètre
- * skip(n) : renvoie un Stream dont les n premiers éléments sont ignorés
- *
- * Pour rechercher une correspondance avec des éléments, un Stream propose plusieurs opérations :
- *
- * anyMatch(Predicate) : renvoie un booléen qui précise si l'évaluation du Predicate sur au moins un élément vaut true
- * allMatch(Predicate) : renvoie un booléen qui précise si l'évaluation du Predicate sur tous les éléments vaut true
- * noneMatch(Predicate) : renvoie un booléen qui précise si l'évaluation du Predicate sur tous les éléments vaut false
- * findAny() : renvoie un objet de type Optional qui encapsule un élément du Stream s'il existe
- * findFirst() : renvoie un objet de type Optional qui encapsule le premier élément du Stream s'il existe
- *
- * Pour transformer des données, un Stream propose plusieurs opérations :
- *
- * map(Function) : applique la Function fournie en paramètre pour transformer l'élément en créant un nouveau
- * flatMap(Function) : applique la Function fournie en paramètre pour transformer l'élément en créant zéro, un ou plusieurs éléments
- *
- * Pour réduire les données et produire un résultat, un Stream propose plusieurs opérations :
- *
- * reduce() : applique une Function pour combiner les éléments afin de produire le résultat
- * collect() : permet de transformer un Stream qui contiendra le résultat des traitements de réduction dans un conteneur mutable
- */

@@ -1,13 +1,13 @@
 package eu.ensup.my_resto.model;
 
 public enum Category {
-    Beverage("boisson"),
-    Appetizer("entrée"),
-    Dish("plat"),
-    Dessert("dessert");
+    BEVERAGE("boisson"),
+    APPETIZER("entrée"),
+    DISH("plat"),
+    DESSERT("dessert");
 
-    private String category;
+    private String cat;
     Category(String category) {
-        this.category = category;
+        this.cat = category;
     }
 }

@@ -1,17 +1,15 @@
 package eu.ensup.my_resto.domain;
 
-import java.time.OffsetDateTime;
-import java.util.Objects;
-import java.util.Set;
-import javax.persistence.*;
-
 import lombok.*;
+
+import javax.persistence.*;
+import java.time.OffsetDateTime;
+import java.util.Set;
 
 
 @Entity
 @Setter
 @Getter
-@ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

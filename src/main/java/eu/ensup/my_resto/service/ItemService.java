@@ -1,21 +1,19 @@
 package eu.ensup.my_resto.service;
 
-import eu.ensup.my_resto.domain.Image;
 import eu.ensup.my_resto.domain.Item;
 import eu.ensup.my_resto.model.ItemDTO;
 import eu.ensup.my_resto.repos.ImageRepository;
 import eu.ensup.my_resto.repos.ItemRepository;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -37,13 +35,13 @@ public class ItemService {
     public List<ItemDTO> findAll() {
         return itemRepository.findAll()
                 .stream()
-                .map(item -> mapToDTO(item))
+                .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
 
     public ItemDTO get(final Long id) {
         return itemRepository.findById(id)
-                .map(item -> mapToDTO(item))
+                .map(this::mapToDTO)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
@@ -60,8 +58,6 @@ public class ItemService {
     }
 
     public void update(final Long id, final ItemDTO itemDTO) {
-        final Item item = itemRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         itemRepository.save(mapToEntity(itemDTO));
     }
 
