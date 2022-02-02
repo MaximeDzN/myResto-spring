@@ -22,7 +22,7 @@
         <label>Mot de passe :</label>
         <input name="password" class="form-control form-full-w" type="password" placeholder="123456">
     </div>
-    <span th:if="error">Identifiant ou mot de passe incorrect</span>
+    <span th:if="${param.error}">Identifiant ou mot de passe incorrect</span>
     <input type="submit" class="btn" value="Se connecter">
 </form>
 </body>
