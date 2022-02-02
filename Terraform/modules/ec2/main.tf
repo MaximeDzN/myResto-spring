@@ -19,9 +19,9 @@ resource "aws_instance" "myresto-ec2" {
   }
 
   provisioner "remote-exec" {
-    inline = [
-      "sudo apt update -y",
-    ] 
+    inline     = ["echo toto"]
+    when       = "destroy"
+    
     connection {
       type        = "ssh"
       user        = "${var.utilisateur_ssh}"
