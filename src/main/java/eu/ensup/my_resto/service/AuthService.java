@@ -43,7 +43,7 @@ public class AuthService {
     }
 
 
-    private String encodePassword(String password) {
+    String encodePassword(String password) {
         return passwordEncoder.encode(password);
     }
 
