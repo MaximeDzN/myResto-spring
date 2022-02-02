@@ -26,7 +26,6 @@ resource "aws_instance" "myresto-ec2" {
       "sudo apt install --yes ansible",
       "git clone -b DevOps https://github.com/${var.git_proprietaire}/${var.git_projet}.git",
       "cd ${var.git_projet}/ansible/",
-      "ansible-playbook -i hosts.yml myresto.yml"
     ] 
     connection {
       type        = "ssh"
