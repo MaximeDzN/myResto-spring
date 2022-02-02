@@ -90,7 +90,7 @@ pipeline {
             
             steps {
                 dir("Terraform/app") {
-                    sh 'terraform plan --auto-approve'
+                    sh 'terraform plan'
                     // sh "terraform plan -input=false -out tfplan "
                     // sh 'terraform show -no-color tfplan > tfplan.txt'
                 }
