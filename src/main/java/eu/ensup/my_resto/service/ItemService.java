@@ -50,10 +50,9 @@ public class ItemService {
         if (item.getImage() != null) {
             String filename = randomString();
             fileService.saveImage(item.getImage(), filename);
-            item.getImage().setPath(String.format("%s/%s", uploadPath, filename));
+            item.getImage().setPath(filename);
             imageRepository.save(item.getImage());
         }
-
         return itemRepository.save(item).getId();
     }
 
