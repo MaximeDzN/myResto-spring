@@ -1,4 +1,4 @@
-FROM openjdk:11-jdk-alpine
+FROM openjdk:11.0-slim
 
 LABEL MAINTENER="projet2"
 
