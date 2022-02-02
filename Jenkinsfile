@@ -22,6 +22,9 @@ pipeline {
     }
 
     stages {
+        stage('Récupération du code') {
+            checkout scm
+        }
 	    stage('clean workspace & stop the last instance if running') {
             when {
                 not {
@@ -42,7 +45,7 @@ pipeline {
             }
         }
 
-        stage('source clone and checkout the branch') {
+        stage('récupération du code source et récupération de la bonne branch') {
 	        when {
                 not {
                     equals expected: true, actual: params.destroy
