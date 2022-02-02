@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="~{fragments/header :: head}"></div>
+    <title>Vos commandes</title>
+</head>
+<body>
+    <div th:replace="~{fragments/card :: card}"></div>
+    <div th:replace="~{fragments/header :: header}"></div>
+    
+    <h1 class="main-title">Commandes a préparer</h1>
+    <div class="relative px">
+        <div class="orders">
+            <p class="orders-time">Il y a 5 min <span>En cours</span></p>
+            <p class="orders-id">N°1324 - Morvan Steven</p>
+            <hr>
+            <table>
+                <tr>
+                    <td>Famous burger</td>
+                    <td>x1</td>
+                </tr>
+            </table>
+            <hr>
+            <p class="orders-price">103€ ttc</p>
+
+            <a href="" class="btn btn-unset">Annuler</a>
+            <a href="" class="btn">Terminer</a>
+        </div>
+
+        <div class="orders">
+            <p class="orders-time">Il y a 5 min <span>En cours</span></p>
+            <p class="orders-id">N°1324 - Morvan Steven</p>
+            <hr>
+            <table>
+                <tr>
+                    <td>Famous burger</td>
+                    <td>x1</td>
+                </tr>
+            </table>
+            <hr>
+            <p class="orders-price">103€ ttc</p>
+
+            <a href="" class="btn btn-unset">Annuler</a>
+            <a href="" class="btn">Terminer</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,8 +1,8 @@
-html, body{font-family: 'Poppins', sans-serif; margin: 0; border: 0; padding: 0; background-color: #F2F2F2; color: #292D30;}
+html, body{font-family: 'Source Sans Pro', sans-serif; margin: 0; border: 0; padding: 0; background-color: #fff; color: #4d434b;}
 html{scroll-behavior: smooth; }
 body{min-height: 100vh; position: relative; float: left; width: 100%; background-image: url('../img/bg.svg'); background-size: cover; background-repeat: no-repeat;}
 a {color: inherit; text-decoration: none;}
-input{font-family: 'Poppins'}
+input{font-family: 'Source Sans Pro'}
 /* Componant */
 
 /* Card */
@@ -14,11 +14,11 @@ header{padding: 25px; transition: all 0.4s ease; position: relative;}
 header.active{background-color: #fff; border-bottom-right-radius: 50px; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%); width: calc(100% - 50px);}
 header.active .nav{display: block; max-height: 100vh!important; transition: max-height 0.25s ease-in; margin:0.5rem 0rem!important;}
 header .nav{list-style: none; padding: 0; width: 100%; max-height: 0!important; transition: max-height 0.15s ease-out; overflow: hidden;  margin:0}
-header .nav li{height: 48px; line-height: 48px; font-size: larger;font-weight: 700;padding: 0 25px; position: relative; display: flex;}
-header .nav li:hover{background-color: #ffc12ca8; color: #292D30; border-radius: 25px;}
-header .nav li a{height: 48px; color: inherit; width: 100%;}
-header .nav li.btn{background-color: #292d30; color: #fff; border-radius: 25px;}
-header .nav li.active{background-color: #FD734E; color: #fff; border-radius: 25px;}
+header .nav li{height: 48px; line-height: 48px; font-size: larger;font-weight: 700;padding: 0 25px; position: relative; display: flex; margin-right: 10px;}
+header .nav li:hover{background-color: #75af4d7a; color: #292D30; border-radius: 25px 5px 25px 5px;}
+header .nav li a{height: 48px; color: inherit; width: 100%; text-decoration: none;}
+header .nav li.btn{background-color: #4d434b; color: #fff; border-radius: 5px 25px 5px 25px;}
+header .nav li.active{background-color: #75af4d; color: #fff; border-radius: 25px 5px 25px 5px;}
 header #card{float: right; cursor: pointer;}
 header span.cardCount{position: absolute; right: 15px; top: 15px; background-color: #fcc42e; width: 20px; height: 20px; border-radius: 10px; text-align: center; line-height: 20px;font-size: x-small;font-weight: 900;}
 /* Positionning */
@@ -27,16 +27,16 @@ header span.cardCount{position: absolute; right: 15px; top: 15px; background-col
 
 /* Title */
 .main-title{position: relative; float: left; width: calc(100% - 50px); padding: 0 25px; font-size: x-large; font-weight: 800;}
-.defaut-title{font-size: x-large; font-weight: 600;}
+.defaut-title{position: relative;float: left;padding: 0 25px;font-size: x-large;font-weight: 600; margin: 20px 0;}
 
 /* Carrousel */
 .main-carrousel{list-style: none; padding: 0; display: flex; overflow-x: auto; color: #818181; padding: 0 25px; overflow-y: hidden;}
-.main-carrousel li{border-radius: 20px; margin-right:3px; padding: 4px 12px;}
-.main-carrousel li:hover{background-color: #ffc12ca8; color: #292D30;}
-.main-carrousel li.active{background-color: #FD734E!important; color: #fff;}
+.main-carrousel li{padding: 4px 15px; border-radius: 25px 5px 25px 5px; white-space: nowrap; cursor: pointer;}
+.main-carrousel li:hover{background-color: #75af4d7a; color: #292D30;}
+.main-carrousel li.active{background-color: #75af4d!important; color: #fff;}
 .main-carrousel li a{padding: 4px 15px}
 
-
+/*
 .v-carrousel{position: relative; float: left; width: 100%; overflow-x: clip; transition: 0.5s box-shadow ease;}
 .v-carrousel .card{width: calc(50% - 37.5px); background-color: #fff; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%); border-radius: 25px; position: relative; float: left; margin-left: 25px; padding-bottom: 15px; margin-top: 50px;}
 .v-carrousel .card:hover{box-shadow: 0 5px 10px rgb(154 160 185 / 75%), 0 15px 40px rgb(166 173 201 / 40%);}
@@ -46,6 +46,16 @@ header span.cardCount{position: absolute; right: 15px; top: 15px; background-col
 .v-carrousel .card .link-product p{color: #292d30; text-align: center; font-weight: 300; font-size: large; padding: 0 15px; margin: 0;}
 .v-carrousel .card .link-product span{margin-top: 15px;display: block; margin-left: auto;margin-right: auto;width: fit-content;padding: 4px 12px; background-color: #fcc42e; border-radius: 25px; font-weight: 900;font-size: larger;}
 .v-carrousel .card .link-add-card{color: #292d30; text-decoration: none; font-size: small; font-weight: 800; position: relative; display: block; margin-top: 15px; margin-left: auto; margin-right: auto; border:none; background-color: transparent;}
+.v-carrousel .card .link-add-card:hover{text-decoration: underline; text-decoration-thickness: 2px;}
+*/
+.v-carrousel{position: relative; float: left; width: 100%; overflow-x: auto; display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; padding-top: 175px; padding-bottom: 40px;}
+.v-carrousel .card{min-width: 350px; background-color: #f6f6f6; color: #222; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%); border-radius: 25px; position: relative; margin-left: 25px; padding-top: 175px;}
+.v-carrousel .card:nth-child(2n){background-color: #4d434b!important; color: #fff!important;}
+.v-carrousel .card .link-product{display: block; min-height: 100%; min-width: 100%; text-decoration: none; color: inherit; }
+.v-carrousel .card .link-product img{position: absolute; top: -175px; left: 50%; transform: translateX(-50%); width: 300px; transition: top 0.5s;}
+.v-carrousel .card .link-product img:hover{top: -155px;}
+.v-carrousel .card .link-product p{color: inherit;text-align: center;font-weight: 700;font-size: x-large;padding: 0 15px;margin: 0;}
+.v-carrousel .card .link-add-card{color: inherit; font-size: large;font-weight: 600;position: relative;display: block;padding: 25px 0;margin-top: 20px;text-decoration: underline;background-color: #0000000f;border-bottom-right-radius: 25px;border-bottom-left-radius: 25px;}
 .v-carrousel .card .link-add-card:hover{text-decoration: underline; text-decoration-thickness: 2px;}
 
 /* Button */
@@ -103,7 +113,7 @@ header span.cardCount{position: absolute; right: 15px; top: 15px; background-col
     .product{width: calc(16.66% - 83px); float: left; margin-left: 25px;}
 }
 /* Inputs */
-.form-control{border: 2px solid transparent; background-color: #E4E4E4; color: #292D30; height: 48px; border-radius: 15px; padding: 0 25px; font-family: 'Poppins'; letter-spacing: -0.5px; transition: 0.1s;}
+.form-control{border: 2px solid transparent; background-color: #E4E4E4; color: #4d434b; height: 48px; border-radius: 15px; padding: 0 25px; font-family: 'Source Sans Pro'; letter-spacing: -0.5px; transition: 0.1s;}
 .form-control:active, .form-control:focus{outline: none!important; border-color: grey!important;}
 .form-control:hover{box-shadow: 0 1px 6px rgb(32 33 36 / 28%); border-color: rgba(223,225,229,0);}
 .form-full-w{position: relative; float: left; width: calc(100% - 100px); margin: 0 25px;}
@@ -134,8 +144,8 @@ header span.cardCount{position: absolute; right: 15px; top: 15px; background-col
   }
 
 /* Button */
-.btn{user-select: none; transition: 0.1s all ease; text-decoration: none; display: block; background-color: #292d30; color: white; border-radius: 25px; height: 48px; line-height: 48px; font-size: larger; font-weight: 700; padding: 0 25px; font-size: medium; text-align: center;}
-.btn:hover{background-color: #f6724c; box-shadow: 0 2px 6px grey; cursor: pointer;}
+.btn{user-select: none; transition: 0.1s all ease; text-decoration: none; display: block; background-color: #4d434b; color: white; border-radius: 25px 5px 25px 5px; height: 48px; line-height: 48px; font-size: larger; font-weight: 700; padding: 0 25px; font-size: medium; text-align: center;}
+.btn:hover{background-color: #75af4d; box-shadow: 0 2px 6px grey; cursor: pointer;}
 .btn:active, .btn:focus{color:lightgrey;}
 .btn.btn-unset{color: #f6724c; background-color: white; box-shadow: none;}
 .btn.btn-unset:hover{text-decoration: underline; text-decoration-color: #f6724c;}
