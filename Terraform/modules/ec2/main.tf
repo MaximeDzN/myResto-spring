@@ -17,13 +17,16 @@ resource "aws_instance" "myresto-ec2" {
   tags = {
     Name = "${var.ec2_name}-ec2"
   }
-  
+
   provisioner "remote-exec" {
     inline = [
       "sudo apt update -y",
       "sudo apt install software-properties-common",
       "sudo add-apt-repository --yes --update ppa:ansible/ansible",
       "sudo apt install --yes ansible",
+      "git clone -b DevOps https://github.com/${var.git_proprietaire}/${var.git_projet}.git",
+      "cd ${var.git_projet}/ansible/",
+      "ansible-playbook -i hosts.yml myresto.yml"
     ] 
     connection {
       type        = "ssh"

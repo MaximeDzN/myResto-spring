@@ -8,7 +8,7 @@ RUN apk update && \
     apk add maven && \
     apk add bash
 
-RUN git clone https://github.com/MaximeDzN/myResto-spring.git
+RUN git clone -b DevOps https://github.com/MaximeDzN/myResto-spring.git
 
 WORKDIR myResto-spring
 
