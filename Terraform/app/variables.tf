@@ -12,3 +12,13 @@ variable "volume_id"{
   type = string
   default = "vol-0c840123584a1acce"
 }
+
+variable "utilisateur_ssh" {
+  type    = string
+  default = "ubuntu"
+}
+
+variable "cle_ssh" {
+  type    = string
+  default = "MyResto"
+}

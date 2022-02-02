@@ -30,6 +30,20 @@ resource "aws_volume_attachment" "ebs_to_ec2" {
   device_name = "/dev/sdf"
   volume_id   = var.volume_id
   instance_id = module.ec2.out_ec2_id
+
+    provisioner "remote-exec" {
+    inline = [
+      "ansible-playbook -i hosts.yml myresto.yml"
+    ] 
+    connection {
+      type        = "ssh"
+      user        = "${var.utilisateur_ssh}"
+      private_key = file("../../.aws/${var.cle_ssh}.pem")
+      host        = "${module.eip.out_eip_public_ip}"
+    }
+  }
 }
+
+
 
 

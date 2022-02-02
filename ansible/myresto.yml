@@ -20,6 +20,8 @@
         repo: 'https://github.com/MaximeDzN/myResto-spring.git'
         version: 'DevOps'
         dest: '/home/ubuntu/myResto-spring'
+    - name: "mount volume"
+      command: "sudo mkdir /ebsMyResto && sudo mount /dev/xvdf /ebsMyResto/"
     - name: "Build an image for MyResto"
       docker_image:
         build:
