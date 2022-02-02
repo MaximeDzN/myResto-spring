@@ -26,18 +26,15 @@ public class FileService {
             //TODO Manage exception
         }
     }
-
     public void saveImage(Image image, String filename) {
-        String path = String.format("%s",uploadPath);
-        Path root = Paths.get(path);
+        Path root = Paths.get(uploadPath);
         try {
             Files.createDirectories(root);
             byte[] imageByte = Base64.getDecoder().decode(image.getPath());
-            Path imagePath = Paths.get(String.format("%s/%s",path,filename));
+            Path imagePath = Paths.get(String.format("%s/%s",uploadPath,filename));
             Files.write(imagePath,imageByte);
         } catch (IOException e){
             //TODO Manage exception
-            e.printStackTrace();
         }
     }
 

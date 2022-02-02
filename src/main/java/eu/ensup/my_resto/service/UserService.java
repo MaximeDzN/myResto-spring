@@ -56,14 +56,12 @@ public class UserService implements UserDetailsService {
     private UserDTO mapToDTO(final User user, final UserDTO userDTO) {
         userDTO.setId(user.getId());
         userDTO.setUsername(user.getUsername());
-        userDTO.setPassword(user.getPassword());
         userDTO.setRole(user.getRole());
         return userDTO;
     }
 
     private User mapToEntity(final UserDTO userDTO, final User user) {
         user.setUsername(userDTO.getUsername());
-        user.setPassword(userDTO.getPassword());
         user.setRole(userDTO.getRole());
         return user;
     }
