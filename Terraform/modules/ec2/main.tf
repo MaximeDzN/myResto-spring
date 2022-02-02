@@ -19,8 +19,7 @@ resource "aws_instance" "myresto-ec2" {
   }
 
   provisioner "local-exec" {
-    command = "rm -f ip_connection.txt"
-    command = "echo [masters] \n${var.ip_public}\n >> hosts.yml"
+    command = "rm -f hosts.yml && echo [masters] \n${var.ip_public}\n >> hosts.yml"
   }
 
   provisioner "remote-exec" {
