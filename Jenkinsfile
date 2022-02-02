@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     parameters {
-        booleanParam(name: 'autoValidation', defaultValue: true, description: 'Lancer automatiquement le Terraform apply après le plan ? (Par défault activer)')
         booleanParam(name: 'destroy', defaultValue: false, description: 'Voulez vous détruire votre instance Terraform en cours ?')
 	    choice(
             choices: ['prod' , 'test'],
@@ -22,15 +21,13 @@ pipeline {
     }
 
     stages {
-
-	    stage('clean workspace & stop the last instance if running') {
+	    stage('Suppression Credentials') {
             when {
                 not {
                     equals expected: true, actual: params.destroy
                 }
             }
             steps {
-                echo "toto"
                 script {
                     dir(".aws") {
                         deleteDir()
@@ -39,8 +36,6 @@ pipeline {
                         deleteDir()
                     }                  
                 }
-    
-                // deleteDir()
             }
         }
 
@@ -64,11 +59,11 @@ pipeline {
         }
            
         stage('Terraform init') {
-	        // when {
-            //     not {
-            //         equals expected: true, actual: params.destroy
-            //     }
-            // }
+	        when {
+                not {
+                    equals expected: true, actual: params.destroy
+                }
+            }
             steps {     
                 dir(".aws"){
                     withCredentials([file(credentialsId: 'MYRESTO_SSH', variable: 'MyResto')]) {
@@ -91,32 +86,9 @@ pipeline {
             steps {
                 dir("Terraform/app") {
                     sh 'terraform plan'
-                    // sh "terraform plan -input=false -out tfplan "
-                    // sh 'terraform show -no-color tfplan > tfplan.txt'
                 }
             }
         }
-
-        // stage('Terraform validation') {
-        //     when {
-        //         not {
-        //             equals expected: true, actual: params.autoValidation
-        //         }
-        //         not {
-        //             equals expected: true, actual: params.destroy
-        //         }
-        //    }
-           
-        //     steps {
-        //         dir("Terraform/app") {
-        //             script {
-        //                 def plan = readFile 'tfplan.txt'
-        //                 input message: "Voulez vous vraiment appliquer le plan?",
-        //                 parameters: [text(name: 'Plan', description: 'Regarder le plan', defaultValue: plan)]
-        //             }
-        //         }
-        //     }
-        // }
 
         stage('Terraform Apply') {
             when {
