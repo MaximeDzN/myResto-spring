@@ -29,12 +29,14 @@ pipeline {
                 }
             }
             steps {
-                def exists = fileExists 'Terraform/app/tfplan'
-                if (exists) {
-                    echo 'Yes'
-                    dir("Terraform/app") {
-                        sh "terraform destroy --auto-approve"
-                    }                
+                script {
+                    def exists = fileExists 'Terraform/app/tfplan'
+                    if (exists) {
+                        echo 'Yes'
+                        dir("Terraform/app") {
+                            sh "terraform destroy --auto-approve"
+                        }                
+                    }
                 }
                 deleteDir()
             }
