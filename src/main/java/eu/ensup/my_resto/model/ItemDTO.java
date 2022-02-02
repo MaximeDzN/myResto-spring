@@ -17,23 +17,10 @@ import lombok.ToString;
 public class ItemDTO {
 
     private Long id;
-
-    @NotNull
-    @Size(max = 60)
     private String name;
-
-    @NotNull
     private Integer quantity;
-
-    @Size(max = 250)
     private String description;
-
-    @NotNull
     private Double price;
-
-    @NotNull
-    @Size(max = 50)
     private String category;
-
     private Image image;
 }

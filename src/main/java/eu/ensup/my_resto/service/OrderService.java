@@ -57,7 +57,12 @@ public class OrderService {
         order.setStatus(String.valueOf(Status.EN_ATTENTE));
         Long id = orderRepository.save(order).getId();
         order.setId(id);
-        final List<Item> items = itemRepository.findAllById(orderDTO.getItems().stream().map(orderItemsDTO -> orderItemsDTO.getItem().getId()).collect(Collectors.toList()));
+
+        final List<Item> items = itemRepository.findAllById(
+                orderDTO.getItems().stream()
+                        .map(orderItemsDTO -> orderItemsDTO.getItem().getId())
+                        .collect(Collectors.toList()));
+
         final Set<OrderItem> orderItems = items.stream().map(item -> OrderItem
                         .builder()
                         .order(order)
