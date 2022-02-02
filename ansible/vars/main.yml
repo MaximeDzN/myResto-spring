@@ -1,0 +1,4 @@
+---
+# defaults file for MyResto
+administrator: projet2
+ansible_user : ubuntu

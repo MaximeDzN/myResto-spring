@@ -1,0 +1,27 @@
+---
+- hosts: all
+  become: true
+  pre_tasks:
+    - name: install dependencies
+      apt:
+        name: "git"
+        state: "present"
+    - name: install dependencies
+      apt:
+        name: "docker"
+        state: "present"
+    - name: install dependencies
+      apt:
+        name: "docker-compose"
+        state: "present"
+  tasks:
+    - name: "Download data from git repo"
+      git:
+        repo: 'https://github.com/MaximeDzN/myResto-spring.git'
+        dest: /home/{{ ansible_user }}/MyResto
+
+    - name: "docker-compose up database"
+      command: "docker-compose -f /home/{{ ansible_user }}/MyResto/docker-compose.yml up -d docker-mysql"
+
+    - name: "docker-compose up for phpmyadmin and springboot app"
+      command: "docker-compose -f /home/{{ ansible_user }}/MyResto/docker-compose.yml up -d"
