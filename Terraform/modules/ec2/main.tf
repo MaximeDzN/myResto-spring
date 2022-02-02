@@ -55,7 +55,7 @@ resource "aws_instance" "myresto-ec2-worker1" {
   }
 
   provisioner "local-exec" {
-    command = "rm -f host && echo \"[workers]\" > hosts && echo \"${format("%s ansible_ssh_user=%s", var.ip_public, var.utilisateur_ssh)}\" >> hosts"
+    command = "echo \"[workers]\" > hosts && echo \"${format("%s ansible_ssh_user=%s", var.ip_public, var.utilisateur_ssh)}\" >> hosts"
   }
 }
 
@@ -71,7 +71,7 @@ resource "aws_instance" "myresto-ec2-worker2" {
   }
 
   provisioner "local-exec" {
-    command = "rm -f host && echo \"${format("%s ansible_ssh_user=%s", var.ip_public, var.utilisateur_ssh)}\" >> hosts"
+    command = "echo \"${format("%s ansible_ssh_user=%s", var.ip_public, var.utilisateur_ssh)}\" >> hosts"
   }
 }
 
