@@ -22,13 +22,20 @@ pipeline {
     }
 
     stages {
-	    stage('clean workspace') {
+	    stage('clean workspace & stop the last instance if running') {
             when {
                 not {
                     equals expected: true, actual: params.destroy
                 }
             }
             steps {
+                def exists = fileExists 'Terraform/app/tfplan'
+                if (exists) {
+                    echo 'Yes'
+                    dir("Terraform/app") {
+                        sh "terraform destroy --auto-approve"
+                    }                
+                }
                 deleteDir()
             }
         }
