@@ -92,7 +92,7 @@
     - name: "adding group"
       command: "newgrp docker"
     - name: "docker-compose up database"
-      command: "sudo docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d docker-mysql"
+      command: "docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d docker-mysql"
 
     - name: "docker-compose up for phpmyadmin and springboot app"
-      command: "sudo docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d phpmyadmin"
+      command: "docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d phpmyadmin"
