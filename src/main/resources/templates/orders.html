@@ -28,9 +28,13 @@
                 <hr>
                 <p class="orders-price">103€ ttc</p>
 
-                <a th:href="@{'/deleteorders/' + ${order.user.id}}" class="btn btn-unset">Annuler</a>
+                <form th:action="@{'/orders/' + ${order.user.id}}" method="put">
+                    <input type="submit" value="Annuler" class="btn btn-unset"/>
+                </form>
                 <th:block sec:authorize="hasAuthority('OWNER')">
-                    <a href="" class="btn" >Terminer</a>
+                    <form th:action="@{'/orders/' + ${order.user.id}}" method="put">
+                        <input type="submit" value="Terminer" class="btn"/>
+                    </form>
                 </th:block>
             </div>
         </th:block>
