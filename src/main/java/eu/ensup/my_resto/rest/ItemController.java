@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 
+import eu.ensup.my_resto.service.exception.FileNotDeleted;
+import eu.ensup.my_resto.service.exception.FileNotSaved;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,16 +30,15 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 public class ItemController {
 
-    private final ItemService itemService;
+    Logger logger = LoggerFactory.getLogger(ItemController.class);
 
-    public ItemController(final ItemService itemService) {
-        this.itemService = itemService;
-    }
+    @Autowired
+    private  ItemService itemService;
+
 
     @GetMapping("/items")
     public String getAllItems(Model model) {
         var items = itemService.findAll();
-        System.out.println(items.toString());
         model.addAttribute("items",items);
         return "product";
     }
@@ -48,9 +52,14 @@ public class ItemController {
         return "product";
     }
 
-    @PostMapping
+    @PostMapping("/items")
     public ResponseEntity<Long> createItem(@RequestBody @Valid final ItemDTO itemDTO) {
-        return new ResponseEntity<>(itemService.create(itemDTO), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(itemService.create(itemDTO), HttpStatus.CREATED);
+        } catch (FileNotSaved e) {
+            logger.error(e.getMessage());
+            return  ResponseEntity.internalServerError().build();
+        }
     }
 
     @PutMapping("/items/{id}")
@@ -62,8 +71,14 @@ public class ItemController {
 
     @DeleteMapping("/items/{id}")
     public ResponseEntity<Void> deleteItem(@PathVariable final Long id) {
-        itemService.delete(id);
-        return ResponseEntity.noContent().build();
+        try {
+            itemService.delete(id);
+            return ResponseEntity.noContent().build();
+        } catch (FileNotDeleted e) {
+            logger.error(e.getMessage());
+            return  ResponseEntity.internalServerError().build();
+        }
+
     }
 
 }

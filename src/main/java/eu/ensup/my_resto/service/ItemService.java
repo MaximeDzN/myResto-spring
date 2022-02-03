@@ -4,6 +4,10 @@ import eu.ensup.my_resto.domain.Item;
 import eu.ensup.my_resto.model.ItemDTO;
 import eu.ensup.my_resto.repos.ImageRepository;
 import eu.ensup.my_resto.repos.ItemRepository;
+import eu.ensup.my_resto.service.exception.FileNotDeleted;
+import eu.ensup.my_resto.service.exception.FileNotSaved;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -45,7 +49,7 @@ public class ItemService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public Long create(final ItemDTO itemDTO) {
+    public Long create(final ItemDTO itemDTO) throws FileNotSaved {
         Item item = mapToEntity(itemDTO);
         if (item.getImage() != null) {
             String filename = randomString();
@@ -60,7 +64,7 @@ public class ItemService {
         itemRepository.save(mapToEntity(itemDTO));
     }
 
-    public void delete(final Long id) {
+    public void delete(final Long id) throws FileNotDeleted {
         Optional<Item> item = itemRepository.findById(id);
         if (item.isPresent()) {
             itemRepository.deleteById(id);
