@@ -81,13 +81,13 @@
       command: "sudo mount /dev/xvdf /ebsMyResto/"
 
     - name: "copy image "
-      command: "cp -r /ebsMyResto/images /home/ec2-user/images"
+      command: "cp -r /ebsMyResto/images /home/ec2-user/myResto-spring/Docker/images"
 
     - name: "change owner images "
-      command: "sudo chown ec2-user:ec2-user /home/ec2-user/images"
+      command: "sudo chown ec2-user:ec2-user /home/ec2-user/myResto-spring/Docker/images"
 
     - name: "Build an image for MyResto"
-      command: "docker build -f /home/ec2-user/myResto-spring/Docker/Dockerfile -t myresto ."
+      command: "chdir=/home/ec2-user/myResto-spring/Docker docker build -t myresto ."
 
     - name: "Docker-compose up database"
       shell: /usr/local/bin/docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d docker-mysql
