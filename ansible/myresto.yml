@@ -24,7 +24,7 @@
       command: "sudo mkdir /ebsMyResto"
     - name: "mount volume"
       command: "sudo mount /dev/xvdf /ebsMyResto/"
-    - name: "Build an image for MyResto"
+    # - name: "Build an image for MyResto"
     #   docker_image:
     #     build:
     #       path: /home/ubuntu/myResto-sspring/Docker
