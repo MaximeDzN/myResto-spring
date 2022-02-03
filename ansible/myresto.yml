@@ -86,14 +86,15 @@
     - name: "mount volume"
       command: "sudo mount /dev/xvdf /ebsMyResto/"
     - name: "Build an image for MyResto"
-      become: true
-      docker_image:
-        build:
-          path: /home/ec2-user/myResto-spring/Docker
-        name: myresto
-        tag: latest
-        push: no
-        source: build
+      command: "docker build -f /home/ec2-user/myResto-spring/Docker/Dockerfile -t myresto"
+      # become: true
+      # docker_image:
+      #   build:
+      #     path: /home/ec2-user/myResto-spring/Docker
+      #   name: myresto
+      #   tag: latest
+      #   push: no
+        # source: build
     - name: "docker-compose up database"
       command: "docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d docker-mysql"
 
