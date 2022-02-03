@@ -52,19 +52,16 @@ public class OrderController {
 
     @PostMapping("/orders")
     public ResponseEntity<Long> createOrder(@RequestBody @Valid final OrderDTO orderDTO, HttpServletRequest req) {
-        HttpSession session = req.getSession();
-
         return new ResponseEntity<>(orderService.create(orderDTO), HttpStatus.CREATED);
     }
 
-    @PutMapping("/orders/{id}")
-    public ResponseEntity<Void> updateOrder(@PathVariable final Long id,
-            @RequestBody @Valid final OrderDTO orderDTO) {
-        orderService.update(id, orderDTO);
+    @PutMapping("/orders")
+    public ResponseEntity<Void> updateOrder(@RequestBody @Valid final OrderDTO orderDTO) {
+        orderService.update(orderDTO);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/deleteorders/{id}")
+    @DeleteMapping("/deleteorders/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable final Long id) {
         orderService.delete(id);
         return ResponseEntity.noContent().build();
