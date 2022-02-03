@@ -33,8 +33,8 @@
       command: sudo chmod +x /home/ec2-user/myResto-spring/Docker/shell.sh
 
 
-    # - name: Go to the folder and execute commande
-    #   command: chdir=/home/ec2-user/myResto-spring/Docker echo test > ye.txt
+    - name: Run sh
+      command: chdir=/home/ec2-user/myResto-spring/Docker ./shell.sh
 
     # - name: Go to the folder and execute command
     #   command: chdir=/home/ec2-user/myResto-spring/Docker docker-compose up -d docker-mysql
