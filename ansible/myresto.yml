@@ -80,6 +80,9 @@
     - name: "mount volume"
       command: "sudo mount /dev/xvdf /ebsMyResto/"
 
+    - name: "copy image "
+      command: "sudo cp -r /ebsMyResto/images /home/ec2-user/myResto-spring/Docker/images"
+
     - name: "Build an image for MyResto"
       command: "docker build -f /home/ec2-user/myResto-spring/Docker/Dockerfile -t myresto ."
 
