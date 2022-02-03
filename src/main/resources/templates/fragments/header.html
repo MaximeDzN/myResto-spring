@@ -41,7 +41,7 @@
       <!--<li><a href="manage_stock.html">Gérer les stocks</a></li>-->
       <li sec:authorize="isAnonymous()"><a th:href="@{/login}">Se connecter</a></li>
       <li sec:authorize="isAnonymous()"><a th:href="@{/register}">Créer un compte</a></li>
-      <li sec:authorize="isAuthenticated()" class="btn">Deconnexion</li>
+      <li sec:authorize="isAuthenticated()" class="btn"><a th:href="@{/logout}">Deconnexion</a></li>
     </ul>
 
 </header>
