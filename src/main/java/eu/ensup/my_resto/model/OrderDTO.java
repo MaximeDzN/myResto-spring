@@ -29,7 +29,7 @@ public class OrderDTO {
     @NotNull
     private Double price;
 
-    private Long user;
+    private UserDTO user;
 
     private List<OrderItemsDTO> items;
 }
