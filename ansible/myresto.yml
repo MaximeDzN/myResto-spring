@@ -91,8 +91,12 @@
       command: "sudo gpasswd -a $USER docker"
     - name: "adding group"
       command: "newgrp docker"
-    - name: "docker-compose up database"
-      command: "docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d docker-mysql"
+    - name: run docker-compose
+      become: true
+      community.docker.docker_compose:
+        project_src: '/home/ec2-user/myResto-spring/Docker/docker-compose.yaml'
+    # - name: "docker-compose up database"
+    #   command: "docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d docker-mysql"
 
-    - name: "docker-compose up for phpmyadmin and springboot app"
-      command: "docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d phpmyadmin"
+    # - name: "docker-compose up for phpmyadmin and springboot app"
+    #   command: "docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d phpmyadmin"
