@@ -89,8 +89,8 @@ public class OrderService {
         return id;
     }
 
-    public void update(final Long id, final OrderDTO orderDTO) {
-        final Order order = orderRepository.findById(id)
+    public void update(final OrderDTO orderDTO) {
+        final Order order = orderRepository.findById(orderDTO.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         Boolean reqOrderIsCancelled = orderDTO.getStatus().equals(Status.ANNULEE.toString());
@@ -113,6 +113,10 @@ public class OrderService {
 
     public void delete(final Long id) {
         orderRepository.deleteById(id);
+    }
+
+    public Double getSumPriceForMonth(String yearMonthDate){
+        return orderRepository.findSumPriceForMonth(yearMonthDate);
     }
 
     private OrderDTO mapToDTO(final Order order, final OrderDTO orderDTO) {

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -27,11 +29,13 @@ public class OrderController {
     }
 
     @GetMapping("/orders")
-    public String getAllOrders(Model model) {
+    public String renderOrderPage(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         List<OrderDTO> orderDTOList;
         if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OWNER"))) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
             orderDTOList = orderService.findAll();
+            model.addAttribute("sumMonth",orderService.getSumPriceForMonth(simpleDateFormat.format(new Date())));
         } else if(auth != null) {
             orderDTOList = orderService.findAllByUser((User) auth.getPrincipal());
         } else {
@@ -48,22 +52,20 @@ public class OrderController {
 
     @PostMapping("/orders")
     public ResponseEntity<Long> createOrder(@RequestBody @Valid final OrderDTO orderDTO, HttpServletRequest req) {
-        HttpSession session = req.getSession();
-
         return new ResponseEntity<>(orderService.create(orderDTO), HttpStatus.CREATED);
     }
 
-    @PutMapping("/orders/{id}")
-    public ResponseEntity<Void> updateOrder(@PathVariable final Long id,
-            @RequestBody @Valid final OrderDTO orderDTO) {
-        orderService.update(id, orderDTO);
+    @PutMapping("/orders")
+    public ResponseEntity<Void> updateOrder(@RequestBody @Valid final OrderDTO orderDTO) {
+        orderService.update(orderDTO);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/deleteorders/{id}")
+    @DeleteMapping("/deleteorders/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable final Long id) {
         orderService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
 
 }
