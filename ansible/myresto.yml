@@ -65,10 +65,7 @@
         executable: /usr/local/bin/pip3.8
       vars:
         packages:
-        - boto
-        - boto3
         - docker
-        - docker-py
         - docker-compose
   tasks:
     - name: "Download data from git repo"
@@ -86,8 +83,9 @@
 
     
     - name: "Docker-compose tesyt"
-      docker_compose:
-        project_src: '/home/ec2-user/myResto-spring/Docker/'
+      shell: /usr/local/bin/docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d
+      # docker_compose:
+      #   project_src: '/home/ec2-user/myResto-spring/Docker/'
 
 
     # - name: "add pour run le script"
