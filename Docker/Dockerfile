@@ -14,6 +14,8 @@ WORKDIR myResto-spring
 
 RUN mvn clean package
 
+COPY images/ images/
+
 RUN cp target/*.jar app.jar
 
 RUN addgroup -S spring && adduser -S spring -G spring
