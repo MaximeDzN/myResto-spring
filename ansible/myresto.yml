@@ -87,7 +87,10 @@
       command: "sudo mount /dev/xvdf /ebsMyResto/"
     - name: "Build an image for MyResto"
       command: "sudo docker build -f /home/ec2-user/myResto-spring/Docker/Dockerfile -t myresto ."
-      
+    - name: "test droit"
+      command: "sudo gpasswd -a $USER docker"
+    - name: "adding group"
+      command: "newgrp docker"
     - name: "docker-compose up database"
       command: "sudo docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d docker-mysql"
 
