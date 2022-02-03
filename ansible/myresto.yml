@@ -84,10 +84,8 @@
       command: "docker build -f /home/ec2-user/myResto-spring/Docker/Dockerfile -t myresto ."
 
     - name: "Docker-compose up database"
-      command: docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d docker-mysql
+      shell: /usr/local/bin/docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d docker-mysql
 
     - name: "Docker-compose up phpmyadmin and springboot app"
-      command: docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d
-
-    # - name: "Docker-compose tesyt"
-    #   shell: /usr/local/bin/docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d
+      shell: /usr/local/bin/docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d
+      
