@@ -10,22 +10,22 @@
 <div th:replace="~{fragments/header :: header}"></div>
 
 <h1 class="main-title">Découvre nos produits</h1>
-<div class="relative">
-    <ul class="main-carrousel">
-        <li class="active" data="Formules">Nos formules</li>
-        <li data="Bases">Bases</li>
-        <li data="Protéines">Protéines</li>
-        <li data="Marinades">Marinades</li>
-        <li data="Garnitures">Garnitures</li>
-        <li data="Graines">Graines</li>
-        <li data="Sauces">Sauces</li>
-        <li data="Entrées">Entrées</li>
-        <li data="Desserts">Desserts</li>
-    </ul>
-</div>
+
 
 <div class="relative center">
-
+    <div class="sticky">
+        <ul class="main-carrousel">
+            <li class="active" data="Formules">Nos formules</li>
+            <li data="Bases">Bases</li>
+            <li data="Protéines">Protéines</li>
+            <li data="Marinades">Marinades</li>
+            <li data="Garnitures">Garnitures</li>
+            <li data="Graines">Graines</li>
+            <li data="Sauces">Sauces</li>
+            <li data="Entrées">Entrées</li>
+            <li data="Desserts">Desserts</li>
+        </ul>
+    </div>
     <span class="defaut-title">Nos formules</span>
     <div class="v-carrousel">
         <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
@@ -165,7 +165,7 @@
 <script type="text/javascript">
     document.querySelectorAll(".main-carrousel li").forEach(item => {
       item.addEventListener('click', event => {
-        window.scrollTo({ top: document.getElementById(item.getAttribute('data')).getBoundingClientRect().top, behavior: 'smooth' });
+        window.scrollTo({ top: (document.getElementById(item.getAttribute('data')).getBoundingClientRect().top - 60), behavior: 'smooth' });
       })
     })
 </script>

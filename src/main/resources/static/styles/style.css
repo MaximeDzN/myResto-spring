@@ -20,11 +20,11 @@ header .nav li a{height: 48px; color: inherit; width: 100%; text-decoration: non
 header .nav li.btn{background-color: #4d434b; color: #fff; border-radius: 5px 25px 5px 25px;}
 header .nav li.active{background-color: #75af4d; color: #fff; border-radius: 25px 5px 25px 5px;}
 header #card{float: right; cursor: pointer;}
-header span.cardCount{position: absolute; right: 15px; top: 15px; background-color: #fcc42e; width: 20px; height: 20px; border-radius: 10px; text-align: center; line-height: 20px;font-size: x-small;font-weight: 900;}
+header span.cardCount{position: absolute; right: 15px; top: 15px; background-color: #75af4d;color: #fff; width: 20px; height: 20px; border-radius: 10px; text-align: center; line-height: 20px;font-size: x-small;font-weight: 900;}
 /* Positionning */
 .relative{position: relative; float: left; width: 100%;}
 .center{text-align: center;}
-
+.sticky{position: sticky; z-index: 1; background-color: #fff; float: left;top: 0; width: 100%;}
 /* Title */
 .main-title{position: relative; float: left; width: calc(100% - 50px); padding: 0 25px; font-size: x-large; font-weight: 800;}
 .defaut-title{position: relative;float: left;padding: 0 25px;font-size: x-large;font-weight: 600; margin: 20px 0;}
