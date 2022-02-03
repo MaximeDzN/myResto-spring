@@ -1,47 +1,38 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:fragment="head">
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" th:href="@{styles/style.css}">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{styles/style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap"
+          rel="stylesheet">
+    <script type="text/javascript" th:src="@{js/script.js}" defer></script>
 </head>
 <header th:fragment="header">
-  <!--<img src="img/menu.svg" alt="" onclick="document.querySelector('header').classList.toggle('active');">
-  <img src="img/shopping-cart-solid.svg" width="24" height="24" alt="" id="card" onclick="document.querySelector('#modal_card').classList.toggle('active');">
-  <span class="cardCount">0</span>
-  <ul class="nav">
-    <% String foo = request.getRequestURI().toString(); %>
-
-    <li class="<%if(foo.equals("/myresto/home.jsp")){%>active<%}%>"><a href="home">La carte</a></li>
-    <% if (session.getAttribute("role") != null) { %>
-    <% String str = (String) session.getAttribute("role"); %>
-    <% if (str.equals("1")) { %>
-    <li class="<%if(foo.equals("/myresto/manage_orders.jsp")){%>active<%}%>"><a href="orders_show">Commandes à préparer</a></li>
-    <li class="<%if(foo.equals("/myresto/manage_stock.jsp")){%>active<%}%>"><a href="manage_stock">Gérer les stocks</a></li>
-    <% } else { %>
-    <li class="<%if(foo.equals("/myresto/manage_orders.jsp")){%>active<%}%>"><a href="orders_show">Mes commandes</a></li>
-    <% } %>
-    <li class="<%if(foo.equals("/myresto/profile.jsp")){%>active<%}%>"><a href="profile">Mon compte</a></li>
-    <li class="btn"><a href="logout">Deconnexion</a></li>
-    <% } else { %>
-    <li class="<%if(foo.equals("/myresto/login.jsp")){%>active<%}%> right"><a href="login">Login</a></li>
-    <li class="<%if(foo.equals("/myresto/register.jsp")){%>active<%}%> right"><a href="register">Créer un compte</a></li>
-    <% } %>
-  </ul>-->
-
     <img th:src="@{img/menu.svg}" alt="" onclick="document.querySelector('header').classList.toggle('active');">
-    <img th:src="@{img/card.svg}" alt="" id="card" onclick="document.querySelector('#modal_card').classList.toggle('active');">
+    <img th:src="@{img/card.svg}" alt="" id="card"
+         onclick="document.querySelector('#modal_card').classList.toggle('active');">
+    <span class="cardCount">0</span>
     <ul class="nav">
-      <li class="active"><a th:href="@{/}">La carte</a></li>
-      <!--<li><a href="profile.html">Mon compte</a></li>-->
-      <li sec:authorize="isAuthenticated()"><a th:href="@{/orders}">Commandes à préparer</a></li>
-      <!--<li><a href="manage_stock.html">Gérer les stocks</a></li>-->
-      <li sec:authorize="isAnonymous()"><a th:href="@{/login}">Se connecter</a></li>
-      <li sec:authorize="isAnonymous()"><a th:href="@{/register}">Créer un compte</a></li>
-      <li sec:authorize="isAuthenticated()" class="btn"><a th:href="@{/logout}">Deconnexion</a></li>
+        <li class="active"><a th:href="@{/}">La carte</a></li>
+        <!--<li><a href="profile.html">Mon compte</a></li>-->
+        <th:block sec:authorize="isAuthenticated()">
+            <li>
+                <a th:href="@{/orders}">
+                    <th:block sec:authorize="hasAuthority('OWNER')">Commandes à préparer</th:block>
+                    <th:block sec:authorize="hasAuthority('USER')">Mes Commandes</th:block>
+                </a></li>
+            <li class="btn"><a th:href="@{/logout}">Deconnexion</a></li>
+        </th:block>
+        <!--<li><a href="manage_stock.html">Gérer les stocks</a></li>-->
+        <th:block sec:authorize="isAnonymous()">
+            <li><a th:href="@{/login}">Se connecter</a></li>
+            <li><a th:href="@{/register}">Créer un compte</a></li>
+        </th:block>
+
+
     </ul>
 
 </header>

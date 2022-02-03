@@ -20,11 +20,11 @@ header .nav li a{height: 48px; color: inherit; width: 100%; text-decoration: non
 header .nav li.btn{background-color: #4d434b; color: #fff; border-radius: 5px 25px 5px 25px;}
 header .nav li.active{background-color: #75af4d; color: #fff; border-radius: 25px 5px 25px 5px;}
 header #card{float: right; cursor: pointer;}
-header span.cardCount{position: absolute; right: 15px; top: 15px; background-color: #fcc42e; width: 20px; height: 20px; border-radius: 10px; text-align: center; line-height: 20px;font-size: x-small;font-weight: 900;}
+header span.cardCount{position: absolute; right: 15px; top: 15px; background-color: #75af4d;color: #fff; width: 20px; height: 20px; border-radius: 10px; text-align: center; line-height: 20px;font-size: x-small;font-weight: 900;}
 /* Positionning */
 .relative{position: relative; float: left; width: 100%;}
 .center{text-align: center;}
-
+.sticky{position: sticky; z-index: 1; background-color: #fff; float: left;top: 0; width: 100%;}
 /* Title */
 .main-title{position: relative; float: left; width: calc(100% - 50px); padding: 0 25px; font-size: x-large; font-weight: 800;}
 .defaut-title{position: relative;float: left;padding: 0 25px;font-size: x-large;font-weight: 600; margin: 20px 0;}
@@ -56,11 +56,13 @@ header span.cardCount{position: absolute; right: 15px; top: 15px; background-col
 .v-carrousel .card .link-product img:hover{top: -155px;}
 .v-carrousel .card .link-product span{font-size: x-large;font-weight: 800;background-color: #75af4d;color: #fff;padding: 5px 10px;border-radius: 20px 5px 20px 5px;}
 .v-carrousel .card .link-product p{color: inherit;text-align: center;font-weight: 700;font-size: x-large;padding: 0 15px;margin: 0;}
-.v-carrousel .card .link-add-card{color: inherit; font-size: large;font-weight: 600;position: relative;display: block;padding: 25px 0;margin-top: 20px;text-decoration: underline;background-color: #0000000f;border-bottom-right-radius: 25px;border-bottom-left-radius: 25px;}
+.v-carrousel .card .link-add-card{color: inherit; font-size: large;font-weight: 600;position: relative;display: block;padding: 25px 0;margin-top: 20px;text-decoration: underline;background-color: #0000000f;border-bottom-right-radius: 25px;border-bottom-left-radius: 25px;width: 100%;border: none;cursor: pointer;}
 .v-carrousel .card .link-add-card:hover{text-decoration: underline; text-decoration-thickness: 2px;}
 
 /* Button */
 .btn.btn-unset{color: #f6724c; background-color: #fff;}
+
+input[name="changestatusbutton"]{width:100%; border: none;}
 
 /* Orders card */
 .orders{background-color: #fff; border-radius: 25px; padding: 25px; margin-top: 25px; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%);}

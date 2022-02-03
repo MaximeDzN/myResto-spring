@@ -4,10 +4,7 @@ import eu.ensup.my_resto.domain.Item;
 import eu.ensup.my_resto.domain.Order;
 import eu.ensup.my_resto.domain.OrderItem;
 import eu.ensup.my_resto.domain.User;
-import eu.ensup.my_resto.model.ItemDTO;
-import eu.ensup.my_resto.model.OrderDTO;
-import eu.ensup.my_resto.model.OrderItemsDTO;
-import eu.ensup.my_resto.model.Status;
+import eu.ensup.my_resto.model.*;
 import eu.ensup.my_resto.repos.ItemRepository;
 import eu.ensup.my_resto.repos.OrderItemRepository;
 import eu.ensup.my_resto.repos.OrderRepository;
@@ -92,8 +89,8 @@ public class OrderService {
         return id;
     }
 
-    public void update(final Long id, final OrderDTO orderDTO) {
-        final Order order = orderRepository.findById(id)
+    public void update(final OrderDTO orderDTO) {
+        final Order order = orderRepository.findById(orderDTO.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         Boolean reqOrderIsCancelled = orderDTO.getStatus().equals(Status.ANNULEE.toString());
@@ -114,8 +111,36 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    public void updateStatus(Long id, String status) {
+        final Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        Boolean reqOrderIsCancelled = status.equals(Status.ANNULEE.toString());
+        Boolean repoOrderIsCancelled = order.getStatus().equals(Status.ANNULEE.toString());
+
+        // update storage
+        if(reqOrderIsCancelled && !repoOrderIsCancelled){ // The status has just changed
+            order.getOrderItems().forEach(orderItem -> {
+                Item itemRepo = itemRepository.findById(orderItem.getItem().getId()).get();
+                itemRepo.setQuantity(itemRepo.getQuantity() + orderItem.getQuantity());
+                itemRepository.save(itemRepo);
+            });
+
+            order.setStatus(Status.ANNULEE.toString());
+        }
+        if(status.equals("TERMINEE"))
+        {
+            order.setStatus(Status.TERMINEE.toString());
+        }
+        orderRepository.save(order);
+    }
+
     public void delete(final Long id) {
         orderRepository.deleteById(id);
+    }
+
+    public Double getSumPriceForMonth(String yearMonthDate){
+        return orderRepository.findSumPriceForMonth(yearMonthDate);
     }
 
     private OrderDTO mapToDTO(final Order order, final OrderDTO orderDTO) {
@@ -124,7 +149,9 @@ public class OrderService {
         orderDTO.setStatus(order.getStatus());
         orderDTO.setAddress(order.getAddress());
         orderDTO.setPrice(order.getPrice());
-        orderDTO.setUser(order.getUser() == null ? null : order.getUser().getId());
+        UserDTO userDTO = UserDTO.builder().username(order.getUser().getUsername()).role(order.getUser().getRole()).id(order.getUser().getId()).build();
+        orderDTO.setUser(order.getUser() == null ? null : userDTO);
+        orderDTO.setDatecreated(order.getDateCreated());
         List<OrderItem> items = orderItemRepository.findAll().stream().filter(orderItem -> Objects.equals(orderItem.getOrder().getId(), order.getId())).collect(Collectors.toList());
         List<OrderItemsDTO> orderItemDTOS = items.stream().map(orderItem -> OrderItemsDTO.builder().item(mapToItemDTO(orderItem.getItem())).quantity(orderItem.getQuantity()).build()).collect(Collectors.toList());
         orderDTO.setItems(orderItemDTOS);
@@ -146,8 +173,9 @@ public class OrderService {
         order.setStatus(orderDTO.getStatus());
         order.setAddress(orderDTO.getAddress());
         order.setPrice(orderDTO.getPrice());
+        order.setDateCreated(orderDTO.getDatecreated());
         if (orderDTO.getUser() != null && (order.getUser() == null || !order.getUser().getId().equals(orderDTO.getUser()))) {
-            final User user = userRepository.findById(orderDTO.getUser())
+            final User user = userRepository.findById(orderDTO.getUser().getId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found"));
             order.setUser(user);
         }
