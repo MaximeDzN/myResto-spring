@@ -45,7 +45,7 @@ variable "id_compte" {
 
 variable "nom_ami" {
   type    = string
-  default = "amzn2-ami-kernel-5.10-hvm-2.0.20220121.0-x86_64-gp2"
+  default = "amzn2-ami-kernel-5.10-hvm-*"
 }
 
 variable "git_proprietaire" {
