@@ -36,7 +36,7 @@
                     <span th:text="${item.price} + ' €'"> price</span>
                     <p th:text="${item.name}">name</p>
                 </a>
-                <form method="POST" action="./add_cart" th:id="'cart' + ${item.id}" class="addToCard">
+                <form method="POST" action="./addCart" th:id="'cart' + ${item.id}" class="addToCard">
                     <input type="hidden" th:value="${item.id}" name="id">
                     <input type="hidden" value="1" name="quantity">
                 </form>

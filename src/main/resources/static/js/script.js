@@ -12,9 +12,9 @@ formAddToCard.forEach(f => f.addEventListener('submit', event => {
 
 
   var request = new XMLHttpRequest();
-  var url = "./add_cart";
+  var url = "./addCart";
   request.open("POST", url, true);
-  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  request.setRequestHeader('Content-Type', 'application/json');
   request.onreadystatechange = function () {
       if (request.readyState === 4 && request.status === 200) {
         debugger;
@@ -27,8 +27,7 @@ formAddToCard.forEach(f => f.addEventListener('submit', event => {
   let data = new FormData(form);
   let formObj = serialize(data);
   //let formObj = JSON.stringify(data);
-debugger;
-  request.send("cart=" + JSON.stringify(formObj));
+  request.send(JSON.stringify(formObj));
 }));
 
 //Suppression d'un produit au panier

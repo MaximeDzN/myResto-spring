@@ -9,10 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-@Controller
+@RestController
 public class CartController {
 
     private ArrayList<CartItemDTO> cartItems = new ArrayList<>();
@@ -28,6 +25,8 @@ public class CartController {
 
     @Autowired
     private ItemService itemService ;
+
+    @PostMapping()
 
     @PutMapping("/cart")
     public ResponseEntity<Void> updateCartItem(@RequestBody CartItemDTO cartItemDTO, HttpServletRequest req){
@@ -55,8 +54,10 @@ public class CartController {
         return  ResponseEntity.ok().build();
     }
 
-    @PostMapping(name = "/add_cart", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> addToCart(@RequestBody CartItemDTO cartItemDTO, HttpServletRequest req) {
+    @PostMapping("/addCart")
+    public ResponseEntity<HttpStatus> addToCart(@RequestBody CartItemDTO cartItemDTO, HttpServletRequest req) {
+        System.out.println(cartItemDTO);
+        System.out.println("add to cart");
         HttpSession session = req.getSession();
         Object cart = req.getSession().getAttribute("cart");
         if(cart == null){
