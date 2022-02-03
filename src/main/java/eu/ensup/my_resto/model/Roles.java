@@ -6,9 +6,9 @@ public enum Roles {
     USER("user"),
     OWNER("owner");
 
-    private String role;
+    private String r;
 
     Roles(String role) {
-        this.role = role;
+        this.r = role;
     }
 }

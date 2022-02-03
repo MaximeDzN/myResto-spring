@@ -4,33 +4,34 @@ package eu.ensup.my_resto.rest;
 import eu.ensup.my_resto.model.LoginDTO;
 import eu.ensup.my_resto.model.RegisterDTO;
 import eu.ensup.my_resto.service.AuthService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
+import javax.validation.Valid;
+
+@Controller
 public class AuthController {
 
-    private final AuthService authService;
+    @Autowired
+    private AuthService authService;
 
-    public AuthController(final AuthService authService){
-        this.authService = authService;
+    @GetMapping("register")
+    public String viewRegisterPage() {
+        return "register";
     }
 
-    @PostMapping("signup")
-    public ResponseEntity<Void> signup(@RequestBody RegisterDTO registerDTO){
+    @PostMapping("register")
+    public String signup(@ModelAttribute("registerForm") @Valid RegisterDTO registerDTO, BindingResult bindingResult){
         authService.signup(registerDTO);
-        return ResponseEntity.ok().build();
+        return "redirect:/";
     }
 
-    @PostMapping("signin")
-    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO){
-        return ResponseEntity.ok(authService.signin(loginDTO));
+    @GetMapping("login")
+    public String viewLoginPage(){
+        return "login";
     }
-
-
-
-
 }
