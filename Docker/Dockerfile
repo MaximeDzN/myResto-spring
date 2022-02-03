@@ -20,7 +20,9 @@ RUN mvn clean package
 
 RUN cp target/*.jar app.jar
 
-RUN addgroup -S spring && adduser -S spring -G spring
+RUN addgroup spring && adduser spring
+
+RUN usermod -a -G spring spring
 
 USER spring:spring
 
