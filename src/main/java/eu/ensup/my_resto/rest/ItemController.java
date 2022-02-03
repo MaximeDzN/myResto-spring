@@ -40,7 +40,7 @@ public class ItemController {
     public String getAllItems(Model model) {
         var items = itemService.findAll();
         model.addAttribute("items",items);
-        return "product";
+        return "index";
     }
 
     @GetMapping("/items/{id}")
