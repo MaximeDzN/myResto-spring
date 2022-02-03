@@ -18,6 +18,16 @@ resource "aws_instance" "myresto-ec2" {
     Name = "${var.ec2_name}-ec2"
   }
 
+  provisioner "local-exec" {
+    when    = destroy
+    command = "echo 'Destroy-time provisioner'"
+  }
+
+
+  provisioner "local-exec" {
+    when    = create
+    command = "echo 'Create-time provisioner'"
+  }
   # provisioner "local-exec" {
   #   when = destroy
   #   inline = [
