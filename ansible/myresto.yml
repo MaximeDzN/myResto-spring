@@ -5,8 +5,6 @@
     - name: install dependencies
       command: "sudo amazon-linux-extras install docker"
     - name: install dependencies
-      command: "sudo amazon-linux-extras install docker"
-    - name: install dependencies
       command: "sudo yum install docker"
     - name: install dependencies
       command: "sudo service docker start"
