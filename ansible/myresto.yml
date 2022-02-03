@@ -27,7 +27,7 @@
     - name: "Build an image for MyResto"
       docker_image:
         build:
-          path: /home/ubuntu/myResto-sspring/Docker
+          path: /home/ubuntu/myResto-spring/Docker
         name: myresto
         tag: latest
         push: no
