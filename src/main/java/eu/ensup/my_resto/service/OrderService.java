@@ -4,10 +4,7 @@ import eu.ensup.my_resto.domain.Item;
 import eu.ensup.my_resto.domain.Order;
 import eu.ensup.my_resto.domain.OrderItem;
 import eu.ensup.my_resto.domain.User;
-import eu.ensup.my_resto.model.ItemDTO;
-import eu.ensup.my_resto.model.OrderDTO;
-import eu.ensup.my_resto.model.OrderItemsDTO;
-import eu.ensup.my_resto.model.Status;
+import eu.ensup.my_resto.model.*;
 import eu.ensup.my_resto.repos.ItemRepository;
 import eu.ensup.my_resto.repos.OrderItemRepository;
 import eu.ensup.my_resto.repos.OrderRepository;
@@ -124,7 +121,8 @@ public class OrderService {
         orderDTO.setStatus(order.getStatus());
         orderDTO.setAddress(order.getAddress());
         orderDTO.setPrice(order.getPrice());
-        orderDTO.setUser(order.getUser() == null ? null : order.getUser().getId());
+        UserDTO userDTO = UserDTO.builder().username(order.getUser().getUsername()).role(order.getUser().getRole()).id(order.getUser().getId()).build();
+        orderDTO.setUser(order.getUser() == null ? null : userDTO);
         List<OrderItem> items = orderItemRepository.findAll().stream().filter(orderItem -> Objects.equals(orderItem.getOrder().getId(), order.getId())).collect(Collectors.toList());
         List<OrderItemsDTO> orderItemDTOS = items.stream().map(orderItem -> OrderItemsDTO.builder().item(mapToItemDTO(orderItem.getItem())).quantity(orderItem.getQuantity()).build()).collect(Collectors.toList());
         orderDTO.setItems(orderItemDTOS);
@@ -147,7 +145,7 @@ public class OrderService {
         order.setAddress(orderDTO.getAddress());
         order.setPrice(orderDTO.getPrice());
         if (orderDTO.getUser() != null && (order.getUser() == null || !order.getUser().getId().equals(orderDTO.getUser()))) {
-            final User user = userRepository.findById(orderDTO.getUser())
+            final User user = userRepository.findById(orderDTO.getUser().getId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found"));
             order.setUser(user);
         }
