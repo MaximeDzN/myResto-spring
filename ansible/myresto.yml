@@ -32,8 +32,8 @@
 
 
     - name: Go to the folder and execute commande
-      command: chdir=/home/ec2-user/myResto-spring/Docker ls >> txt.txt
-      
+      command: chdir=/home/ec2-user/myResto-spring/Docker echo test > ye.txt
+
     - name: Go to the folder and execute command
       command: chdir=/home/ec2-user/myResto-spring/Docker docker-compose up -d docker-mysql
 
