@@ -15,7 +15,7 @@ variable "volume_id"{
 
 variable "utilisateur_ssh" {
   type    = string
-  default = "ubuntu"
+  default = "ec2-user"
 }
 
 variable "cle_ssh" {

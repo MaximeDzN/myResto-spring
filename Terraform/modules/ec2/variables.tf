@@ -38,14 +38,14 @@ variable "utilisateur_ssh" {
   default = "NULL"
 }
 
-variable "id_compte_ubuntu" {
+variable "id_compte" {
   type    = string
-  default = "099720109477"
+  default = "137112412989"
 }
 
-variable "nom_ubuntu_ami" {
+variable "nom_ami" {
   type    = string
-  default = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
+  default = "amzn2-ami-kernel-5.10-hvm-2.0.20220121.0-x86_64-gp2"
 }
 
 variable "git_proprietaire" {

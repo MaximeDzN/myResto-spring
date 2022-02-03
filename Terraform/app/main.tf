@@ -16,7 +16,7 @@ module "ec2" {
   type_instance = "t2.micro"
   securite_groupe= "${module.sg.out_sg_nom}"
   ip_public = "${module.eip.out_eip_public_ip}"
-  utilisateur_ssh = "ubuntu"
+  utilisateur_ssh = "ec2-user"
 }
 
 
@@ -33,10 +33,9 @@ resource "aws_volume_attachment" "ebs_to_ec2" {
   skip_destroy = true
   provisioner "remote-exec" {
     inline = [
-      "sudo apt update -y",
-      "sudo apt install software-properties-common",
-      "sudo add-apt-repository --yes --update ppa:ansible/ansible",
-      "sudo apt install --yes ansible",
+      "sudo yum update -y",
+      "sudo yum install -y git"
+      "sudo amazon-linux-extras install -y ansible2",
       "git clone -b DevOps https://github.com/${var.git_proprietaire}/${var.git_projet}.git",
       "cd ${var.git_projet}/ansible/",
       "ansible-playbook -i hosts.yml myresto.yml"
