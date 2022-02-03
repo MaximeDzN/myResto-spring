@@ -2,8 +2,8 @@ FROM openjdk:11-jdk-slim
 
 LABEL MAINTENER="projet2"
 
-RUN apt-get install -y update && \
-    apt-get install -y upgrade && \
+RUN apt-get update -y && \
+    apt-get upgrade -y  && \
     apt-get install -y git && \
     apt-get install -y maven
 
