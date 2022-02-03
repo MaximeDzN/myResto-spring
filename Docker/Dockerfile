@@ -1,12 +1,12 @@
-FROM adoptopenjdk/openjdk11:jdk-11.0.9_11-alpine-slim
+FROM openjdk:11-jdk-slim
 
 LABEL MAINTENER="projet2"
 
-RUN apk update && \
-    apk upgrade && \
-    apk add git && \
-    apk add maven && \
-    apk add bash
+RUN apt-get install -y update && \
+    apt-get install -y upgrade && \
+    apt-get install -y git && \
+    apt-get install -y maven
+
 
 RUN git clone -b DevOps https://github.com/MaximeDzN/myResto-spring.git
 
