@@ -8,6 +8,7 @@ import eu.ensup.my_resto.model.*;
 import eu.ensup.my_resto.repos.ItemRepository;
 import eu.ensup.my_resto.repos.OrderItemRepository;
 import eu.ensup.my_resto.repos.OrderRepository;
+import eu.ensup.my_resto.repos.Projections.StatusMapProjection;
 import eu.ensup.my_resto.repos.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collector;
@@ -141,6 +143,10 @@ public class OrderService {
 
     public Double getSumPriceForMonth(String yearMonthDate){
         return orderRepository.findSumPriceForMonth(yearMonthDate);
+    }
+
+    public List<StatusMapProjection> getStatusNb(){
+        return orderRepository.findStatusNb();
     }
 
     private OrderDTO mapToDTO(final Order order, final OrderDTO orderDTO) {
