@@ -67,6 +67,7 @@
         packages:
         - boto
         - boto3
+        - docker
         - docker-compose
   tasks:
     - name: "Download data from git repo"
