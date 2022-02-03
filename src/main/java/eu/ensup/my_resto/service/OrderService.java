@@ -115,6 +115,10 @@ public class OrderService {
         orderRepository.deleteById(id);
     }
 
+    public Double getSumPriceForMonth(String yearMonthDate){
+        return orderRepository.findSumPriceForMonth(yearMonthDate);
+    }
+
     private OrderDTO mapToDTO(final Order order, final OrderDTO orderDTO) {
 
         orderDTO.setId(order.getId());
