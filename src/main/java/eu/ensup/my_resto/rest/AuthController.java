@@ -27,7 +27,7 @@ public class AuthController {
     @PostMapping("register")
     public String signup(@ModelAttribute("registerForm") @Valid RegisterDTO registerDTO, BindingResult bindingResult){
         authService.signup(registerDTO);
-        return "redirect:/";
+        return "redirect:login";
     }
 
     @GetMapping("login")
