@@ -3,9 +3,9 @@
   become: true
   pre_tasks:
     - name: install dependencies
-      command: "sudo amazon-linux-extras install docker"
+      command: "sudo amazon-linux-extras install -y  docker"
     - name: install dependencies
-      command: "sudo yum install docker"
+      command: "sudo yum install -y docker"
     - name: install dependencies
       command: "sudo service docker start"
     - name: install dependencies
