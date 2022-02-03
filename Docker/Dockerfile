@@ -1,6 +1,6 @@
 FROM adoptopenjdk/openjdk11:jdk-11.0.9_11-alpine-slim
 
-LABEL MAINTENER="Allan et Brice"
+LABEL MAINTENER="projet2"
 
 RUN apk update && \
     apk upgrade && \
@@ -12,7 +12,9 @@ RUN git clone -b DevOps https://github.com/MaximeDzN/myResto-spring.git
 
 WORKDIR myResto-spring
 
-COPY ./images/ images/
+RUN ls
+
+COPY Docker/images images/
 
 RUN mvn clean package
 
