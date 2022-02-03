@@ -35,10 +35,12 @@ resource "aws_volume_attachment" "ebs_to_ec2" {
     inline = [
       "sudo yum update -y",
       "sudo yum install -y git",
+      "sudo yum -y install docker",
+      "sudo systemctl start docker",
       "sudo amazon-linux-extras install -y ansible2",
-      "git clone -b DevOps https://github.com/${var.git_proprietaire}/${var.git_projet}.git",
-      "cd ${var.git_projet}/ansible/",
-      "ansible-playbook -i hosts.yml myresto.yml"
+      # "git clone -b DevOps https://github.com/${var.git_proprietaire}/${var.git_projet}.git",
+      # "cd ${var.git_projet}/ansible/", 
+      # "ansible-playbook -i hosts.yml myresto.yml"
     ] 
     connection {
       type        = "ssh"

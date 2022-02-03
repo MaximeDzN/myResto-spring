@@ -1,19 +1,19 @@
 ---
 - hosts: all
   become: true
-  pre_tasks:
-    - name: install dependencies
-      yum:
-        name: "git"
-        state: "present"
-    - name: install dependencies
-      yum:
-        name: "docker"
-        state: "present"
-    - name: install dependencies
-      yum:
-        name: "docker-compose"
-        state: "present"
+  # pre_tasks:
+    # - name: install dependencies
+    #   yum:
+    #     name: "git"
+    #     state: "present"
+    # - name: install dependencies
+    #   yum:
+    #     name: "docker"
+    #     state: "present"
+    # - name: install dependencies
+    #   yum:
+    #     name: "docker-compose"
+    #     state: "present"
     # - name: Update all packages
     #   yum:
     #     name: '*'
