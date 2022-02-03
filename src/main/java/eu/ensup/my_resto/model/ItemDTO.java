@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Getter
@@ -23,4 +24,5 @@ public class ItemDTO {
     private Double price;
     private String category;
     private Image image;
+    private MultipartFile file;
 }

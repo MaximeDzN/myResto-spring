@@ -1,4 +1,4 @@
-package eu.ensup.my_resto.rest;
+package eu.ensup.my_resto.controller;
 
 import eu.ensup.my_resto.domain.User;
 import eu.ensup.my_resto.model.OrderDTO;
@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.text.SimpleDateFormat;

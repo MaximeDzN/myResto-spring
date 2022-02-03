@@ -1,4 +1,4 @@
-package eu.ensup.my_resto.rest;
+package eu.ensup.my_resto.controller;
 
 
 import eu.ensup.my_resto.model.RegisterDTO;
