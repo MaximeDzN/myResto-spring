@@ -20,18 +20,18 @@
         repo: 'https://github.com/MaximeDzN/myResto-spring.git'
         version: 'DevOps'
         dest: '/home/ubuntu/myResto-spring'
-    - name: "create volume"
-      command: "sudo mkdir /ebsMyResto"
-    - name: "mount volume"
-      command: "sudo mount /dev/xvdf /ebsMyResto/"
-    - name: "Build an image for MyResto"
-      docker_image:
-        build:
-          path: /home/ubuntu/myResto-spring/Docker
-        name: myresto
-        tag: latest
-        push: no
-        source: build
+    # - name: "create volume"
+    #   command: "sudo mkdir /ebsMyResto"
+    # - name: "mount volume"
+    #   command: "sudo mount /dev/xvdf /ebsMyResto/"
+    # - name: "Build an image for MyResto"
+    #   docker_image:
+    #     build:
+    #       path: /home/ubuntu/myResto-spring/Docker
+    #     name: myresto
+    #     tag: latest
+    #     push: no
+    #     source: build
     - name: "docker-compose up database"
       command: "docker-compose -f /home/ubuntu/myResto-spring/Docker/docker-compose.yaml up -d docker-mysql"
 
