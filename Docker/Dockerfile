@@ -14,7 +14,7 @@ WORKDIR myResto-spring
 
 RUN ls
 
-COPY Docker/images images/
+COPY /home/ec2-user/myResto-spring/Docker images/
 
 RUN mvn clean package
 
