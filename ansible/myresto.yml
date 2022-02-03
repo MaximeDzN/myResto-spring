@@ -85,6 +85,7 @@
       command: "sudo mount /dev/xvdf /ebsMyResto/"
 
     - name: "Add access for docker"
+      become: true
       command: "sudo gpasswd -a $USER docker && newgrp docker"
 
     - name: "Build an image for MyResto"
