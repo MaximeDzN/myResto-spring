@@ -29,17 +29,21 @@
         repo: 'https://github.com/MaximeDzN/myResto-spring.git'
         version: 'DevOps'
         dest: '/home/ec2-user/myResto-spring'
+    - name: "add pour run le script"
+      command: sudo chmod +x /home/ec2-user/myResto-spring/Docker/shell.sh
 
 
-    - name: Go to the folder and execute commande
-      command: chdir=/home/ec2-user/myResto-spring/Docker echo test > ye.txt
+    # - name: Go to the folder and execute commande
+    #   command: chdir=/home/ec2-user/myResto-spring/Docker echo test > ye.txt
 
-    - name: Go to the folder and execute command
-      command: chdir=/home/ec2-user/myResto-spring/Docker docker-compose up -d docker-mysql
+    # - name: Go to the folder and execute command
+    #   command: chdir=/home/ec2-user/myResto-spring/Docker docker-compose up -d docker-mysql
 
 
     # - name: "Build an image for MyResto"
     #   command: "docker build -f /home/ec2-user/myResto-spring/Docker/Dockerfile -t myresto ."
+
+    
       
     # - name: "docker-compose up database"
     #   command: "docker-compose up -d docker-mysql"
