@@ -29,7 +29,9 @@
                 <p class="orders-price">103€ ttc</p>
 
                 <a th:href="@{'/deleteorders/' + ${order.user.id}}" class="btn btn-unset">Annuler</a>
-                <a href="" class="btn" th:if="${role == 'owner'}">Terminer</a>
+                <th:block sec:authorize="hasAuthority('OWNER')">
+                    <a href="" class="btn" >Terminer</a>
+                </th:block>
             </div>
         </th:block>
     </div>

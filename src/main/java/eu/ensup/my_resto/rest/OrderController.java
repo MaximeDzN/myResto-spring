@@ -32,13 +32,10 @@ public class OrderController {
         List<OrderDTO> orderDTOList;
         if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OWNER"))) {
             orderDTOList = orderService.findAll();
-            model.addAttribute("role","owner");
-        } else if (auth == null){
-            return "login";
-        }
-        else {
+        } else if(auth != null) {
             orderDTOList = orderService.findAllByUser((User) auth.getPrincipal());
-            model.addAttribute("role","user");
+        } else {
+            return "login";
         }
         model.addAttribute("orderslist",orderDTOList);
         return "orders";

@@ -6,8 +6,6 @@ import eu.ensup.my_resto.repos.ImageRepository;
 import eu.ensup.my_resto.repos.ItemRepository;
 import eu.ensup.my_resto.service.exception.FileNotDeleted;
 import eu.ensup.my_resto.service.exception.FileNotSaved;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
