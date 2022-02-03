@@ -20,39 +20,13 @@ resource "aws_instance" "myresto-ec2" {
 
   provisioner "local-exec" {
     when    = destroy
-    command = "echo 'Destroy-time provisioner'"
+    command = "echo 'EC2 en cours de destruction'"
   }
 
 
   provisioner "local-exec" {
     when    = create
-    command = "echo 'Create-time provisioner'"
+    command = "echo 'EC2 en cours de création'"
   }
-  # provisioner "local-exec" {
-  #   when = destroy
-  #   inline = [
-  #     "ls"
-  #   ]
-  #   # connection {
-  #   #   type        = "ssh"
-  #   #   user        = "ubuntu"
-  #   #   private_key = file("../../../.aws/${var.cle_ssh}.pem")
-  #   #   host        = "${self.public_ip}"
-  #   # }
-  # }
-
-
-  # provisioner "remote-exec" {
-  #   when   = create
-  #   inline = [
-  #     "sudo apt update -y",
-  #   ] 
-  #   # connection {
-  #   #   type        = "ssh"
-  #   #   user        = "ubuntu"
-  #   #   private_key = file("../../../.aws/${var.cle_ssh}.pem")
-  #   #   host        = "${self.public_ip}"
-  #   # }
-  # }
 }
 

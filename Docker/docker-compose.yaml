@@ -4,7 +4,7 @@ services:
     image: mysql:8.0
     container_name: docker-mysql
     volumes:
-      - ./mysql-data:/var/lib/mysql
+      - /ebsMyResto/mysql-data:/var/lib/mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 0D2B87E1DE55A9BD89009B37979CACD984AA773C7197BE3F46DCB15B0CAE7E6D
