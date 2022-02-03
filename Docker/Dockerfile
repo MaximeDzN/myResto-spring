@@ -12,7 +12,7 @@ RUN git clone -b DevOps https://github.com/MaximeDzN/myResto-spring.git
 
 WORKDIR myResto-spring
 
-COPY images/ images/
+COPY ./images/ images/
 
 RUN mvn clean package
 
