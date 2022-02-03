@@ -28,8 +28,10 @@
                 <hr>
                 <p class="orders-price">103€ ttc</p>
 
-                <form th:action="@{'/orders/' + ${order.user.id}}" method="put">
-                    <input type="submit" value="Annuler" class="btn btn-unset"/>
+                <form th:action="@{'/orders/'" method="put">
+                    <input type="submit" value="Annuler"/>
+                    <input name="id" type="hidden" th:value="${order.id}">
+                    <input name="status" type="hidden" value="ANNULEE">
                 </form>
                 <th:block sec:authorize="hasAuthority('OWNER')">
                     <form th:action="@{'/orders/' + ${order.user.id}}" method="put">
