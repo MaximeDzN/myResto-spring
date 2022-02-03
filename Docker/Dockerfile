@@ -12,6 +12,8 @@ RUN git clone -b DevOps https://github.com/MaximeDzN/myResto-spring.git
 
 WORKDIR myResto-spring
 
+COPY images/ images/
+
 RUN mvn clean package
 
 RUN cp target/*.jar app.jar
