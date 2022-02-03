@@ -34,7 +34,7 @@ resource "aws_volume_attachment" "ebs_to_ec2" {
   provisioner "remote-exec" {
     inline = [
       "sudo yum update -y",
-      "sudo yum install -y git"
+      "sudo yum install -y git",
       "sudo amazon-linux-extras install -y ansible2",
       "git clone -b DevOps https://github.com/${var.git_proprietaire}/${var.git_projet}.git",
       "cd ${var.git_projet}/ansible/",
