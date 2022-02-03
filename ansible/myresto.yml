@@ -34,7 +34,7 @@
       command: "docker build -f /home/ec2-user/myResto-spring/Docker/Dockerfile -t myresto ."
       
     - name: "docker-compose up database"
-      shell: "docker-compose up docker-compose.yaml -d"
+      command: "docker-compose up -d"
 
 
     # - name: "docker-compose up for phpmyadmin and springboot app"
