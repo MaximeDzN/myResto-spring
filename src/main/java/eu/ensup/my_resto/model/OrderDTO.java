@@ -1,5 +1,6 @@
 package eu.ensup.my_resto.model;
 
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,9 @@ public class OrderDTO {
     @NotNull
     private Double price;
 
-    private Long user;
+    private UserDTO user;
 
     private List<OrderItemsDTO> items;
+
+    private OffsetDateTime datecreated;
 }

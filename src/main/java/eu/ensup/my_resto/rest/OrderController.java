@@ -31,13 +31,20 @@ public class OrderController {
     }
 
     @GetMapping("/orders")
-    public ResponseEntity<List<OrderDTO>> getAllOrders(Model model) {
+    public String getAllOrders(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OWNER"))){
-            //TODO À TEST AVEC LA CONNEXION
-            return ResponseEntity.ok(orderService.findAllByUser((User)auth.getPrincipal()));
+        List<OrderDTO> orderDTOList;
+        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OWNER"))) {
+            orderDTOList = orderService.findAll();
+        } else if (auth == null){
+            return "login";
         }
-        return ResponseEntity.ok(orderService.findAll());
+        else {
+            orderDTOList = orderService.findAllByUser((User) auth.getPrincipal());
+        }
+        System.out.println(orderDTOList);
+        model.addAttribute("orderslist",orderDTOList);
+        return "orders";
     }
 
     @GetMapping("/orders/{id}")
@@ -59,7 +66,7 @@ public class OrderController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/orders/{id}")
+    @GetMapping("/deleteorders/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable final Long id) {
         orderService.delete(id);
         return ResponseEntity.noContent().build();

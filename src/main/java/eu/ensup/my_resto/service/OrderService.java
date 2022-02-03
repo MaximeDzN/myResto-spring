@@ -123,6 +123,7 @@ public class OrderService {
         orderDTO.setPrice(order.getPrice());
         UserDTO userDTO = UserDTO.builder().username(order.getUser().getUsername()).role(order.getUser().getRole()).id(order.getUser().getId()).build();
         orderDTO.setUser(order.getUser() == null ? null : userDTO);
+        orderDTO.setDatecreated(order.getDateCreated());
         List<OrderItem> items = orderItemRepository.findAll().stream().filter(orderItem -> Objects.equals(orderItem.getOrder().getId(), order.getId())).collect(Collectors.toList());
         List<OrderItemsDTO> orderItemDTOS = items.stream().map(orderItem -> OrderItemsDTO.builder().item(mapToItemDTO(orderItem.getItem())).quantity(orderItem.getQuantity()).build()).collect(Collectors.toList());
         orderDTO.setItems(orderItemDTOS);
@@ -144,6 +145,7 @@ public class OrderService {
         order.setStatus(orderDTO.getStatus());
         order.setAddress(orderDTO.getAddress());
         order.setPrice(orderDTO.getPrice());
+        order.setDateCreated(orderDTO.getDatecreated());
         if (orderDTO.getUser() != null && (order.getUser() == null || !order.getUser().getId().equals(orderDTO.getUser()))) {
             final User user = userRepository.findById(orderDTO.getUser().getId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found"));
