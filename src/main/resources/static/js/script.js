@@ -12,11 +12,12 @@ formAddToCard.forEach(f => f.addEventListener('submit', event => {
 
 
   var request = new XMLHttpRequest();
-  var url = "card_add";
+  var url = "./add_cart";
   request.open("POST", url, true);
   request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   request.onreadystatechange = function () {
       if (request.readyState === 4 && request.status === 200) {
+        debugger;
         document.getElementById("modal_card").innerHTML = request.responseText;
         let bubble = document.querySelector(".cardCount");
         bubble.innerText = document.querySelectorAll("div.product.no-float").length;
@@ -25,8 +26,9 @@ formAddToCard.forEach(f => f.addEventListener('submit', event => {
   let form = event.target;
   let data = new FormData(form);
   let formObj = serialize(data);
-
-  request.send("product=" + formObj.product);
+  //let formObj = JSON.stringify(data);
+debugger;
+  request.send("cart=" + JSON.stringify(formObj));
 }));
 
 //Suppression d'un produit au panier
