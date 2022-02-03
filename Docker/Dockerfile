@@ -20,10 +20,6 @@ RUN mvn clean package
 
 RUN cp target/*.jar app.jar
 
-RUN addgroup spring && adduser spring
-
-RUN usermod -a -G spring spring
-
 USER spring:spring
 
 ENTRYPOINT ["java","-jar","app.jar"]
