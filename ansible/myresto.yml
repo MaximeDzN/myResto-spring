@@ -1,15 +1,26 @@
 ---
 - hosts: all
+  become: true
   pre_tasks:
+    # - name: install dependencies
+    #   apt:
+    #     name: "git"
+    #     state: "present"
+    # - name: install dependencies
+    #   apt:
+    #     name: "docker"
+    #     state: "present"
+    # - name: install dependencies
+    #   apt:
+    #     name: "docker-compose"
+    #     state: "present"
     - name: Update all packages
-      become: true
       yum:
         name: '*'
         state: latest
         update_only: yes
 
     - name: Ensure a list of yum packages are installed
-      become: true
       yum:
         name: "{{ packages }}"
         state: latest
@@ -23,21 +34,17 @@
         - amazon-linux-extras
 
     - name: Add extras repository
-      become: true
       shell: yum-config-manager --enable extras
 
     - name: Enable Some packages from amazon-linux-extras packages
-      become: true
       shell: "amazon-linux-extras enable python3.8 ansible2 docker"
 
     - name: clean yum metadata cache
-      become: true
       command: yum clean metadata
       args:
         warn: false
 
     - name: Ensure a list of yum packages are installed
-      become: true
       yum:
         name: "{{ packages }}"
         state: latest
@@ -49,18 +56,15 @@
         - docker
 
     - name: Enable Docker CE service at startup
-      become: true
       service:
         name: docker
         state: started
         enabled: yes
 
     - name: Upgrade pip3
-      become: true
       shell: "python3.8 -m pip install pip --upgrade"
 
     - name: Ensure Python pip packages are installed
-      become: true
       pip:
         name: "{{ packages }}"
         executable: /usr/local/bin/pip3.8
@@ -69,30 +73,23 @@
         - boto
         - boto3
         - docker-compose
+    - name: "Add access for docker"
+      shell: "sudo gpasswd -a $USER docker && newgrp docker"
   tasks:
     - name: "Download data from git repo"
       git:
         repo: 'https://github.com/MaximeDzN/myResto-spring.git'
         version: 'DevOps'
         dest: '/home/ec2-user/myResto-spring'
-    
     - name: "create volume"
-      become: true
       command: "sudo mkdir /ebsMyResto"
-    
     - name: "mount volume"
-      become: true
       command: "sudo mount /dev/xvdf /ebsMyResto/"
-
-    - name: "Add access for docker"
-      become: true
-      command: "sudo gpasswd -a $USER docker && newgrp docker"
-
     - name: "Build an image for MyResto"
       command: "sudo docker build -f /home/ec2-user/myResto-spring/Docker/Dockerfile -t myresto ."
-
+      
     - name: "docker-compose up database"
-      command: "docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d docker-mysql"
+      command: "sudo docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d docker-mysql"
 
     - name: "docker-compose up for phpmyadmin and springboot app"
-      command: "docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d phpmyadmin"
+      command: "sudo docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d phpmyadmin"
