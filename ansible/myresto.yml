@@ -1,11 +1,19 @@
 ---
 - hosts: all
   become: true
-  # pre_tasks:
-    # - name: install dependencies
-    #   yum:
-    #     name: "git"
-    #     state: "present"
+  pre_tasks:
+    - name: install dependencies
+      command: "sudo amazon-linux-extras install docker"
+    - name: install dependencies
+      command: "sudo amazon-linux-extras install docker"
+    - name: install dependencies
+      command: "sudo yum install docker"
+    - name: install dependencies
+      command: "sudo service docker start"
+    - name: install dependencies
+      command: "sudo systemctl enable docker"
+    - name: install dependencies
+      command: "sudo usermod -a -G docker ec2-user"
     # - name: install dependencies
     #   yum:
     #     name: "docker"
