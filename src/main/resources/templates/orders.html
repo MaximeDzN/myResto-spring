@@ -28,14 +28,16 @@
                 <hr>
                 <p class="orders-price">103€ ttc</p>
 
-                <form th:action="@{'/orders/'" method="put">
-                    <input type="submit" value="Annuler"/>
+                <form th:action="@{'/updateorders'}" method="post">
+                    <input type="submit" value="Annuler" class="btn btn-unset" th:if="${order.status != 'ANNULEE' and order.status != 'TERMINEE'}"/>
                     <input name="id" type="hidden" th:value="${order.id}">
                     <input name="status" type="hidden" value="ANNULEE">
                 </form>
                 <th:block sec:authorize="hasAuthority('OWNER')">
-                    <form th:action="@{'/orders/' + ${order.user.id}}" method="put">
-                        <input type="submit" value="Terminer" class="btn"/>
+                    <form th:action="@{'/updateorders'}" method="post">
+                        <input type="submit" value="Terminer" class="btn" th:if="${order.status == 'EN_COURS' or order.status == 'EN_ATTENTE'}"/>
+                        <input name="id" type="hidden" th:value="${order.id}">
+                        <input name="status" type="hidden" value="TERMINEE">
                     </form>
                 </th:block>
             </div>

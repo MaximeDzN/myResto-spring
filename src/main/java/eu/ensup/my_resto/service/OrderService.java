@@ -111,6 +111,30 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    public void updateStatus(Long id, String status) {
+        final Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        Boolean reqOrderIsCancelled = status.equals(Status.ANNULEE.toString());
+        Boolean repoOrderIsCancelled = order.getStatus().equals(Status.ANNULEE.toString());
+
+        // update storage
+        if(reqOrderIsCancelled && !repoOrderIsCancelled){ // The status has just changed
+            order.getOrderItems().forEach(orderItem -> {
+                Item itemRepo = itemRepository.findById(orderItem.getItem().getId()).get();
+                itemRepo.setQuantity(itemRepo.getQuantity() + orderItem.getQuantity());
+                itemRepository.save(itemRepo);
+            });
+
+            order.setStatus(Status.ANNULEE.toString());
+        }
+        if(status.equals("TERMINEE"))
+        {
+            order.setStatus(Status.TERMINEE.toString());
+        }
+        orderRepository.save(order);
+    }
+
     public void delete(final Long id) {
         orderRepository.deleteById(id);
     }

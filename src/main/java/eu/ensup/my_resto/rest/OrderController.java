@@ -55,13 +55,14 @@ public class OrderController {
         return new ResponseEntity<>(orderService.create(orderDTO), HttpStatus.CREATED);
     }
 
-    @PutMapping("/orders")
-    public ResponseEntity<Void> updateOrder(@RequestBody @Valid final OrderDTO orderDTO) {
-        orderService.update(orderDTO);
-        return ResponseEntity.ok().build();
+    @PostMapping("/updateorders")
+    public String updateOrder(@PathParam("id") Long id, @PathParam("status") String status) {
+        System.out.println("updateorders method");
+        orderService.updateStatus(id, status);
+        return "redirect:/orders";
     }
 
-    @DeleteMapping("/deleteorders/{id}")
+    @DeleteMapping("/orders/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable final Long id) {
         orderService.delete(id);
         return ResponseEntity.noContent().build();
