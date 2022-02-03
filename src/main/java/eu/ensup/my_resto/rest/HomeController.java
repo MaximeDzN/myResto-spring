@@ -27,7 +27,6 @@ public class HomeController {
         } else {
             orderDTOList = orderService.findAll();
         }
-        System.out.println(orderDTOList);
         model.addAttribute("orders",orderDTOList);
         return "index";
     }

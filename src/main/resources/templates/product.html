@@ -30,9 +30,9 @@
     <div class="v-carrousel">
         <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
         <th:block th:each="item : ${items}">
-        <div class="card" th:if="${item.category} == 'Formules'">
+        <div class="card" th:if="${item.category} == 'plat'">
             <a class="link-product" th:href="@{'/items/' + ${item.id}}">
-                <img th:src="@{${item.image.getPath()}}" alt="">
+                <img th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
                 <span th:text="${item.price} + ' €'"> price</span>
                 <p th:text="${item.name}">name</p>
             </a>
