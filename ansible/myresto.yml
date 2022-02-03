@@ -34,7 +34,10 @@
       command: "docker build -f /home/ec2-user/myResto-spring/Docker/Dockerfile -t myresto ."
       
     - name: "docker-compose up database"
-      shell: "docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d docker-mysql"
+      shell: "ls"
+
+    - name: "docker-compose up database"
+      shell: "pwd"
 
     # - name: "docker-compose up for phpmyadmin and springboot app"
     #   shell: "docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d phpmyadmin"
