@@ -1,27 +1,27 @@
 ---
 - hosts: all
   become: true
-  pre_tasks:
-    - name: install dependencies docker 
-      command: "sudo amazon-linux-extras install -y  docker"
+  # pre_tasks:
+  #   - name: install dependencies docker 
+  #     command: "sudo amazon-linux-extras install -y  docker"
 
-    - name: install dependencies docker
-      command: "sudo yum install -y docker"
+  #   - name: install dependencies docker
+  #     command: "sudo yum install -y docker"
 
-    - name: start docker
-      command: "sudo service docker start"
+  #   - name: start docker
+  #     command: "sudo service docker start"
 
-    - name: enable docker
-      command: "sudo systemctl enable docker"
+  #   - name: enable docker
+  #     command: "sudo systemctl enable docker"
 
-    - name: ajout droit docker a ec2
-      command: "sudo usermod -a -G docker ec2-user"
+  #   - name: ajout droit docker a ec2
+  #     command: "sudo usermod -a -G docker ec2-user"
 
-    - name: install docker-compose
-      shell: 'sudo curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
+  #   - name: install docker-compose
+  #     shell: 'sudo curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
 
-    - name: ajout droit docker-compose
-      command: "sudo chmod +x /usr/local/bin/docker-compose" 
+  #   - name: ajout droit docker-compose
+  #     command: "sudo chmod +x /usr/local/bin/docker-compose" 
 
   tasks:
     - name: "Download data from git repo"
