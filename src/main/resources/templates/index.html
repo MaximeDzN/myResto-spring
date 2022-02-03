@@ -8,293 +8,166 @@
 <body>
 <div th:replace="~{fragments/card :: card}"></div>
 <div th:replace="~{fragments/header :: header}"></div>
-    
-    <h1 class="main-title">Découvre nos produits</h1>
-    <div class="relative">
+
+<h1 class="main-title">Découvre nos produits</h1>
+
+
+<div class="relative center">
+    <div class="sticky">
         <ul class="main-carrousel">
-            <li class="active">Nos formules</li>
-            <li>Bases</li>
-            <li>Protéines</li>
-            <li>Marinades</li>
-            <li>Garnitures</li>
-            <li>Graines</li>
-            <li>Sauces</li>
-            <li>Entrées</li>
-            <li>Dessert</li>
+            <li class="active" data="Formules">Nos formules</li>
+            <li data="Bases">Bases</li>
+            <li data="Protéines">Protéines</li>
+            <li data="Marinades">Marinades</li>
+            <li data="Garnitures">Garnitures</li>
+            <li data="Graines">Graines</li>
+            <li data="Sauces">Sauces</li>
+            <li data="Entrées">Entrées</li>
+            <li data="Desserts">Desserts</li>
         </ul>
     </div>
-
-    <div class="relative center">
-        <span class="defaut-title">Nos formules</span>
-        <div class="v-carrousel">
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/poké-signature-thon-détouré-ombre.png}" alt="">
-                    <p>Poké thon</p>
+    <span class="defaut-title">Nos formules</span>
+    <div class="v-carrousel">
+        <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
+        <th:block th:each="item : ${items}">
+            <div class="card" th:if="${item.category} == 'Formules'">
+                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                    <img th:src="@{${item.image.getPath()}}" alt="">
+                    <span th:text="${item.price} + ' €'"> price</span>
+                    <p th:text="${item.name}">name</p>
                 </a>
                 <a class="link-add-card" href="">Ajouter au panier</a>
             </div>
-
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/poke-me-signature-poulet-ombre.png}" alt="">
-                    <p>Poké poulet</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/Poké-signature-saumon-ombre.png}" alt="">
-                    <p>Poké saumon</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/poké-signature-dorade-ombre.png}" alt="">
-                    <p>Poké dorade</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-        </div>
-    
-        <span class="defaut-title">Nos bases</span>
-        <div class="v-carrousel">
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/BASE-RIZ-BLANC.png}" alt="">
-                    <p>Riz blanc</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/BASE-RIZ-BRUN.png}" alt="">
-                    <p>Riz brun</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/BASE-POUSSES-DEPINARD-.png}" alt="">
-                    <p>Pousses d'épinard</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/BASE-QUINOA.png}" alt="">
-                    <p>Quinoa</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-        </div>
-
-        <span class="defaut-title">Nos protéines</span>
-        <div class="v-carrousel">
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/PROTEINE-POULET.png}" alt="">
-                    <p>Poulet</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/PROTEINE-SAUMON.png}" alt="">
-                    <p>Saumon</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/PROTEINE-THON-CRU.png}" alt="">
-                    <p>Thon cru</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/PROTEINE-THON-CUIT.png}" alt="">
-                    <p>Thon cuit</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/PROTEINE-FALAFELS.png}" alt="">
-                    <p>Falafels</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/PROTEINE-DAURADE.png}"  alt="">
-                    <p>Daurade</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/PROTEINE-CREVETTE.png}" alt="">
-                    <p>Crevette</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-        </div>
-
-        <span class="defaut-title">Nos garnitures</span>
-        <div class="v-carrousel">
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-ANANAS.png}" alt="">
-                    <p>Ananas</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-AVOCAT.png}" alt="">
-                    <p>Avocat</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-CAROTTES.png}" alt="">
-                    <p>Carottes</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-CHOU-FLEURS.png}" alt="">
-                    <p>Chou-fleurs</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-CHOU-ROUGE.png}" alt="">
-                    <p>Chou rouge</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-CONCOMBRE.png}" alt="">
-                    <p>Concombre</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-EDAMAME.png}" alt="">
-                    <p>Edamame</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-FETA.png}" alt="">
-                    <p>Feta</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-FROMAGE-BLANC.png}" alt="">
-                    <p>Fromage blanc</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-GINGEMBRE.png}" alt="">
-                    <p>Gingembre</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-GRENADE.png}" alt="">
-                    <p>Grenade</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-MAIS.png}" alt="">
-                    <p>Mais</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-MANGUE.png}" alt="">
-                    <p>Mangue</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-OEUFS-DE-POISSON.png}" alt="">
-                    <p>Oeuf de poisson</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-OIGNONS-PICKELS-.png}" alt="">
-                    <p>Oignon pickels</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-POIS-CHICHE.png}" alt="">
-                    <p>Pois chiche</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-POIVRON.png}" alt="">
-                    <p>Poivron</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-POUSSE-DE-SOJA.png}" alt="">
-                    <p>Pousse de soja</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-RADIS.png}" alt="">
-                    <p>Radis</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-SALADE-DALGUES.png}" alt="">
-                    <p>Salade d'algues</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-            <div class="card">
-                <a class="link-product" href="">
-                    <img th:src="@{assets/GARNITURES-TOMATE-CERISE.png}" alt="">
-                    <p>Tomate cerise</p>
-                </a>
-                <a class="link-add-card" href="">Ajouter au panier</a>
-            </div>
-        </div>
+        </th:block>
     </div>
+
+    <span class="defaut-title" id="Entrées">Nos entrées</span>
+    <div class="v-carrousel">
+        <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
+        <th:block th:each="item : ${items}">
+            <div class="card" th:if="${item.category} == 'Entrées'">
+                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                    <img th:src="@{${item.image.getPath()}}" alt="">
+                    <span th:text="${item.price} + ' €'"> price</span>
+                    <p th:text="${item.name}">name</p>
+                </a>
+                <a class="link-add-card" href="">Ajouter au panier</a>
+            </div>
+        </th:block>
+    </div>
+
+    <span class="defaut-title" id="Bases">Nos bases</span>
+    <div class="v-carrousel">
+        <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
+        <th:block th:each="item : ${items}">
+            <div class="card" th:if="${item.category} == 'Bases'">
+                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                    <img th:src="@{${item.image.getPath()}}" alt="">
+                    <span th:text="${item.price} + ' €'"> price</span>
+                    <p th:text="${item.name}">name</p>
+                </a>
+                <a class="link-add-card" href="">Ajouter au panier</a>
+            </div>
+        </th:block>
+    </div>
+
+    <span class="defaut-title" id="Protéines">Nos protéines</span>
+    <div class="v-carrousel">
+        <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
+        <th:block th:each="item : ${items}">
+            <div class="card" th:if="${item.category} == 'Protéines'">
+                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                    <img th:src="@{${item.image.getPath()}}" alt="">
+                    <span th:text="${item.price} + ' €'"> price</span>
+                    <p th:text="${item.name}">name</p>
+                </a>
+                <a class="link-add-card" href="">Ajouter au panier</a>
+            </div>
+        </th:block>
+    </div>
+
+    <span class="defaut-title" id="Garnitures">Nos garnitures</span>
+    <div class="v-carrousel">
+        <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
+        <th:block th:each="item : ${items}">
+            <div class="card" th:if="${item.category} == 'Garnitures'">
+                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                    <img th:src="@{${item.image.getPath()}}" alt="">
+                    <span th:text="${item.price} + ' €'"> price</span>
+                    <p th:text="${item.name}">name</p>
+                </a>
+                <a class="link-add-card" href="">Ajouter au panier</a>
+            </div>
+        </th:block>
+    </div>
+
+    <span class="defaut-title" id="Graines">Nos graines</span>
+    <div class="v-carrousel">
+        <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
+        <th:block th:each="item : ${items}">
+            <div class="card" th:if="${item.category} == 'Graines'">
+                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                    <img th:src="@{${item.image.getPath()}}" alt="">
+                    <span th:text="${item.price} + ' €'"> price</span>
+                    <p th:text="${item.name}">name</p>
+                </a>
+                <a class="link-add-card" href="">Ajouter au panier</a>
+            </div>
+        </th:block>
+    </div>
+
+    <span class="defaut-title" id="Marinades">Nos marinades</span>
+    <div class="v-carrousel">
+        <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
+        <th:block th:each="item : ${items}">
+            <div class="card" th:if="${item.category} == 'Marinades'">
+                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                    <img th:src="@{${item.image.getPath()}}" alt="">
+                    <span th:text="${item.price} + ' €'"> price</span>
+                    <p th:text="${item.name}">name</p>
+                </a>
+                <a class="link-add-card" href="">Ajouter au panier</a>
+            </div>
+        </th:block>
+    </div>
+
+    <span class="defaut-title" id="Sauces">Nos sauces</span>
+    <div class="v-carrousel">
+        <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
+        <th:block th:each="item : ${items}">
+            <div class="card" th:if="${item.category} == 'Sauces'">
+                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                    <img th:src="@{${item.image.getPath()}}" alt="">
+                    <span th:text="${item.price} + ' €'"> price</span>
+                    <p th:text="${item.name}">name</p>
+                </a>
+                <a class="link-add-card" href="">Ajouter au panier</a>
+            </div>
+        </th:block>
+    </div>
+
+    <span class="defaut-title" id="Desserts">Nos desserts</span>
+    <div class="v-carrousel">
+        <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
+        <th:block th:each="item : ${items}">
+            <div class="card" th:if="${item.category} == 'Desserts'">
+                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                    <img th:src="@{${item.image.getPath()}}" alt="">
+                    <span th:text="${item.price} + ' €'"> price</span>
+                    <p th:text="${item.name}">name</p>
+                </a>
+                <a class="link-add-card" href="">Ajouter au panier</a>
+            </div>
+        </th:block>
+    </div>
+</div>
+
+<script type="text/javascript">
+    document.querySelectorAll(".main-carrousel li").forEach(item => {
+      item.addEventListener('click', event => {
+        window.scrollTo({ top: (document.getElementById(item.getAttribute('data')).getBoundingClientRect().top - 60), behavior: 'smooth' });
+      })
+    })
+</script>
 </body>
 </html>

@@ -5,6 +5,7 @@ import eu.ensup.my_resto.model.LoginDTO;
 import eu.ensup.my_resto.model.RegisterDTO;
 import eu.ensup.my_resto.model.Roles;
 import eu.ensup.my_resto.repos.UserRepository;
+import eu.ensup.my_resto.service.exception.UserExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,8 +23,13 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void signup(RegisterDTO registerDTO) {
-        userRepository.save(mapToEntity(registerDTO, new User()));
+    public void signup(RegisterDTO registerDTO) throws UserExistsException {
+        try {
+            userRepository.save(mapToEntity(registerDTO, new User()));
+        } catch (Exception e){
+            throw  new UserExistsException("L'utilisateur existe déjà");
+        }
+
     }
 
     private String encodePassword(String password) {
