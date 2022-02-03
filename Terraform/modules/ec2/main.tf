@@ -1,15 +1,15 @@
-data "aws_ami" "ubuntu_bionic_ami" {
+data "aws_ami" "ami_search" {
   most_recent = true
-  owners      = ["${var.id_compte_ubuntu}"]
+  owners      = ["${var.id_compte}"]
 
   filter {
     name   = "name"
-    values = ["${var.nom_ubuntu_ami}"]
+    values = ["${var.nom_ami}"]
   }
 }
 
 resource "aws_instance" "myresto-ec2" {
-  ami               = data.aws_ami.ubuntu_bionic_ami.id
+  ami               = data.aws_ami.ami_search.id
   instance_type     = var.type_instance
   key_name          = var.cle_ssh
   availability_zone = var.zone_dispo
