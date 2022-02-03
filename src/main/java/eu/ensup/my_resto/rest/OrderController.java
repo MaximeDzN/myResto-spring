@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -57,7 +58,6 @@ public class OrderController {
 
     @PostMapping("/updateorders")
     public String updateOrder(@PathParam("id") Long id, @PathParam("status") String status) {
-        System.out.println("updateorders method");
         orderService.updateStatus(id, status);
         return "redirect:/orders";
     }

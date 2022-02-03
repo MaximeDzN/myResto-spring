@@ -62,6 +62,8 @@ header span.cardCount{position: absolute; right: 15px; top: 15px; background-col
 /* Button */
 .btn.btn-unset{color: #f6724c; background-color: #fff;}
 
+input[name="changestatusbutton"]{width:100%; border: none;}
+
 /* Orders card */
 .orders{background-color: #fff; border-radius: 25px; padding: 25px; margin-top: 25px; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%);}
 .orders .orders-time{margin: 0; color: #818181;}

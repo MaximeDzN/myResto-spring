@@ -29,13 +29,13 @@
                 <p class="orders-price">103€ ttc</p>
 
                 <form th:action="@{'/updateorders'}" method="post">
-                    <input type="submit" value="Annuler" class="btn btn-unset" th:if="${order.status != 'ANNULEE' and order.status != 'TERMINEE'}"/>
-                    <input name="id" type="hidden" th:value="${order.id}">
-                    <input name="status" type="hidden" value="ANNULEE">
+                        <input name="changestatusbutton" type="submit" value="Annuler" class="btn btn-unset" th:if="${order.status != 'ANNULEE' and order.status != 'TERMINEE'}"/>
+                        <input name="id" type="hidden" th:value="${order.id}">
+                        <input name="status" type="hidden" value="ANNULEE">
                 </form>
                 <th:block sec:authorize="hasAuthority('OWNER')">
                     <form th:action="@{'/updateorders'}" method="post">
-                        <input type="submit" value="Terminer" class="btn" th:if="${order.status == 'EN_COURS' or order.status == 'EN_ATTENTE'}"/>
+                        <input name="changestatusbutton" type="submit" value="Terminer" class="btn" th:if="${order.status == 'EN_COURS' or order.status == 'EN_ATTENTE'}"/>
                         <input name="id" type="hidden" th:value="${order.id}">
                         <input name="status" type="hidden" value="TERMINEE">
                     </form>
