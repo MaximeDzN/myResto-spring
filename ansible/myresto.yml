@@ -30,11 +30,14 @@
         version: 'DevOps'
         dest: '/home/ec2-user/myResto-spring'
 
-    - name: "Build an image for MyResto"
-      command: "docker build -f /home/ec2-user/myResto-spring/Docker/Dockerfile -t myresto ."
+    - name: Go to the folder and execute command
+      command: chdir=/home/ec2-user/myResto-spring/Docker ls
+
+    # - name: "Build an image for MyResto"
+    #   command: "docker build -f /home/ec2-user/myResto-spring/Docker/Dockerfile -t myresto ."
       
     - name: "docker-compose up database"
-      command: "docker-compose up -d"
+      command: "docker-compose up -d docker-mysql"
 
 
     # - name: "docker-compose up for phpmyadmin and springboot app"
