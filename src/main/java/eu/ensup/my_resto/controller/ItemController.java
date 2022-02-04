@@ -53,6 +53,7 @@ public class ItemController {
             itemDTO.setImage(Image.builder().path(Base64Utils.encodeToString(itemDTO.getFile().getBytes())).build());
             itemService.create(itemDTO);
         } catch (IOException | FileNotSaved e) {
+            e.printStackTrace();
             logger.error(e.getMessage());
             model.addAttribute("err",e.getMessage());
         }
