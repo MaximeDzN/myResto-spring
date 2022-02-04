@@ -79,7 +79,6 @@ function serialize (data) {
 
 function refreshPrice() {
     let sum = 0;
-    debugger;
     document.getElementById("modal_card").querySelectorAll("span[data]").forEach(function (elem) {
         sum += parseInt(elem.getAttribute("data"));
     })
