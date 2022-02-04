@@ -14,7 +14,8 @@
         <div class="cadiv">
             <div class="ca">
                 <h2>Chiffre d'affaires Mensuel</h2>
-                <h1>[[${sumMonth}]] €</h1>
+                <h1 th:if="${sumMonth != null}">[[${sumMonth}]] €</h1>
+                <h1 th:if="${sumMonth == null}"> 0 €</h1>
             </div>
         </div>
     </th:block>
