@@ -1,6 +1,6 @@
 package eu.ensup.my_resto.repos.Projections;
 
-public interface StatusMapProjection {
-    String getStatus();
+public interface MapProjection {
+    String getName();
     Integer getNb();
 }

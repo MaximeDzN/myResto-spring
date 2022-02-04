@@ -4,6 +4,7 @@ import eu.ensup.my_resto.domain.Item;
 import eu.ensup.my_resto.model.ItemDTO;
 import eu.ensup.my_resto.repos.ImageRepository;
 import eu.ensup.my_resto.repos.ItemRepository;
+import eu.ensup.my_resto.repos.Projections.MapProjection;
 import eu.ensup.my_resto.service.exception.FileNotDeleted;
 import eu.ensup.my_resto.service.exception.FileNotSaved;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,10 @@ public class ItemService {
             itemRepository.deleteById(id);
             fileService.deleteImage(item.get().getImage());
         }
+    }
+
+    public List<MapProjection> getNbItemCategory(){
+        return itemRepository.findNbItemCategory();
     }
 
     private ItemDTO mapToDTO(final Item item) {
