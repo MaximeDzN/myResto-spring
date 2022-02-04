@@ -40,7 +40,7 @@ public class CartController {
             if (orderItemDTO.getItem().getId().equals(orderItem.getItem().getId())) { // if exist update with total
                 exists.set(true);
                 ItemDTO itemDTO = itemService.get(orderItem.getItem().getId());
-                orderItem.setQuantity(orderItemDTO.getQuantity());
+                orderItem.setQuantity(orderItemDTO.getQuantity()+orderItem.getQuantity());
                 orderItem.setItem(itemDTO);
                 cartTotal += (itemDTO.getPrice() * orderItemDTO.getQuantity());
             }
