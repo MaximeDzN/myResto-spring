@@ -72,7 +72,7 @@ public class CartController {
 
         for(int i = 0;  i <orderItemsDTOS.size(); i++){
             if(orderItemsDTOS.get(i).getItem().getId().equals(id)) {
-                cartTotal.add(orderItemsDTOS.get(i).getItem().getPrice() * orderItemsDTOS.get(i).getQuantity());
+                cartTotal.add(-(orderItemsDTOS.get(i).getItem().getPrice() * orderItemsDTOS.get(i).getQuantity()));
                 orderItemsDTOS.remove(i);
                 break;
             }
