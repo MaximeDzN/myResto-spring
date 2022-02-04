@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
+/**
+ * The type Cart controller.
+ */
 @RestController
 public class CartController {
 
@@ -25,6 +28,13 @@ public class CartController {
     @Autowired
     private ItemService itemService ;
 
+    /**
+     * Add to cart response entity.
+     *
+     * @param orderItemDTO the order item dto
+     * @param req          the req
+     * @return the response entity
+     */
     @PostMapping("/addCart")
     public ResponseEntity<HttpStatus> addToCart(@RequestBody OrderItemsDTO orderItemDTO, HttpServletRequest req) {
         HttpSession session = req.getSession();
@@ -61,6 +71,13 @@ public class CartController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Remove from cart response entity.
+     *
+     * @param id  the id
+     * @param req the req
+     * @return the response entity
+     */
     @DeleteMapping("/removeCart/{id}")
     public ResponseEntity<HttpStatus> removeFromCart(@PathVariable("id") Long id, HttpServletRequest req) {
         HttpSession session = req.getSession();
@@ -84,6 +101,12 @@ public class CartController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Get all cart item response entity.
+     *
+     * @param req the req
+     * @return the response entity
+     */
     @GetMapping("/cart")
     public ResponseEntity<List<OrderItemsDTO>> getAllCartItem(HttpServletRequest req){
         List<OrderItemsDTO> itemDTOList = (List<OrderItemsDTO>) req.getSession().getAttribute("cart");

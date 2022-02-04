@@ -15,14 +15,26 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 
+/**
+ * The type File service.
+ */
 @Service
 public class FileService {
 
+    /**
+     * The Logger.
+     */
     Logger logger = LoggerFactory.getLogger(FileService.class);
 
+    /**
+     * The Upload path.
+     */
     @Value("${upload.path}")
     public String uploadPath;
 
+    /**
+     * Init.
+     */
     @PostConstruct
     public void init() {
         try {
@@ -31,6 +43,14 @@ public class FileService {
             logger.error(e.getMessage());
         }
     }
+
+    /**
+     * Save image.
+     *
+     * @param image    the image
+     * @param filename the filename
+     * @throws FileNotSaved the file not saved
+     */
     public void saveImage(Image image, String filename) throws FileNotSaved {
         Path root = Paths.get(uploadPath);
         try {
@@ -43,6 +63,12 @@ public class FileService {
         }
     }
 
+    /**
+     * Delete image.
+     *
+     * @param image the image
+     * @throws FileNotDeleted the file not deleted
+     */
     public void deleteImage(Image image) throws FileNotDeleted {
         Path imagePath = Paths.get(image.getPath());
         try {

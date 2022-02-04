@@ -4,6 +4,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
+/**
+ * The type Order items dto.
+ */
 @Data
 @Builder
 @ToString

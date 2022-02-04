@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * The type Auth service.
+ */
 @Service
 public class AuthService {
 
@@ -18,6 +21,12 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Signup.
+     *
+     * @param registerDTO the register dto
+     * @throws UserExistsException the user exists exception
+     */
     public void signup(RegisterDTO registerDTO) throws UserExistsException {
         try {
             userRepository.save(mapToEntity(registerDTO, new User()));

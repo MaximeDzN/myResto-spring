@@ -9,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
+/**
+ * The type Stats controller.
+ */
 @Controller
 public class StatsController {
 
@@ -18,6 +21,12 @@ public class StatsController {
     @Autowired
     private ItemService itemService;
 
+    /**
+     * View stat page string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @GetMapping("/stats")
     public String viewStatPage(Model model){
              model.addAttribute("nbStatus",orderService.getStatusNb());

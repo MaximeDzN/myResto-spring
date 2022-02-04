@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 
+/**
+ * The type Error response.
+ */
 @Getter
 @Setter
 public class ErrorResponse {

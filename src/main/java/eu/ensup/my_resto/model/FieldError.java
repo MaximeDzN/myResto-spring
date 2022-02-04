@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 
+/**
+ * The type Field error.
+ */
 @Getter
 @Setter
 public class FieldError {

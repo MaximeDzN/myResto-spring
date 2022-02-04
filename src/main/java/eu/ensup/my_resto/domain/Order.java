@@ -9,6 +9,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 
+/**
+ * The type Order.
+ */
 @Entity
 @Table(name = "\"order\"")
 @Getter
@@ -43,12 +46,18 @@ public class Order {
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
 
+    /**
+     * Pre persist.
+     */
     @PrePersist
     public void prePersist() {
         dateCreated = OffsetDateTime.now();
         lastUpdated = dateCreated;
     }
 
+    /**
+     * Pre update.
+     */
     @PreUpdate
     public void preUpdate() {
         lastUpdated = OffsetDateTime.now();

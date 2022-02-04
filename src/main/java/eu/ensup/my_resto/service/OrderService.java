@@ -24,6 +24,9 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 
+/**
+ * The type Order service.
+ */
 @Transactional
 @Service
 public class OrderService {
@@ -31,6 +34,13 @@ public class OrderService {
     private final ItemRepository itemRepository;
     private final OrderItemRepository orderItemRepository;
 
+    /**
+     * Instantiates a new Order service.
+     *
+     * @param orderRepository     the order repository
+     * @param itemRepository      the item repository
+     * @param orderItemRepository the order item repository
+     */
     public OrderService(final OrderRepository orderRepository,
                         final ItemRepository itemRepository, final OrderItemRepository orderItemRepository) {
         this.orderRepository = orderRepository;
@@ -38,6 +48,11 @@ public class OrderService {
         this.orderItemRepository = orderItemRepository;
     }
 
+    /**
+     * Find all list.
+     *
+     * @return the list
+     */
     public List<OrderDTO> findAll() {
         return orderRepository.findAll()
                 .stream()
@@ -45,6 +60,12 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Find all by user list.
+     *
+     * @param user the user
+     * @return the list
+     */
     public List<OrderDTO> findAllByUser(User user) {
         return orderRepository.findAllByUser(user)
                 .stream()
@@ -52,12 +73,24 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Get order dto.
+     *
+     * @param id the id
+     * @return the order dto
+     */
     public OrderDTO get(final Long id) {
         return orderRepository.findById(id)
                 .map(order -> mapToDTO(order, new OrderDTO()))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    /**
+     * Create long.
+     *
+     * @param orderDTO the order dto
+     * @return the long
+     */
     public Long create(final OrderDTO orderDTO) {
         final Order order = new Order();
         mapToEntity(orderDTO, order);
@@ -95,6 +128,11 @@ public class OrderService {
         return id;
     }
 
+    /**
+     * Update.
+     *
+     * @param orderDTO the order dto
+     */
     public void update(final OrderDTO orderDTO) {
         final Order order = orderRepository.findById(orderDTO.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -121,6 +159,12 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    /**
+     * Update status.
+     *
+     * @param id     the id
+     * @param status the status
+     */
     public void updateStatus(Long id, String status) {
         final Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -150,14 +194,30 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    /**
+     * Delete.
+     *
+     * @param id the id
+     */
     public void delete(final Long id) {
         orderRepository.deleteById(id);
     }
 
+    /**
+     * Get sum price for month double.
+     *
+     * @param yearMonthDate the year month date
+     * @return the double
+     */
     public Double getSumPriceForMonth(String yearMonthDate){
         return orderRepository.findSumPriceForMonth(yearMonthDate);
     }
 
+    /**
+     * Get status nb list.
+     *
+     * @return the list
+     */
     public List<MapProjection> getStatusNb(){
         return orderRepository.findStatusNb();
     }
@@ -202,6 +262,12 @@ public class OrderService {
         return order;
     }
 
+    /**
+     * To singleton collector.
+     *
+     * @param <T> the type parameter
+     * @return the collector
+     */
     public static <T> Collector<T, ?, T> toSingleton() {
         return Collectors.collectingAndThen(
             Collectors.toList(),

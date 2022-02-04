@@ -22,15 +22,29 @@ import java.util.Date;
 import java.util.List;
 
 
+/**
+ * The type Order controller.
+ */
 @Controller
 public class OrderController {
 
     private final OrderService orderService;
 
+    /**
+     * Instantiates a new Order controller.
+     *
+     * @param orderService the order service
+     */
     public OrderController(final OrderService orderService) {
         this.orderService = orderService;
     }
 
+    /**
+     * Render order page string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @GetMapping("/orders")
     public String renderOrderPage(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -49,11 +63,25 @@ public class OrderController {
         return "orders";
     }
 
+    /**
+     * Gets order.
+     *
+     * @param id the id
+     * @return the order
+     */
     @GetMapping("/orders/{id}")
     public ResponseEntity<OrderDTO> getOrder(@PathVariable final Long id) {
         return ResponseEntity.ok(orderService.get(id));
     }
 
+    /**
+     * Create order string.
+     *
+     * @param orderDTO the order dto
+     * @param req      the req
+     * @param model    the model
+     * @return the string
+     */
     @PostMapping("/orders")
     public String createOrder(@ModelAttribute("orderForm") @Valid final OrderDTO orderDTO, HttpServletRequest req, Model model) {
         ArrayList< OrderItemsDTO> itemsDTOS = (ArrayList< OrderItemsDTO>)req.getSession().getAttribute("cart");
@@ -67,12 +95,25 @@ public class OrderController {
         return "redirect:/";
     }
 
+    /**
+     * Update order string.
+     *
+     * @param id     the id
+     * @param status the status
+     * @return the string
+     */
     @PostMapping("/updateorders")
     public String updateOrder(@PathParam("id") Long id, @PathParam("status") String status) {
         orderService.updateStatus(id, status);
         return "redirect:/orders";
     }
 
+    /**
+     * Delete order response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @DeleteMapping("/orders/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable final Long id) {
         orderService.delete(id);

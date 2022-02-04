@@ -24,16 +24,29 @@ import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.*;
 
 
+/**
+ * The type Item controller.
+ */
 @Controller
 @RequestMapping("items")
 public class ItemController {
 
+    /**
+     * The Logger.
+     */
     Logger logger = LoggerFactory.getLogger(ItemController.class);
 
     @Autowired
     private  ItemService itemService;
 
 
+    /**
+     * Gets item.
+     *
+     * @param id    the id
+     * @param model the model
+     * @return the item
+     */
     @GetMapping("/{id}")
     public String getItem(@PathVariable final Long id, Model model) {
         ItemDTO item = itemService.get(id);
@@ -43,11 +56,24 @@ public class ItemController {
         return "product";
     }
 
+    /**
+     * Add item view string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @GetMapping("/add")
     public String addItemView(Model model){
         return "addItem";
     }
 
+    /**
+     * Create item form string.
+     *
+     * @param itemDTO the item dto
+     * @param model   the model
+     * @return the string
+     */
     @PostMapping("/add")
     public String createItemForm(@ModelAttribute("itemForm") @Valid ItemDTO itemDTO,Model model){
         try {
@@ -64,6 +90,12 @@ public class ItemController {
     }
 
 
+    /**
+     * Create item response entity.
+     *
+     * @param itemDTO the item dto
+     * @return the response entity
+     */
     @PostMapping
     public ResponseEntity<Long> createItem(@RequestBody @Valid final ItemDTO itemDTO) {
         try {
@@ -74,6 +106,13 @@ public class ItemController {
         }
     }
 
+    /**
+     * Update item response entity.
+     *
+     * @param id      the id
+     * @param itemDTO the item dto
+     * @return the response entity
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateItem(@PathVariable final Long id,
                                            @RequestBody @Valid final ItemDTO itemDTO) {
@@ -81,6 +120,12 @@ public class ItemController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Delete item response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteItem(@PathVariable final Long id) {
         try {

@@ -6,12 +6,15 @@ import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 
+/**
+ * The type Image.
+ */
 @Entity
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Image {
 
     @Id
@@ -29,12 +32,18 @@ public class Image {
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
 
+    /**
+     * Pre persist.
+     */
     @PrePersist
     public void prePersist() {
         dateCreated = OffsetDateTime.now();
         lastUpdated = dateCreated;
     }
 
+    /**
+     * Pre update.
+     */
     @PreUpdate
     public void preUpdate() {
         lastUpdated = OffsetDateTime.now();
