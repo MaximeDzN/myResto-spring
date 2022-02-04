@@ -41,7 +41,8 @@ formAddToCard.forEach(f => f.addEventListener('submit', event => {
         },
         'quantity' : formObj.quantity
     };
-  request.send(myObj);
+
+  request.send(JSON.stringify(myObj));
 }));
 
 //Suppression d'un produit au panier

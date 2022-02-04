@@ -6,8 +6,8 @@
     <th:block th:each="elem : ${session.cart}">
       <div class="product no-float">
         <div class="product-body">
-          <img src="" alt="">
-          <span>${ card.name }<b> x1</b></span>
+          <img  th:src="@{'/images/' + ${elem.item.image.getPath()}}" alt="">
+          <span th:utext="${elem.item.name} + '<b> ' + ${elem.quantity} +'</b>'"></span>
         </div>
         <!--<img src="img/delete.svg" alt="" class="delete-product" data="${loop.index}" onclick="card_delete(this)">-->
         <img src="img/delete.svg" alt="" class="delete-product" data="" onclick="card_delete(this)">
@@ -17,6 +17,8 @@
   </div>
   <h3 id="total_cart" class="main-title" style="text-align: right; margin: 0;" th:text="${'Total : ' + session.total + '€ TTC'}">Total :TTC</h3>
   <div class="relative px">
-    <a href="order_create" class="btn" style="margin-top: 25px;">Valider ma commande</a>
+    <form method="POST" action="./orders" id="checkout" style="display: none;" th:object="${orderForm}"></form>
+    <input class="form-control" style="width: calc(100% - 50px); margin-top: 25px;" type="text" value="" form="checkout" name="address" placeholder="Saisir l'adresse de livraison" required>
+    <input class="btn" type="submit" form="checkout" value="Valider ma commande" style="width: 100%; border: none; margin-top: 10px;">
   </div>
 </div>

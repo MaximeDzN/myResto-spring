@@ -31,7 +31,7 @@
         <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Formules'">
-                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                <a class="link-product" href="#">
                     <th:block th:if="${item.image != null}">
                         <img  th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
                     </th:block>
@@ -55,7 +55,7 @@
         <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Entrées'">
-                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                <a class="link-product" href="#">
                     <th:block th:if="${item.image != null}">
                         <img  th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
                     </th:block>
@@ -75,7 +75,7 @@
         <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Bases'">
-                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                <a class="link-product" href="#">
                     <th:block th:if="${item.image != null}">
                         <img  th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
                     </th:block>
@@ -95,7 +95,7 @@
         <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Protéines'">
-                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                <a class="link-product" href="#">
                     <th:block th:if="${item.image != null}">
                         <img  th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
                     </th:block>
@@ -115,7 +115,7 @@
         <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Garnitures'">
-                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                <a class="link-product" href="#">
                     <th:block th:if="${item.image != null}">
                         <img  th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
                     </th:block>
@@ -135,7 +135,7 @@
         <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Graines'">
-                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                <a class="link-product" href="#">
                     <th:block th:if="${item.image != null}">
                         <img  th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
                     </th:block>
@@ -155,7 +155,7 @@
         <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Marinades'">
-                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                <a class="link-product" href="#">
                     <th:block th:if="${item.image != null}">
                         <img  th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
                     </th:block>
@@ -175,7 +175,7 @@
         <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Sauces'">
-                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                <a class="link-product" href="#">
                     <th:block th:if="${item.image != null}">
                         <img  th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
                     </th:block>
@@ -195,7 +195,7 @@
         <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Desserts'">
-                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                <a class="link-product" href="#">
                     <th:block th:if="${item.image != null}">
                         <img  th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
                     </th:block>
