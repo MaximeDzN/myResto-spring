@@ -18,21 +18,9 @@ Application web et mobile permettant :<br>
 * Aux utilisateurs authentifiés de commander
 * Permettre au gérant d'analyser son volume d'affaire mensuel
 
-## Architecture
-```
-+  ansible
-      |
-      +  
-+  Docker
-+  Jenkinsfile
-+  mvnw
-+  mvnw.cmd
-+  pom.xml
-+  readme.md
-+  src
-+  Terraform
+## Utilisation
+Pour ce rendre sur le site merci de cliquer sur le lien : [MyResto](http://3.213.147.10:5000/myresto)
 
-```
 ## Déploiement
 
 #### Pour déployer l'instance ec2 :
@@ -95,9 +83,3 @@ Deux choix sont alors possibles.
    <br/>Examples:
     * interface IRasterDelegate;
     * interface IStoring;
-
-## Tests unitaires TODO
-
-Pour lancer les tests unitaires
-
-> mvn test
