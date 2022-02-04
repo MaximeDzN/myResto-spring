@@ -42,7 +42,7 @@ public class CartController {
                 ItemDTO itemDTO = itemService.get(orderItem.getItem().getId());
                 orderItem.setQuantity(orderItemDTO.getQuantity()+orderItem.getQuantity());
                 orderItem.setItem(itemDTO);
-                cartTotal += (itemDTO.getPrice() * orderItemDTO.getQuantity());
+                cartTotal += (itemDTO.getPrice() * orderItem.getQuantity());
             }
         });
 
