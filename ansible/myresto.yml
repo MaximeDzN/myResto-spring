@@ -71,7 +71,7 @@
     - name: "Download data from git repo"
       git:
         repo: 'https://github.com/MaximeDzN/myResto-spring.git'
-        version: 'DevOps'
+        version: 'security'
         dest: '/home/ec2-user/myResto-spring'
 
     - name: "create volume"
