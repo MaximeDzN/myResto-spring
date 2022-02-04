@@ -55,6 +55,7 @@ function card_delete(elem) {
   request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   request.onreadystatechange = function () {
       if (request.readyState === 4 && request.status === 200) {
+        elem.parentNode.nextElementSibling.remove();
         elem.parentNode.remove();
         let bubble = document.querySelector(".cardCount");
         bubble.innerText = document.querySelectorAll("div.product.no-float").length;
