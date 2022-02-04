@@ -74,8 +74,10 @@
 <body>
 <div th:replace="~{fragments/card :: card}"></div>
 <div th:replace="~{fragments/header :: header}"></div>
-<div id="chart_div"></div>
-<div id="bar_div"></div>
+<div style="display:flex; flex-direction:row;">
+    <div id="chart_div"></div>
+    <div id="bar_div"></div>
+</div>
 <!--
 <th:block th:each="status : ${nbStatus}">
   <span th:text="${status.getStatus()}"/>
