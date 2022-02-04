@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class CartController {
 
     final private ArrayList<OrderItemsDTO> orderItemsDTOS = new ArrayList<>();
-    private Double cartTotal;
+    private ArrayList<Double> cartTotal = new ArrayList<>();
 
     @Autowired
     private ItemService itemService ;
@@ -31,7 +31,7 @@ public class CartController {
         Object cart = req.getSession().getAttribute("cart");
         if(cart == null){
             orderItemsDTOS.clear();
-            cartTotal = 0.0;
+            cartTotal.clear();
         }
 
         AtomicReference<Boolean> exists = new AtomicReference<>(false);
@@ -42,20 +42,21 @@ public class CartController {
                 ItemDTO itemDTO = itemService.get(orderItem.getItem().getId());
                 orderItem.setQuantity(orderItemDTO.getQuantity()+orderItem.getQuantity());
                 orderItem.setItem(itemDTO);
-                cartTotal += (itemDTO.getPrice() * orderItem.getQuantity());
+                cartTotal.add(itemDTO.getPrice() * orderItem.getQuantity());
             }
         });
 
         // item does not exist add it
         if(!exists.get()){
             ItemDTO itemDTO = itemService.get(orderItemDTO.getItem().getId());
-            cartTotal += (itemDTO.getPrice() * orderItemDTO.getQuantity());
+            cartTotal.add(itemDTO.getPrice() * orderItemDTO.getQuantity());
             orderItemDTO.setItem(itemDTO);
             orderItemsDTOS.add(orderItemDTO);
         }
 
+        Double total = cartTotal.stream().reduce(0.0, Double::sum);
         session.setAttribute("cart", orderItemsDTOS);
-        session.setAttribute("total", cartTotal);
+        session.setAttribute("total", total);
 
         return ResponseEntity.ok().build();
     }
@@ -66,19 +67,19 @@ public class CartController {
         Object cart = req.getSession().getAttribute("cart");
         if(cart == null){
             orderItemsDTOS.clear();
-            cartTotal = 0.0;
+            cartTotal.clear();
         }
 
         for(int i = 0;  i <orderItemsDTOS.size(); i++){
             if(orderItemsDTOS.get(i).getItem().getId().equals(id)) {
-                cartTotal -= (orderItemsDTOS.get(i).getItem().getPrice() * orderItemsDTOS.get(i).getQuantity());
+                cartTotal.add(orderItemsDTOS.get(i).getItem().getPrice() * orderItemsDTOS.get(i).getQuantity());
                 orderItemsDTOS.remove(i);
                 break;
             }
         }
-
+        Double total = cartTotal.stream().reduce(0.0, Double::sum);
         session.setAttribute("cart", orderItemsDTOS);
-        session.setAttribute("total", cartTotal);
+        session.setAttribute("total", total);
 
         return ResponseEntity.ok().build();
     }
