@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +44,7 @@ public class OrderController {
         } else {
             return "login";
         }
+        orderDTOList.sort(Comparator.comparing(OrderDTO::getId).reversed());
         model.addAttribute("orderslist",orderDTOList);
         return "orders";
     }
