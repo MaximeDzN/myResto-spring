@@ -30,9 +30,18 @@ formAddToCard.forEach(f => f.addEventListener('submit', event => {
   };
   let form = event.target;
   let data = new FormData(form);
+
   let formObj = serialize(data);
-  //let formObj = JSON.stringify(data);
-  request.send(JSON.stringify(formObj));
+  formObj = JSON.stringify(formObj);
+  formObj = JSON.parse(formObj);
+
+  var myObj = {
+        'item': {
+          'id': formObj.id
+        },
+        'quantity' : formObj.quantity
+    };
+  request.send(myObj);
 }));
 
 //Suppression d'un produit au panier

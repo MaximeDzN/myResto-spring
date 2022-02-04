@@ -1,7 +1,7 @@
 package eu.ensup.my_resto.controller;
 
-import eu.ensup.my_resto.model.CartItemDTO;
 import eu.ensup.my_resto.model.ItemDTO;
+import eu.ensup.my_resto.model.OrderItemsDTO;
 import eu.ensup.my_resto.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @RestController
 public class CartController {
 
-    private ArrayList<CartItemDTO> cartItems = new ArrayList<>();
+    private ArrayList<OrderItemsDTO> orderItemsDTOS = new ArrayList<>();
     private Double cartTotal;
 
     @Autowired
@@ -26,25 +26,25 @@ public class CartController {
     @PostMapping()
 
     @PutMapping("/cart")
-    public ResponseEntity<Void> updateCartItem(@RequestBody CartItemDTO cartItemDTO, HttpServletRequest req){
+    public ResponseEntity<Void> updateCartItem(@RequestBody OrderItemsDTO orderItemDTO, HttpServletRequest req){
         HttpSession session = req.getSession();
         Object cart = session.getAttribute("cart");
         if(cart == null){
-            cartItems.clear();
+            orderItemsDTOS.clear();
             cartTotal = 0.0;
         }
         AtomicReference<Double> total = new AtomicReference<>(0.0);
-        cartItems.forEach(cartItem -> {
-            if(cartItemDTO.getId() == cartItem.getId()){
-                System.out.println(cartItem);
-                ItemDTO itemDTO = itemService.get(cartItem.getId());
-                cartItem.setQuantity(cartItemDTO.getQuantity());
-                total.updateAndGet(value -> value + (itemDTO.getPrice() * cartItem.getQuantity()));
+        orderItemsDTOS.forEach(orderItem -> {
+            if(orderItemDTO.getItem().getId().equals(orderItem.getItem().getId())){
+                ItemDTO itemDTO = itemService.get(orderItem.getItem().getId());
+                orderItem.setQuantity(orderItemDTO.getQuantity());
+                orderItem.setItem(itemDTO);
+                total.updateAndGet(value -> value + (itemDTO.getPrice() * orderItem.getQuantity()));
             }
         });
 
         cartTotal = total.get();
-        session.setAttribute("cart", cartItems);
+        session.setAttribute("cart", orderItemsDTOS);
         session.setAttribute("total", cartTotal);
         System.out.println(session.getAttribute("total"));
 
@@ -52,31 +52,28 @@ public class CartController {
     }
 
     @PostMapping("/addCart")
-    public ResponseEntity<HttpStatus> addToCart(@RequestBody CartItemDTO cartItemDTO, HttpServletRequest req) {
-        System.out.println(cartItemDTO);
-        System.out.println("add to cart");
+    public ResponseEntity<HttpStatus> addToCart(@RequestBody OrderItemsDTO orderItemDTO, HttpServletRequest req) {
         HttpSession session = req.getSession();
         Object cart = req.getSession().getAttribute("cart");
         if(cart == null){
-            cartItems.clear();
+            orderItemsDTOS.clear();
             cartTotal = 0.0;
         }
 
-        System.out.println(cartItemDTO.getId());
-        ItemDTO itemDTO = itemService.get(cartItemDTO.getId());
-        cartTotal += (itemDTO.getPrice() * cartItemDTO.getQuantity());
-        cartItems.add(cartItemDTO);
+        ItemDTO itemDTO = itemService.get(orderItemDTO.getItem().getId());
+        cartTotal += (itemDTO.getPrice() * orderItemDTO.getQuantity());
+        orderItemDTO.setItem(itemDTO);
+        orderItemsDTOS.add(orderItemDTO);
 
-        session.setAttribute("cart", cartItems);
+        session.setAttribute("cart", orderItemsDTOS);
         session.setAttribute("total", cartTotal);
-        System.out.println(session.getAttribute("total"));
 
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/cart")
-    public ResponseEntity<List<CartItemDTO>> getAllCartItem(HttpServletRequest req){
-        List<CartItemDTO> itemDTOList = (List<CartItemDTO>) req.getSession().getAttribute("cart");
+    public ResponseEntity<List<OrderItemsDTO>> getAllCartItem(HttpServletRequest req){
+        List<OrderItemsDTO> itemDTOList = (List<OrderItemsDTO>) req.getSession().getAttribute("cart");
         HttpSession session = req.getSession();
         return new ResponseEntity<>(itemDTOList, HttpStatus.OK) ;
     }
