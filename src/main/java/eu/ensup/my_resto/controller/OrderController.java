@@ -2,6 +2,7 @@ package eu.ensup.my_resto.controller;
 
 import eu.ensup.my_resto.domain.User;
 import eu.ensup.my_resto.model.OrderDTO;
+import eu.ensup.my_resto.model.OrderItemsDTO;
 import eu.ensup.my_resto.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -51,7 +53,9 @@ public class OrderController {
     }
 
     @PostMapping("/orders")
-    public ResponseEntity<Long> createOrder(@RequestBody @Valid final OrderDTO orderDTO, HttpServletRequest req) {
+    public ResponseEntity<Long> createOrder(@ModelAttribute("orderForm") @Valid final OrderDTO orderDTO, HttpServletRequest req) {
+        ArrayList< OrderItemsDTO> itemsDTOS = (ArrayList< OrderItemsDTO>)req.getSession().getAttribute("cart");
+        orderDTO.setItems(itemsDTOS);
         return new ResponseEntity<>(orderService.create(orderDTO), HttpStatus.CREATED);
     }
 

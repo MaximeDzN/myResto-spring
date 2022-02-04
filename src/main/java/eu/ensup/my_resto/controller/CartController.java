@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @RestController
 public class CartController {
 
-    private ArrayList<OrderItemsDTO> orderItemsDTOS = new ArrayList<>();
+    final private ArrayList<OrderItemsDTO> orderItemsDTOS = new ArrayList<>();
     private Double cartTotal;
 
     @Autowired
@@ -64,6 +64,26 @@ public class CartController {
         cartTotal += (itemDTO.getPrice() * orderItemDTO.getQuantity());
         orderItemDTO.setItem(itemDTO);
         orderItemsDTOS.add(orderItemDTO);
+
+        session.setAttribute("cart", orderItemsDTOS);
+        session.setAttribute("total", cartTotal);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/removeCart/{id}")
+    public ResponseEntity<HttpStatus> removeFromCart(@PathVariable("id") Long id, HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        Object cart = req.getSession().getAttribute("cart");
+        if(cart == null){
+            orderItemsDTOS.clear();
+            cartTotal = 0.0;
+        } else{
+            orderItemsDTOS.removeIf(item-> {
+                cartTotal -= (item.getItem().getPrice() * item.getQuantity());
+                return item.getItem().getId().equals(id);
+            });
+        }
 
         session.setAttribute("cart", orderItemsDTOS);
         session.setAttribute("total", cartTotal);
