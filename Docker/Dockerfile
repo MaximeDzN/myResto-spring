@@ -8,7 +8,7 @@ RUN apt-get update -y && \
     apt-get install -y maven
 
 
-RUN git clone -b security https://github.com/MaximeDzN/myResto-spring.git
+RUN git clone -b main https://github.com/MaximeDzN/myResto-spring.git
 
 WORKDIR myResto-spring
 
