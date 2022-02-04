@@ -33,12 +33,6 @@ Application web et mobile permettant :<br>
 +  Terraform
 
 ```
-
-## Pré-requis pour déploiement
-Docker
-
-
-
 ## Déploiement
 
 #### Pour déployer l'instance ec2 :
