@@ -34,25 +34,23 @@ public class CartController {
             cartTotal.clear();
         }
 
-        AtomicReference<Boolean> exists = new AtomicReference<>(false);
-        //  check if item exists
-        orderItemsDTOS.forEach(orderItem -> {
-            if (orderItemDTO.getItem().getId().equals(orderItem.getItem().getId())) { // if exist update with total
-                exists.set(true);
-                ItemDTO itemDTO = itemService.get(orderItem.getItem().getId());
-                orderItem.setQuantity(orderItemDTO.getQuantity()+orderItem.getQuantity());
-                orderItem.setItem(itemDTO);
-                cartTotal.add(itemDTO.getPrice() * orderItem.getQuantity());
-            }
-        });
+//        //  check if item exists
+//        orderItemsDTOS.forEach(orderItem -> {
+//            if (orderItemDTO.getItem().getId().equals(orderItem.getItem().getId())) { // if exist update with total
+//                exists.set(true);
+//                ItemDTO itemDTO = itemService.get(orderItem.getItem().getId());
+//                orderItem.setQuantity(orderItemDTO.getQuantity()+orderItem.getQuantity());
+//                orderItem.setItem(itemDTO);
+//                cartTotal.add(itemDTO.getPrice() * orderItemDTO.getQuantity());
+//            }
+//        });
 
         // item does not exist add it
-        if(!exists.get()){
-            ItemDTO itemDTO = itemService.get(orderItemDTO.getItem().getId());
-            cartTotal.add(itemDTO.getPrice() * orderItemDTO.getQuantity());
-            orderItemDTO.setItem(itemDTO);
-            orderItemsDTOS.add(orderItemDTO);
-        }
+        ItemDTO itemDTO = itemService.get(orderItemDTO.getItem().getId());
+        cartTotal.add(itemDTO.getPrice() * orderItemDTO.getQuantity());
+        orderItemDTO.setItem(itemDTO);
+        orderItemsDTOS.add(orderItemDTO);
+
 
         Double total = cartTotal.stream().reduce(0.0, Double::sum);
         session.setAttribute("cart", orderItemsDTOS);
