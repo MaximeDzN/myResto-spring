@@ -39,6 +39,7 @@ public class FileService {
             Path imagePath = Paths.get(String.format("%s/%s",uploadPath,filename));
             Files.write(imagePath,imageByte);
         } catch (IOException e){
+            e.printStackTrace();
             throw new FileNotSaved(e.getMessage());
         }
     }
@@ -48,6 +49,7 @@ public class FileService {
         try {
             Files.delete(imagePath);
         } catch (IOException e) {
+            e.printStackTrace();
             throw new FileNotDeleted(e.getMessage());
         }
 
