@@ -90,8 +90,8 @@
       command: "chdir=/home/ec2-user/myResto-spring/Docker docker build -t myresto ."
 
     - name: "Docker-compose up database"
-      shell: /usr/local/bin/docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d docker-mysql
+      shell: /usr/local/bin/docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d springapp
 
-    - name: "Docker-compose up phpmyadmin and springboot app"
-      shell: /usr/local/bin/docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d phpmyadmin
+    # - name: "Docker-compose up phpmyadmin and springboot app"
+    #   shell: /usr/local/bin/docker-compose -f /home/ec2-user/myResto-spring/Docker/docker-compose.yaml up -d phpmyadmin
       
