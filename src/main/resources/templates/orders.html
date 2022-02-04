@@ -14,7 +14,8 @@
         <div class="cadiv">
             <div class="ca">
                 <h2>Chiffre d'affaires Mensuel</h2>
-                <h1>[[${sumMonth}]] €</h1>
+                <h1 th:if="${sumMonth != null}">[[${sumMonth}]] €</h1>
+                <h1 th:if="${sumMonth == null}"> 0 €</h1>
             </div>
         </div>
     </th:block>
@@ -23,7 +24,7 @@
         <p th:if="${orderslist.empty}">Il n'y aucune commande pour le moment..</p>
         <th:block th:each="order : ${orderslist}">
             <div class="orders">
-                <p class="orders-time">[[${order.datecreated}]] <span th:text="${order.status}">status</span></p>
+                <p class="orders-time">[[${#temporals.format(order.datecreated, 'dd/MM/yyyy HH:mm')}]] <span th:text="${order.status}">status</span></p>
                 <p class="orders-id" th:text="${'N° ' + order.id + ' - ' + order.user.username}">name</p>
                 <hr>
                 <table>

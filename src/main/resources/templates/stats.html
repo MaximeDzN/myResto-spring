@@ -6,24 +6,44 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script th:inline="javascript">
 
+        function mapToDataSource(list) {
+            let array = [];
+            list.forEach(el => {
+               array.push([el.name,el.nb]);
+            });
+            return array;
+        }
+
         // Load the Visualization API and the corechart package.
-        google.charts.load('current', {'packages':['corechart']});
+        google.charts.load('current', {'packages': ['corechart']});
 
         // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawColumnChart);
         google.charts.setOnLoadCallback(drawChart);
-
         // Callback that creates and populates a data table,
         // instantiates the pie chart, passes in the data and
         // draws it.
+
+        function drawColumnChart() {
+            if ([[${itemCategory}]].length > 0) {
+                array = mapToDataSource([[${itemCategory}]]);
+                var data = new google.visualization.DataTable();
+                data.addColumn("string", "type d\'item");
+                data.addColumn("number", "quantité");
+                data.addRows(array);
+                var options = {
+                    'title': 'Répartitions des types d\'items',
+                    width:"100%",
+                    height:"100%"
+                };
+                var chart = new google.visualization.ColumnChart(document.getElementById('bar_div'));
+                chart.draw(data, options);
+            }
+        }
+
         function drawChart() {
-            let array = [];
-            if([[${nbStatus}]].length > 0){
-                /*[# th:each="row : ${nbStatus}"]*/
-                var status = [[${row.getStatus()}]];
-                var nb = [[${row.getNb()}]];
-                var arr = [status,nb];
-                array.push(arr);
-                /*[/]*/
+            if ([[${nbStatus}]].length > 0) {
+                array = mapToDataSource([[${nbStatus}]]);
                 // Create the data table.
                 var data = new google.visualization.DataTable();
                 data.addColumn('string', 'Topping');
@@ -31,14 +51,20 @@
                 data.addRows(array);
 
                 // Set chart options
-                var options = {'title':'Répartition des commandes',
-                    'width':400,
-                    'height':300};
+                var options = {
+                    'title': 'Répartition des commandes',
+                    pieSliceText: 'label',
+                    width:"100%",
+                    height:"100%"
+                };
 
                 // Instantiate and draw our chart, passing in some options.
                 var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
                 chart.draw(data, options);
             }
+
+
+
         }
     </script>
     <title>Statistiques</title>
@@ -46,7 +72,10 @@
 <body>
 <div th:replace="~{fragments/card :: card}"></div>
 <div th:replace="~{fragments/header :: header}"></div>
-<div id="chart_div"></div>
+<div class="graph_wrapper">
+    <div class="chart" id="chart_div"></div>
+    <div class="chart" id="bar_div"></div>
+</div>
 <!--
 <th:block th:each="status : ${nbStatus}">
   <span th:text="${status.getStatus()}"/>

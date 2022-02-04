@@ -2,6 +2,7 @@ package eu.ensup.my_resto.controller;
 
 import eu.ensup.my_resto.domain.User;
 import eu.ensup.my_resto.model.OrderDTO;
+import eu.ensup.my_resto.model.OrderItemsDTO;
 import eu.ensup.my_resto.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +44,7 @@ public class OrderController {
         } else {
             return "login";
         }
+        orderDTOList.sort(Comparator.comparing(OrderDTO::getId).reversed());
         model.addAttribute("orderslist",orderDTOList);
         return "orders";
     }
@@ -51,8 +55,16 @@ public class OrderController {
     }
 
     @PostMapping("/orders")
-    public ResponseEntity<Long> createOrder(@RequestBody @Valid final OrderDTO orderDTO, HttpServletRequest req) {
-        return new ResponseEntity<>(orderService.create(orderDTO), HttpStatus.CREATED);
+    public String createOrder(@ModelAttribute("orderForm") @Valid final OrderDTO orderDTO, HttpServletRequest req, Model model) {
+        ArrayList< OrderItemsDTO> itemsDTOS = (ArrayList< OrderItemsDTO>)req.getSession().getAttribute("cart");
+        orderDTO.setPrice((Double) req.getSession().getAttribute("total"));
+        orderDTO.setItems(itemsDTOS);
+
+        orderService.create(orderDTO);
+        req.getSession().setAttribute("cart", null);
+        req.getSession().setAttribute("total", 0.0);
+        model.addAttribute("success", "Commande créée avec succès!");
+        return "redirect:/";
     }
 
     @PostMapping("/updateorders")

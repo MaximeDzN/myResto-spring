@@ -8,6 +8,7 @@ import eu.ensup.my_resto.service.ItemService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.validation.Valid;
 
 import eu.ensup.my_resto.service.exception.FileNotDeleted;
@@ -50,7 +51,9 @@ public class ItemController {
     @PostMapping("/add")
     public String createItemForm(@ModelAttribute("itemForm") @Valid ItemDTO itemDTO,Model model){
         try {
-            itemDTO.setImage(Image.builder().path(Base64Utils.encodeToString(itemDTO.getFile().getBytes())).build());
+            if(!Objects.equals(itemDTO.getFile().getOriginalFilename(), "")){
+                itemDTO.setImage(Image.builder().path(Base64Utils.encodeToString(itemDTO.getFile().getBytes())).build());
+            }
             itemService.create(itemDTO);
         } catch (IOException | FileNotSaved e) {
             logger.error(e.getMessage());

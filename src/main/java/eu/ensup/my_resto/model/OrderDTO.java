@@ -18,21 +18,10 @@ import lombok.ToString;
 public class OrderDTO {
 
     private Long id;
-
-    @NotNull
-    @Size(max = 100)
     private String status;
-
-    @NotNull
-    @Size(max = 150)
     private String address;
-
-    @NotNull
     private Double price;
-
     private UserDTO user;
-
     private List<OrderItemsDTO> items;
-
     private OffsetDateTime datecreated;
 }

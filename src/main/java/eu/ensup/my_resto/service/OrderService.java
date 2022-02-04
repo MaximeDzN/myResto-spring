@@ -8,16 +8,17 @@ import eu.ensup.my_resto.model.*;
 import eu.ensup.my_resto.repos.ItemRepository;
 import eu.ensup.my_resto.repos.OrderItemRepository;
 import eu.ensup.my_resto.repos.OrderRepository;
-import eu.ensup.my_resto.repos.Projections.StatusMapProjection;
-import eu.ensup.my_resto.repos.UserRepository;
+import eu.ensup.my_resto.repos.Projections.MapProjection;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -27,14 +28,12 @@ import java.util.stream.Collectors;
 @Service
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final UserRepository userRepository;
     private final ItemRepository itemRepository;
     private final OrderItemRepository orderItemRepository;
 
-    public OrderService(final OrderRepository orderRepository, final UserRepository userRepository,
-                        final ItemRepository itemRepository, OrderItemRepository orderItemRepository) {
+    public OrderService(final OrderRepository orderRepository,
+                        final ItemRepository itemRepository, final OrderItemRepository orderItemRepository) {
         this.orderRepository = orderRepository;
-        this.userRepository = userRepository;
         this.itemRepository = itemRepository;
         this.orderItemRepository = orderItemRepository;
     }
@@ -83,9 +82,14 @@ public class OrderService {
 
         // Update storage
         orderItems.forEach(orderItem -> {
-           Item item = itemRepository.findById(orderItem.getItem().getId()).get();
-           item.setQuantity(item.getQuantity() - orderItem.getQuantity());
-           itemRepository.save(item);
+
+           Optional<Item> item = itemRepository.findById(orderItem.getItem().getId());
+           if(item.isPresent()) {
+               item.get().setQuantity(item.get().getQuantity() - orderItem.getQuantity());
+               itemRepository.save(item.get());
+           } else {
+               throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+           }
         });
 
         return id;
@@ -103,9 +107,13 @@ public class OrderService {
         // update storage
         if(reqOrderIsCancelled && !repoOrderIsCancelled){ // The status has just changed
             orderDTO.getItems().forEach(orderItem -> {
-                Item itemRepo = itemRepository.findById(orderItem.getItem().getId()).get();
-                itemRepo.setQuantity(itemRepo.getQuantity() + orderItem.getQuantity());
-                itemRepository.save(itemRepo);
+                Optional<Item> itemRepo = itemRepository.findById(orderItem.getItem().getId());
+                if(itemRepo.isPresent()){
+                    itemRepo.get().setQuantity(itemRepo.get().getQuantity() + orderItem.getQuantity());
+                    itemRepository.save(itemRepo.get());
+                } else {
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+                }
             });
 
             order.setStatus(Status.TERMINEE.toString());
@@ -123,9 +131,14 @@ public class OrderService {
         // update storage
         if(reqOrderIsCancelled && !repoOrderIsCancelled){ // The status has just changed
             order.getOrderItems().forEach(orderItem -> {
-                Item itemRepo = itemRepository.findById(orderItem.getItem().getId()).get();
-                itemRepo.setQuantity(itemRepo.getQuantity() + orderItem.getQuantity());
-                itemRepository.save(itemRepo);
+
+                Optional<Item> itemRepo = itemRepository.findById(orderItem.getItem().getId());
+                if(itemRepo.isPresent()) {
+                    itemRepo.get().setQuantity(itemRepo.get().getQuantity() + orderItem.getQuantity());
+                    itemRepository.save(itemRepo.get());
+                } else {
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+                }
             });
 
             order.setStatus(Status.ANNULEE.toString());
@@ -145,7 +158,7 @@ public class OrderService {
         return orderRepository.findSumPriceForMonth(yearMonthDate);
     }
 
-    public List<StatusMapProjection> getStatusNb(){
+    public List<MapProjection> getStatusNb(){
         return orderRepository.findStatusNb();
     }
 
@@ -176,15 +189,15 @@ public class OrderService {
     }
 
     private Order mapToEntity(final OrderDTO orderDTO, final Order order) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Object userPrincipal = (auth != null) ? auth.getPrincipal() :  null;
+        User user = (userPrincipal instanceof User) ? (User) userPrincipal : null;
+
         order.setStatus(orderDTO.getStatus());
         order.setAddress(orderDTO.getAddress());
         order.setPrice(orderDTO.getPrice());
         order.setDateCreated(orderDTO.getDatecreated());
-        if (orderDTO.getUser() != null) {
-            final User user = userRepository.findById(orderDTO.getUser().getId())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found"));
-            order.setUser(user);
-        }
+        order.setUser(user);
         order.setOrderItems(null);
         return order;
     }

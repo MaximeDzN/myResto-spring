@@ -1,8 +1,9 @@
 package eu.ensup.my_resto.controller;
 
-import eu.ensup.my_resto.model.CartItemDTO;
 import eu.ensup.my_resto.model.ItemDTO;
+import eu.ensup.my_resto.model.OrderItemsDTO;
 import eu.ensup.my_resto.service.ItemService;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,70 +14,79 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 @RestController
 public class CartController {
 
-    private ArrayList<CartItemDTO> cartItems = new ArrayList<>();
-    private Double cartTotal;
+    final private ArrayList<OrderItemsDTO> orderItemsDTOS = new ArrayList<>();
+    private ArrayList<Double> cartTotal = new ArrayList<>();
 
     @Autowired
     private ItemService itemService ;
 
-    @PostMapping()
-
-    @PutMapping("/cart")
-    public ResponseEntity<Void> updateCartItem(@RequestBody CartItemDTO cartItemDTO, HttpServletRequest req){
-        HttpSession session = req.getSession();
-        Object cart = session.getAttribute("cart");
-        if(cart == null){
-            cartItems.clear();
-            cartTotal = 0.0;
-        }
-        AtomicReference<Double> total = new AtomicReference<>(0.0);
-        cartItems.forEach(cartItem -> {
-            if(cartItemDTO.getId() == cartItem.getId()){
-                System.out.println(cartItem);
-                ItemDTO itemDTO = itemService.get(cartItem.getId());
-                cartItem.setQuantity(cartItemDTO.getQuantity());
-                total.updateAndGet(value -> value + (itemDTO.getPrice() * cartItem.getQuantity()));
-            }
-        });
-
-        cartTotal = total.get();
-        session.setAttribute("cart", cartItems);
-        session.setAttribute("total", cartTotal);
-        System.out.println(session.getAttribute("total"));
-
-        return  ResponseEntity.ok().build();
-    }
-
     @PostMapping("/addCart")
-    public ResponseEntity<HttpStatus> addToCart(@RequestBody CartItemDTO cartItemDTO, HttpServletRequest req) {
-        System.out.println(cartItemDTO);
-        System.out.println("add to cart");
+    public ResponseEntity<HttpStatus> addToCart(@RequestBody OrderItemsDTO orderItemDTO, HttpServletRequest req) {
         HttpSession session = req.getSession();
         Object cart = req.getSession().getAttribute("cart");
         if(cart == null){
-            cartItems.clear();
-            cartTotal = 0.0;
+            orderItemsDTOS.clear();
+            cartTotal.clear();
         }
 
-        System.out.println(cartItemDTO.getId());
-        ItemDTO itemDTO = itemService.get(cartItemDTO.getId());
-        cartTotal += (itemDTO.getPrice() * cartItemDTO.getQuantity());
-        cartItems.add(cartItemDTO);
+        AtomicReference<Boolean> exists = new AtomicReference<>(false);
+        //  check if item exists
+        orderItemsDTOS.forEach(orderItem -> {
+            if (orderItemDTO.getItem().getId().equals(orderItem.getItem().getId())) { // if exist update with total
+                exists.set(true);
+                ItemDTO itemDTO = itemService.get(orderItem.getItem().getId());
+                orderItem.setQuantity(orderItemDTO.getQuantity()+orderItem.getQuantity());
+                orderItem.setItem(itemDTO);
+                cartTotal.add(itemDTO.getPrice() * orderItemDTO.getQuantity());
+            }
+        });
 
-        session.setAttribute("cart", cartItems);
-        session.setAttribute("total", cartTotal);
-        System.out.println(session.getAttribute("total"));
+        // item does not exist add it
+        if(!exists.get()){
+            ItemDTO itemDTO = itemService.get(orderItemDTO.getItem().getId());
+            cartTotal.add(itemDTO.getPrice() * orderItemDTO.getQuantity());
+            orderItemDTO.setItem(itemDTO);
+            orderItemsDTOS.add(orderItemDTO);
+        }
+
+        Double total = cartTotal.stream().reduce(0.0, Double::sum);
+        session.setAttribute("cart", orderItemsDTOS);
+        session.setAttribute("total", total);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/removeCart/{id}")
+    public ResponseEntity<HttpStatus> removeFromCart(@PathVariable("id") Long id, HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        Object cart = req.getSession().getAttribute("cart");
+        if(cart == null){
+            orderItemsDTOS.clear();
+            cartTotal.clear();
+        }
+
+        for(int i = 0;  i <orderItemsDTOS.size(); i++){
+            if(orderItemsDTOS.get(i).getItem().getId().equals(id)) {
+                cartTotal.add(-(orderItemsDTOS.get(i).getItem().getPrice() * orderItemsDTOS.get(i).getQuantity()));
+                orderItemsDTOS.remove(i);
+                break;
+            }
+        }
+        Double total = cartTotal.stream().reduce(0.0, Double::sum);
+        session.setAttribute("cart", orderItemsDTOS);
+        session.setAttribute("total", total);
 
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/cart")
-    public ResponseEntity<List<CartItemDTO>> getAllCartItem(HttpServletRequest req){
-        List<CartItemDTO> itemDTOList = (List<CartItemDTO>) req.getSession().getAttribute("cart");
+    public ResponseEntity<List<OrderItemsDTO>> getAllCartItem(HttpServletRequest req){
+        List<OrderItemsDTO> itemDTOList = (List<OrderItemsDTO>) req.getSession().getAttribute("cart");
         HttpSession session = req.getSession();
         return new ResponseEntity<>(itemDTOList, HttpStatus.OK) ;
     }
