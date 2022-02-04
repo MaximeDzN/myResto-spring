@@ -49,7 +49,7 @@ public class ImageController {
                     .contentType(MediaType.IMAGE_PNG)
                     .body(file);
         } catch (Exception e){
-            logger.error(e.getMessage());
+            logger.error(String.format("Canno't retrieve image %s",e.getMessage()));
             return ResponseEntity
                     .ok()
                     .contentType(MediaType.IMAGE_PNG)
