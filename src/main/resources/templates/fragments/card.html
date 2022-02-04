@@ -10,7 +10,7 @@
           <span th:utext="${elem.item.name} + '<b> ' + ${elem.quantity} +'</b>'"></span>
         </div>
         <!--<img src="img/delete.svg" alt="" class="delete-product" data="${loop.index}" onclick="card_delete(this)">-->
-        <img src="img/delete.svg" alt="" class="delete-product" data="" onclick="card_delete(this)">
+        <img src="img/delete.svg" alt="" class="delete-product" onclick="card_delete(this)" th:data="${elem.item.id}">
       </div>
       <hr>
     </th:block>
