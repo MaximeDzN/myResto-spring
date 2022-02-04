@@ -9,8 +9,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 0D2B87E1DE55A9BD89009B37979CACD984AA773C7197BE3F46DCB15B0CAE7E6D
       MYSQL_DATABASE: myresto
-      MYSQL_USER: springuser
-      MYSQL_PASSWORD: springuser
+      MYSQL_USER: springUser
+      MYSQL_PASSWORD: springUser
     ports:
       - "3306:3306"
   phpmyadmin:
@@ -33,8 +33,8 @@ services:
       - /ebsMyResto/images:/images
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://docker-mysql/myresto?useSSL=false&allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: springuser
-      SPRING_DATASOURCE_PASSWORD: springuser
+      SPRING_DATASOURCE_USERNAME: springUser
+      SPRING_DATASOURCE_PASSWORD: springUser
       APP_PORT: 5000
     depends_on:
       - docker-mysql
