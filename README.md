@@ -32,13 +32,13 @@ Pour ce rendre sur le site merci de cliquer sur le lien : [MyResto](http://3.213
 > 6. Attendre que toutes les taches se finissent
 
 Pour supprimer l'instance ec2
-1. Se connecter sur [Pipeline](http://146.59.154.110:8080/job/MyResto/)
-2. identifiant : allan
-3. mot de passe : 5rR1F4ZJw1wBVVyIqwph
-4. aller dans build avec des paramètres
-5. cocher la case 'destroy'
-6. cliquer sur build
-7. attendre que toutes les taches se finissent
+> 1. Se connecter sur [Pipeline](http://146.59.154.110:8080/job/MyResto/)
+> 2. identifiant : allan
+> 3. mot de passe : 5rR1F4ZJw1wBVVyIqwph
+> 4. aller dans build avec des paramètres
+> 5. cocher la case 'destroy'
+> 6. cliquer sur build
+> 7. attendre que toutes les taches se finissent
 
 Deux choix sont alors possibles.
 
