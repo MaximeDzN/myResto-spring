@@ -32,7 +32,7 @@
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Formules'">
                 <a class="link-product" th:href="@{'/items/' + ${item.id}}">
-                    <img th:src="@{${item.image.getPath()}}" alt="">
+                    <img th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
                     <span th:text="${item.price} + ' €'"> price</span>
                     <p th:text="${item.name}">name</p>
                 </a>
