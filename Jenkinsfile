@@ -16,7 +16,7 @@ pipeline {
         MYRESTO_SSH           = credentials('MYRESTO_SSH')
         GIT_PATH = "https://github.com/MaximeDzN/myResto-spring.git"
 	    GIT_TEST_BRANCH = "DevOps"
-        GIT_MAIN_BRANCH = "main"
+        GIT_MAIN_BRANCH = "security"
         GIT_BRANCH = "${params.ENV == 'prod' ? GIT_MAIN_BRANCH : GIT_TEST_BRANCH}"
     }
 
