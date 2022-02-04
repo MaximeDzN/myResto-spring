@@ -1,6 +1,10 @@
 package eu.ensup.my_resto.service;
 
 import eu.ensup.my_resto.domain.Image;
+import eu.ensup.my_resto.service.exception.FileNotDeleted;
+import eu.ensup.my_resto.service.exception.FileNotSaved;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +18,7 @@ import java.util.Base64;
 @Service
 public class FileService {
 
+    Logger logger = LoggerFactory.getLogger(FileService.class);
 
     @Value("${upload.path}")
     public String uploadPath;
@@ -23,30 +28,27 @@ public class FileService {
         try {
             Files.createDirectories(Paths.get(uploadPath));
         } catch (IOException e) {
-            //TODO Manage exception
+            logger.error(e.getMessage());
         }
     }
-
-    public void saveImage(Image image, String filename) {
-        String path = String.format("%s",uploadPath);
-        Path root = Paths.get(path);
+    public void saveImage(Image image, String filename) throws FileNotSaved {
+        Path root = Paths.get(uploadPath);
         try {
             Files.createDirectories(root);
             byte[] imageByte = Base64.getDecoder().decode(image.getPath());
-            Path imagePath = Paths.get(String.format("%s/%s",path,filename));
+            Path imagePath = Paths.get(String.format("%s/%s",uploadPath,filename));
             Files.write(imagePath,imageByte);
         } catch (IOException e){
-            //TODO Manage exception
-            e.printStackTrace();
+            throw new FileNotSaved(e.getMessage());
         }
     }
 
-    public void deleteImage(Image image) {
+    public void deleteImage(Image image) throws FileNotDeleted {
         Path imagePath = Paths.get(image.getPath());
         try {
             Files.delete(imagePath);
         } catch (IOException e) {
-            //TODO Manage exception
+            throw new FileNotDeleted(e.getMessage());
         }
 
     }

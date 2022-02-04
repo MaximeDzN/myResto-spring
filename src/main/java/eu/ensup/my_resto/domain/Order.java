@@ -2,28 +2,18 @@ package eu.ensup.my_resto.domain;
 
 import java.time.OffsetDateTime;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
 @Entity
 @Table(name = "\"order\"")
 @Getter
 @Setter
+@ToString
 public class Order {
 
     @Id
@@ -44,8 +34,8 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<Item> items;
+    @OneToMany(mappedBy = "item")
+    private Set<OrderItem> orderItems;
 
     @Column(nullable = false, updatable = false)
     private OffsetDateTime dateCreated;

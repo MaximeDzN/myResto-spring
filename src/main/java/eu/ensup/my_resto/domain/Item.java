@@ -1,27 +1,18 @@
 package eu.ensup.my_resto.domain;
 
+import lombok.*;
+
+import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 
 @Entity
-@Getter
 @Setter
-@ToString
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Item {
 
     @Id
@@ -44,7 +35,8 @@ public class Item {
     @Column(nullable = false, length = 50)
     private String category;
 
-
+    @OneToMany(mappedBy = "order")
+    private Set<OrderItem> orderItems;
 
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "image_id")
@@ -66,5 +58,4 @@ public class Item {
     public void preUpdate() {
         lastUpdated = OffsetDateTime.now();
     }
-
 }

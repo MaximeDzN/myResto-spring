@@ -1,0 +1,39 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{styles/style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap"
+          rel="stylesheet">
+    <script type="text/javascript" th:src="@{js/script.js}" defer></script>
+</head>
+<header th:fragment="header">
+    <img th:src="@{img/menu.svg}" alt="" onclick="document.querySelector('header').classList.toggle('active');">
+    <img th:src="@{img/card.svg}" alt="" id="card"
+         onclick="document.querySelector('#modal_card').classList.toggle('active');">
+    <span class="cardCount">0</span>
+    <ul class="nav">
+        <li class="active"><a th:href="@{/}">La carte</a></li>
+        <!--<li><a href="profile.html">Mon compte</a></li>-->
+        <th:block sec:authorize="isAuthenticated()">
+            <li>
+                <a th:href="@{/orders}">
+                    <th:block sec:authorize="hasAuthority('OWNER')">Commandes à préparer</th:block>
+                    <th:block sec:authorize="hasAuthority('USER')">Mes Commandes</th:block>
+                </a></li>
+            <li><a sec:authorize="hasAuthority('OWNER')" th:href="@{/stats}">Statistiques</a></li>
+            <li class="btn"><a th:href="@{/logout}">Deconnexion</a></li>
+        </th:block>
+        <!--<li><a href="manage_stock.html">Gérer les stocks</a></li>-->
+        <th:block sec:authorize="isAnonymous()">
+            <li><a th:href="@{/login}">Se connecter</a></li>
+            <li><a th:href="@{/register}">Créer un compte</a></li>
+        </th:block>
+
+
+    </ul>
+
+</header>

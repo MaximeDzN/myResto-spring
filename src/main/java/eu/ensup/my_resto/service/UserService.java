@@ -1,10 +1,13 @@
 package eu.ensup.my_resto.service;
 
 import eu.ensup.my_resto.domain.User;
+import eu.ensup.my_resto.model.Roles;
 import eu.ensup.my_resto.model.UserDTO;
 import eu.ensup.my_resto.repos.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,11 +19,8 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class UserService implements UserDetailsService {
 
-    private final UserRepository userRepository;
-
-    public UserService(final UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    private UserRepository userRepository;
 
     public List<UserDTO> findAll() {
         return userRepository.findAll()
@@ -38,6 +38,7 @@ public class UserService implements UserDetailsService {
     public Long create(final UserDTO userDTO) {
         final User user = new User();
         mapToEntity(userDTO, user);
+        user.setRole(Roles.USER.toString());
         return userRepository.save(user).getId();
     }
 
@@ -55,14 +56,12 @@ public class UserService implements UserDetailsService {
     private UserDTO mapToDTO(final User user, final UserDTO userDTO) {
         userDTO.setId(user.getId());
         userDTO.setUsername(user.getUsername());
-        userDTO.setPassword(user.getPassword());
         userDTO.setRole(user.getRole());
         return userDTO;
     }
 
     private User mapToEntity(final UserDTO userDTO, final User user) {
         user.setUsername(userDTO.getUsername());
-        user.setPassword(userDTO.getPassword());
         user.setRole(userDTO.getRole());
         return user;
     }

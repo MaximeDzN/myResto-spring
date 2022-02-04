@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="~{fragments/header :: head}"></div>
+    <title>Notre carte</title>
+</head>
+<body>
+<div th:replace="~{fragments/card :: card}"></div>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<h1 class="main-title">Découvre nos produits</h1>
+
+
+<div class="relative center">
+    <div class="sticky">
+        <ul class="main-carrousel">
+            <li class="active" data="Formules">Nos formules</li>
+            <li data="Bases">Bases</li>
+            <li data="Protéines">Protéines</li>
+            <li data="Marinades">Marinades</li>
+            <li data="Garnitures">Garnitures</li>
+            <li data="Graines">Graines</li>
+            <li data="Sauces">Sauces</li>
+            <li data="Entrées">Entrées</li>
+            <li data="Desserts">Desserts</li>
+        </ul>
+    </div>
+    <span class="defaut-title">Nos formules</span>
+    <div class="v-carrousel">
+        <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
+        <th:block th:each="item : ${items}">
+            <div class="card" th:if="${item.category} == 'Formules'">
+                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                    <img th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
+                    <span th:text="${item.price} + ' €'"> price</span>
+                    <p th:text="${item.name}">name</p>
+                </a>
+                <form method="POST" action="./addCart" th:id="'cart' + ${item.id}" class="addToCard">
+                    <input type="hidden" th:value="${item.id}" name="id">
+                    <input type="hidden" value="1" name="quantity">
+                </form>
+                <input class="link-add-card" type="submit" th:form="'cart' + ${item.id}" value="Ajouter au panier">
+            </div>
+        </th:block>
+    </div>
+
+    <span class="defaut-title" id="Entrées">Nos entrées</span>
+    <div class="v-carrousel">
+        <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
+        <th:block th:each="item : ${items}">
+            <div class="card" th:if="${item.category} == 'Entrées'">
+                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                    <img th:src="@{${item.image.getPath()}}" alt="">
+                    <span th:text="${item.price} + ' €'"> price</span>
+                    <p th:text="${item.name}">name</p>
+                </a>
+                <label class="link-add-card" >Composition</label>
+            </div>
+        </th:block>
+    </div>
+
+    <span class="defaut-title" id="Bases">Nos bases</span>
+    <div class="v-carrousel">
+        <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
+        <th:block th:each="item : ${items}">
+            <div class="card" th:if="${item.category} == 'Bases'">
+                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                    <img th:src="@{${item.image.getPath()}}" alt="">
+                    <span th:text="${item.price} + ' €'"> price</span>
+                    <p th:text="${item.name}">name</p>
+                </a>
+                <label class="link-add-card" >Composition</label>
+            </div>
+        </th:block>
+    </div>
+
+    <span class="defaut-title" id="Protéines">Nos protéines</span>
+    <div class="v-carrousel">
+        <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
+        <th:block th:each="item : ${items}">
+            <div class="card" th:if="${item.category} == 'Protéines'">
+                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                    <img th:src="@{${item.image.getPath()}}" alt="">
+                    <span th:text="${item.price} + ' €'"> price</span>
+                    <p th:text="${item.name}">name</p>
+                </a>
+                <label class="link-add-card" >Composition</label>
+            </div>
+        </th:block>
+    </div>
+
+    <span class="defaut-title" id="Garnitures">Nos garnitures</span>
+    <div class="v-carrousel">
+        <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
+        <th:block th:each="item : ${items}">
+            <div class="card" th:if="${item.category} == 'Garnitures'">
+                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                    <img th:src="@{${item.image.getPath()}}" alt="">
+                    <span th:text="${item.price} + ' €'"> price</span>
+                    <p th:text="${item.name}">name</p>
+                </a>
+                <label class="link-add-card" >Composition</label>
+            </div>
+        </th:block>
+    </div>
+
+    <span class="defaut-title" id="Graines">Nos graines</span>
+    <div class="v-carrousel">
+        <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
+        <th:block th:each="item : ${items}">
+            <div class="card" th:if="${item.category} == 'Graines'">
+                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                    <img th:src="@{${item.image.getPath()}}" alt="">
+                    <span th:text="${item.price} + ' €'"> price</span>
+                    <p th:text="${item.name}">name</p>
+                </a>
+                <label class="link-add-card" >Composition</label>
+            </div>
+        </th:block>
+    </div>
+
+    <span class="defaut-title" id="Marinades">Nos marinades</span>
+    <div class="v-carrousel">
+        <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
+        <th:block th:each="item : ${items}">
+            <div class="card" th:if="${item.category} == 'Marinades'">
+                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                    <img th:src="@{${item.image.getPath()}}" alt="">
+                    <span th:text="${item.price} + ' €'"> price</span>
+                    <p th:text="${item.name}">name</p>
+                </a>
+                <label class="link-add-card" >Composition</label>
+            </div>
+        </th:block>
+    </div>
+
+    <span class="defaut-title" id="Sauces">Nos sauces</span>
+    <div class="v-carrousel">
+        <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
+        <th:block th:each="item : ${items}">
+            <div class="card" th:if="${item.category} == 'Sauces'">
+                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                    <img th:src="@{${item.image.getPath()}}" alt="">
+                    <span th:text="${item.price} + ' €'"> price</span>
+                    <p th:text="${item.name}">name</p>
+                </a>
+                <label class="link-add-card" >Composition</label>
+            </div>
+        </th:block>
+    </div>
+
+    <span class="defaut-title" id="Desserts">Nos desserts</span>
+    <div class="v-carrousel">
+        <p th:if="${items.empty}">Il n'y a pour le moment aucun produit dans cette catégorie..</p>
+        <th:block th:each="item : ${items}">
+            <div class="card" th:if="${item.category} == 'Desserts'">
+                <a class="link-product" th:href="@{'/items/' + ${item.id}}">
+                    <img th:src="@{${item.image.getPath()}}" alt="">
+                    <span th:text="${item.price} + ' €'"> price</span>
+                    <p th:text="${item.name}">name</p>
+                </a>
+                <label class="link-add-card" >Composition</label>
+            </div>
+        </th:block>
+    </div>
+</div>
+
+<script type="text/javascript">
+    document.querySelectorAll(".main-carrousel li").forEach(item => {
+      item.addEventListener('click', event => {
+        window.scrollTo({ top: (document.getElementById(item.getAttribute('data')).getBoundingClientRect().top - 60), behavior: 'smooth' });
+      })
+    })
+</script>
+</body>
+</html>

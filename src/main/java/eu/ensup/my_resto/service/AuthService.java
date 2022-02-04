@@ -1,18 +1,11 @@
 package eu.ensup.my_resto.service;
 
-import eu.ensup.my_resto.domain.Image;
 import eu.ensup.my_resto.domain.User;
-import eu.ensup.my_resto.model.ImageDTO;
-import eu.ensup.my_resto.model.LoginDTO;
 import eu.ensup.my_resto.model.RegisterDTO;
 import eu.ensup.my_resto.model.Roles;
 import eu.ensup.my_resto.repos.UserRepository;
-import eu.ensup.my_resto.security.JwtProvider;
+import eu.ensup.my_resto.service.exception.UserExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,23 +18,14 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    public void signup(RegisterDTO registerDTO) throws UserExistsException {
+        try {
+            userRepository.save(mapToEntity(registerDTO, new User()));
+        } catch (Exception e){
+            throw  new UserExistsException("L'utilisateur existe déjà");
+        }
 
-    @Autowired
-    private JwtProvider jwtProvider;
-
-
-    public void signup(RegisterDTO registerDTO) {
-        userRepository.save(mapToEntity(registerDTO, new User()));
     }
-
-    public String signin(LoginDTO loginDTO) {
-        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authenticate);
-        return jwtProvider.generateToken(authenticate);
-    }
-
 
     private String encodePassword(String password) {
         return passwordEncoder.encode(password);
@@ -53,6 +37,4 @@ public class AuthService {
         user.setRole(String.valueOf(Roles.USER));
         return user;
     }
-
-
 }
