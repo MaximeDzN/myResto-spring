@@ -3,11 +3,11 @@ pipeline {
 
     parameters {
         booleanParam(name: 'destroy', defaultValue: false, description: 'Voulez vous détruire votre instance Terraform en cours ?')
-	    choice(
-            choices: ['prod' , 'test'],
-            description: 'Choisir entre le code de prod ou de test',
-            name: 'ENV'
-        )
+	    // choice(
+        //     choices: ['prod' , 'test'],
+        //     description: 'Choisir entre le code de prod ou de test',
+        //     name: 'ENV'
+        // )
     }
 
     environment {
@@ -17,7 +17,8 @@ pipeline {
         GIT_PATH = "https://github.com/MaximeDzN/myResto-spring.git"
 	    GIT_TEST_BRANCH = "DevOps"
         GIT_MAIN_BRANCH = "security"
-        GIT_BRANCH = "${params.ENV == 'prod' ? GIT_MAIN_BRANCH : GIT_TEST_BRANCH}"
+        // GIT_BRANCH = "${params.ENV == 'prod' ? GIT_MAIN_BRANCH : GIT_TEST_BRANCH}"
+        GIT_BRANCH = "security"
     }
 
     stages {

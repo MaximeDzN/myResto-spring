@@ -33,3 +33,13 @@ variable "git_proprietaire" {
   type    = string
   default = "MaximeDzN"
 }
+
+variable "eip_id" {
+  type    = string
+  default = "eipalloc-0c3e555f3d6775361"
+}
+
+variable "public_ip" {
+  type    = string
+  default = "3.213.147.10"
+}
