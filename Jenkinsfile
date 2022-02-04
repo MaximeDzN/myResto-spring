@@ -15,10 +15,10 @@ pipeline {
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
         MYRESTO_SSH           = credentials('MYRESTO_SSH')
         GIT_PATH = "https://github.com/MaximeDzN/myResto-spring.git"
-	    GIT_TEST_BRANCH = "DevOps"
+	    GIT_TEST_BRANCH = "main"
         GIT_MAIN_BRANCH = "security"
         // GIT_BRANCH = "${params.ENV == 'prod' ? GIT_MAIN_BRANCH : GIT_TEST_BRANCH}"
-        GIT_BRANCH = "security"
+        GIT_BRANCH = "main"
     }
 
     stages {
