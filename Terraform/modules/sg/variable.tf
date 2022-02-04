@@ -74,6 +74,17 @@ variable "port_phpmyadmin" {
   default = 8081
 }
 
+
+variable "description_port5000" {
+  type    = string
+  default = "Autorise le traffic https depuis tous les hotes"
+}
+
+variable "port_5000" {
+  type    = number
+  default = 5000
+}
+
 variable "description_egress" {
   type    = string
   default = "Autorise la sortie du traffic"

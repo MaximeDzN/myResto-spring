@@ -93,6 +93,24 @@ resource "aws_security_group" "sg" {
     ipv6_cidr_blocks = ["${var.ipv6_cidr_blocks}"]
   }
 
+  ingress {
+      description      = "${var.description_port5000}"
+      from_port        = var.port_5000
+      to_port          = var.port_5000
+      protocol         = "${var.protocol}"
+      cidr_blocks      = ["${var.cidr_blocks}"]
+      ipv6_cidr_blocks = ["${var.ipv6_cidr_blocks}"]
+  }
+
+  egress {
+      description      = "${var.description_egress}"
+      from_port        = var.port_egress
+      to_port          = var.port_egress
+      protocol         = "${var.protocol_egress}"
+      cidr_blocks      = ["${var.cidr_blocks}"]
+      ipv6_cidr_blocks = ["${var.ipv6_cidr_blocks}"]
+  }
+
   tags = {
     Name = "${var.auteur}-sg"
   }
