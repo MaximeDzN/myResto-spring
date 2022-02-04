@@ -1,0 +1,9 @@
+eu.ensup.my_resto
+eu.ensup.my_resto.config
+eu.ensup.my_resto.controller
+eu.ensup.my_resto.domain
+eu.ensup.my_resto.model
+eu.ensup.my_resto.repos
+eu.ensup.my_resto.repos.Projections
+eu.ensup.my_resto.service
+eu.ensup.my_resto.service.exception
