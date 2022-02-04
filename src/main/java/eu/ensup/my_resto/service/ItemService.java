@@ -19,6 +19,9 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 
+/**
+ * The type Item service.
+ */
 @Service
 public class ItemService {
 
@@ -29,12 +32,23 @@ public class ItemService {
     @Autowired
     private FileService fileService;
 
+    /**
+     * The Upload path.
+     */
     @Value("${upload.path}")
     public String uploadPath;
 
+    /**
+     * The Random.
+     */
     Random random = new Random();
 
 
+    /**
+     * Find all list.
+     *
+     * @return the list
+     */
     public List<ItemDTO> findAll() {
         return itemRepository.findAll()
                 .stream()
@@ -42,12 +56,25 @@ public class ItemService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Get item dto.
+     *
+     * @param id the id
+     * @return the item dto
+     */
     public ItemDTO get(final Long id) {
         return itemRepository.findById(id)
                 .map(this::mapToDTO)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    /**
+     * Create long.
+     *
+     * @param itemDTO the item dto
+     * @return the long
+     * @throws FileNotSaved the file not saved
+     */
     public Long create(final ItemDTO itemDTO) throws FileNotSaved {
         Item item = mapToEntity(itemDTO);
         if (item.getImage() != null) {
@@ -59,10 +86,22 @@ public class ItemService {
         return itemRepository.save(item).getId();
     }
 
+    /**
+     * Update.
+     *
+     * @param id      the id
+     * @param itemDTO the item dto
+     */
     public void update(final Long id, final ItemDTO itemDTO) {
         itemRepository.save(mapToEntity(itemDTO));
     }
 
+    /**
+     * Delete.
+     *
+     * @param id the id
+     * @throws FileNotDeleted the file not deleted
+     */
     public void delete(final Long id) throws FileNotDeleted {
         Optional<Item> item = itemRepository.findById(id);
         if (item.isPresent()) {
@@ -71,6 +110,11 @@ public class ItemService {
         }
     }
 
+    /**
+     * Get nb item category list.
+     *
+     * @return the list
+     */
     public List<MapProjection> getNbItemCategory(){
         return itemRepository.findNbItemCategory();
     }
@@ -96,6 +140,11 @@ public class ItemService {
         .image(itemDTO.getImage()).build();
     }
 
+    /**
+     * Random string string.
+     *
+     * @return the string
+     */
     public String randomString() {
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'

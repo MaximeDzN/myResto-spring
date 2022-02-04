@@ -12,6 +12,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 
+/**
+ * The type Order dto.
+ */
 @Getter
 @Setter
 @ToString

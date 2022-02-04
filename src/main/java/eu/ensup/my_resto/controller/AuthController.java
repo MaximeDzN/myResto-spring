@@ -16,18 +16,37 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 
+/**
+ * The type Auth controller.
+ */
 @Controller
 public class AuthController {
+    /**
+     * The Logger.
+     */
     Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
     private AuthService authService;
 
+    /**
+     * View register page string.
+     *
+     * @return the string
+     */
     @GetMapping("register")
     public String viewRegisterPage() {
         return "register";
     }
 
+    /**
+     * Signup string.
+     *
+     * @param registerDTO   the register dto
+     * @param bindingResult the binding result
+     * @param model         the model
+     * @return the string
+     */
     @PostMapping("register")
     public String signup(@ModelAttribute("registerForm") @Valid RegisterDTO registerDTO, BindingResult bindingResult, Model model){
         try {
@@ -41,6 +60,11 @@ public class AuthController {
 
     }
 
+    /**
+     * View login page string.
+     *
+     * @return the string
+     */
     @GetMapping("login")
     public String viewLoginPage(){
         return "login";

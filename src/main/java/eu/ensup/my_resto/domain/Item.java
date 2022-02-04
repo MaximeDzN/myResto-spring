@@ -7,6 +7,9 @@ import java.time.OffsetDateTime;
 import java.util.Set;
 
 
+/**
+ * The type Item.
+ */
 @Entity
 @Setter
 @Getter
@@ -48,12 +51,18 @@ public class Item {
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
 
+    /**
+     * Pre persist.
+     */
     @PrePersist
     public void prePersist() {
         dateCreated = OffsetDateTime.now();
         lastUpdated = dateCreated;
     }
 
+    /**
+     * Pre update.
+     */
     @PreUpdate
     public void preUpdate() {
         lastUpdated = OffsetDateTime.now();

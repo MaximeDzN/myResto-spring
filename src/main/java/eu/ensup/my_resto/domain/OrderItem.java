@@ -4,6 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * The type Order item.
+ */
 @Entity
 @Setter
 @Getter

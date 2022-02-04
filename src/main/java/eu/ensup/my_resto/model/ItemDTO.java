@@ -11,6 +11,9 @@ import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 
+/**
+ * The type Item dto.
+ */
 @Getter
 @Setter
 @ToString

@@ -16,12 +16,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 
+/**
+ * The type User service.
+ */
 @Service
 public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Find all list.
+     *
+     * @return the list
+     */
     public List<UserDTO> findAll() {
         return userRepository.findAll()
                 .stream()
@@ -29,12 +37,24 @@ public class UserService implements UserDetailsService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Get user dto.
+     *
+     * @param id the id
+     * @return the user dto
+     */
     public UserDTO get(final Long id) {
         return userRepository.findById(id)
                 .map(user -> mapToDTO(user, new UserDTO()))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    /**
+     * Create long.
+     *
+     * @param userDTO the user dto
+     * @return the long
+     */
     public Long create(final UserDTO userDTO) {
         final User user = new User();
         mapToEntity(userDTO, user);
@@ -42,6 +62,12 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user).getId();
     }
 
+    /**
+     * Update.
+     *
+     * @param id      the id
+     * @param userDTO the user dto
+     */
     public void update(final Long id, final UserDTO userDTO) {
         final User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -49,6 +75,11 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    /**
+     * Delete.
+     *
+     * @param id the id
+     */
     public void delete(final Long id) {
         userRepository.deleteById(id);
     }
