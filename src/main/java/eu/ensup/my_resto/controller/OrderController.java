@@ -53,10 +53,12 @@ public class OrderController {
     }
 
     @PostMapping("/orders")
-    public ResponseEntity<Long> createOrder(@ModelAttribute("orderForm") @Valid final OrderDTO orderDTO, HttpServletRequest req) {
+    public String createOrder(@ModelAttribute("orderForm") @Valid final OrderDTO orderDTO, HttpServletRequest req, Model model) {
         ArrayList< OrderItemsDTO> itemsDTOS = (ArrayList< OrderItemsDTO>)req.getSession().getAttribute("cart");
         orderDTO.setItems(itemsDTOS);
-        return new ResponseEntity<>(orderService.create(orderDTO), HttpStatus.CREATED);
+        orderService.create(orderDTO);
+        model.addAttribute("success", "Commande créée avec succès!");
+        return "redirect:/";
     }
 
     @PostMapping("/updateorders")
