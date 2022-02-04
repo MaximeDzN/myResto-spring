@@ -176,3 +176,9 @@ input[name="changestatusbutton"]{width:100%; border: none;}
 ::-webkit-scrollbar-track{background-color: #f1f1f1;border-radius: 5px;}
 ::-webkit-scrollbar{width: 5px;height: 5px;background-color: #fff;}
 ::-webkit-scrollbar-thumb{background-color: #75af4d;}
+
+/* Chiffre dAffaire card */
+.ca{text-align:center; padding:5px; background-color: #7ec17a; border-radius: 5px 25px 5px 25px; box-shadow: 0 5px 10px rgb(154 160 185 / 45%), 0 15px 40px rgb(166 173 201 / 20%);}
+.cadiv{display:flex; justify-content:center; width: 100%;}
+.ca h1{color:#50384b!important; margin: 0;}
+.ca h2{text-decoration: underline; color:#50384b!important;}
