@@ -1,17 +1,11 @@
-package eu.ensup.my_resto.rest;
+package eu.ensup.my_resto.controller;
 
-import eu.ensup.my_resto.domain.User;
-import eu.ensup.my_resto.model.OrderDTO;
+import eu.ensup.my_resto.model.ItemDTO;
 import eu.ensup.my_resto.service.ItemService;
-import eu.ensup.my_resto.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 @Controller
 public class HomeController {

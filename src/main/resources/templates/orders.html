@@ -10,6 +10,15 @@
     <div th:replace="~{fragments/header :: header}"></div>
     
     <h1 class="main-title">Commandes a préparer</h1>
+    <th:block sec:authorize="hasAuthority('OWNER')">
+        <div class="cadiv">
+            <div class="ca">
+                <h2>Chiffre d'affaires Mensuel</h2>
+                <h1>[[${sumMonth}]] €</h1>
+            </div>
+        </div>
+    </th:block>
+
     <div class="relative px">
         <p th:if="${orderslist.empty}">Il n'y aucune commande pour le moment..</p>
         <th:block th:each="order : ${orderslist}">

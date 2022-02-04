@@ -1,7 +1,9 @@
-package eu.ensup.my_resto.rest;
+package eu.ensup.my_resto.controller;
 
 import eu.ensup.my_resto.model.ImageDTO;
 import eu.ensup.my_resto.service.ImageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,9 @@ import java.util.List;
 @RequestMapping("images")
 public class ImageController {
 
+    Logger logger = LoggerFactory.getLogger(ImageController.class);
+
+
     @Autowired
     private  ImageService imageService;
 
@@ -35,11 +40,17 @@ public class ImageController {
 
     @GetMapping("{filename}")
     public ResponseEntity<byte[]> getImage(@PathVariable String filename) throws IOException {
-        byte[] file = Files.readAllBytes(Paths.get(String.format("%s/%s",uploadPath,filename)));
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.IMAGE_PNG)
-                .body(file);
+        try {
+            byte[] file = Files.readAllBytes(Paths.get(String.format("%s/%s",uploadPath,filename)));
+            return ResponseEntity
+                    .ok()
+                    .contentType(MediaType.IMAGE_PNG)
+                    .body(file);
+        } catch (Exception e){
+            logger.error(e.getMessage());
+            return null;
+        }
+
     }
 
     @PostMapping

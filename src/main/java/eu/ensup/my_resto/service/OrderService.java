@@ -8,17 +8,19 @@ import eu.ensup.my_resto.model.*;
 import eu.ensup.my_resto.repos.ItemRepository;
 import eu.ensup.my_resto.repos.OrderItemRepository;
 import eu.ensup.my_resto.repos.OrderRepository;
+import eu.ensup.my_resto.repos.Projections.StatusMapProjection;
 import eu.ensup.my_resto.repos.UserRepository;
-
-import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import javax.transaction.Transactional;
-
-import org.hibernate.boot.model.source.spi.SingularAttributeSourceToOne;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 
 @Transactional
@@ -93,8 +95,8 @@ public class OrderService {
         final Order order = orderRepository.findById(orderDTO.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        Boolean reqOrderIsCancelled = orderDTO.getStatus().equals(Status.ANNULEE.toString());
-        Boolean repoOrderIsCancelled = order.getStatus().equals(Status.ANNULEE.toString());
+        boolean reqOrderIsCancelled = orderDTO.getStatus().equals(Status.ANNULEE.toString());
+        boolean repoOrderIsCancelled = order.getStatus().equals(Status.ANNULEE.toString());
 
         mapToEntity(orderDTO, order);
 
@@ -115,8 +117,8 @@ public class OrderService {
         final Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        Boolean reqOrderIsCancelled = status.equals(Status.ANNULEE.toString());
-        Boolean repoOrderIsCancelled = order.getStatus().equals(Status.ANNULEE.toString());
+        boolean reqOrderIsCancelled = status.equals(Status.ANNULEE.toString());
+        boolean repoOrderIsCancelled = order.getStatus().equals(Status.ANNULEE.toString());
 
         // update storage
         if(reqOrderIsCancelled && !repoOrderIsCancelled){ // The status has just changed
@@ -141,6 +143,10 @@ public class OrderService {
 
     public Double getSumPriceForMonth(String yearMonthDate){
         return orderRepository.findSumPriceForMonth(yearMonthDate);
+    }
+
+    public List<StatusMapProjection> getStatusNb(){
+        return orderRepository.findStatusNb();
     }
 
     private OrderDTO mapToDTO(final Order order, final OrderDTO orderDTO) {
@@ -174,7 +180,7 @@ public class OrderService {
         order.setAddress(orderDTO.getAddress());
         order.setPrice(orderDTO.getPrice());
         order.setDateCreated(orderDTO.getDatecreated());
-        if (orderDTO.getUser() != null && (order.getUser() == null || !order.getUser().getId().equals(orderDTO.getUser()))) {
+        if (orderDTO.getUser() != null) {
             final User user = userRepository.findById(orderDTO.getUser().getId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found"));
             order.setUser(user);

@@ -1,11 +1,10 @@
-package eu.ensup.my_resto.rest;
+package eu.ensup.my_resto.controller;
 
 import eu.ensup.my_resto.model.UserDTO;
 import eu.ensup.my_resto.service.UserService;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

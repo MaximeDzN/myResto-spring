@@ -24,6 +24,7 @@
                     <th:block sec:authorize="hasAuthority('OWNER')">Commandes à préparer</th:block>
                     <th:block sec:authorize="hasAuthority('USER')">Mes Commandes</th:block>
                 </a></li>
+            <li><a sec:authorize="hasAuthority('OWNER')" th:href="@{/stats}">Statistiques</a></li>
             <li class="btn"><a th:href="@{/logout}">Deconnexion</a></li>
         </th:block>
         <!--<li><a href="manage_stock.html">Gérer les stocks</a></li>-->
