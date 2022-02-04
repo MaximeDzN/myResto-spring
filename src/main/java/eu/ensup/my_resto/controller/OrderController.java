@@ -55,8 +55,12 @@ public class OrderController {
     @PostMapping("/orders")
     public String createOrder(@ModelAttribute("orderForm") @Valid final OrderDTO orderDTO, HttpServletRequest req, Model model) {
         ArrayList< OrderItemsDTO> itemsDTOS = (ArrayList< OrderItemsDTO>)req.getSession().getAttribute("cart");
+        orderDTO.setPrice((Double) req.getSession().getAttribute("total"));
         orderDTO.setItems(itemsDTOS);
+
         orderService.create(orderDTO);
+        req.getSession().setAttribute("cart", null);
+        req.getSession().setAttribute("total", 0.0);
         model.addAttribute("success", "Commande créée avec succès!");
         return "redirect:/";
     }
