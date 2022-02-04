@@ -26,6 +26,7 @@ formAddToCard.forEach(f => f.addEventListener('submit', event => {
          '</div>';
         let bubble = document.querySelector(".cardCount");
         bubble.innerText = document.querySelectorAll("div.product.no-float").length;
+        refreshPrice();
       }
   };
   let form = event.target;
