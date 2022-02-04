@@ -24,7 +24,7 @@
         <p th:if="${orderslist.empty}">Il n'y aucune commande pour le moment..</p>
         <th:block th:each="order : ${orderslist}">
             <div class="orders">
-                <p class="orders-time">[[${order.datecreated}]] <span th:text="${order.status}">status</span></p>
+                <p class="orders-time">[[${#temporals.format(order.datecreated, 'dd/MM/yyyy HH:mm')}]] <span th:text="${order.status}">status</span></p>
                 <p class="orders-id" th:text="${'N° ' + order.id + ' - ' + order.user.username}">name</p>
                 <hr>
                 <table>
