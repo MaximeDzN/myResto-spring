@@ -35,8 +35,8 @@
                 data.addRows(array);
                 var options = {
                     'title': 'Répartitions des types d\'items',
-                    'width': 400,
-                    'height': 300
+                    'width': 900,
+                    'height': 800
                 };
                 var chart = new google.visualization.ColumnChart(document.getElementById('bar_div'));
                 chart.draw(data, options);
@@ -55,8 +55,9 @@
                 // Set chart options
                 var options = {
                     'title': 'Répartition des commandes',
-                    'width': 400,
-                    'height': 300
+                    pieSliceText: 'label',
+                    'width': 900,
+                    'height': 800
                 };
 
                 // Instantiate and draw our chart, passing in some options.
