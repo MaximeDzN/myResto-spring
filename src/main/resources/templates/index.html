@@ -32,7 +32,12 @@
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Formules'">
                 <a class="link-product" th:href="@{'/items/' + ${item.id}}">
-                    <img th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
+                    <th:block th:if="${item.image != null}">
+                        <img  th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
+                    </th:block>
+                    <th:block th:if="${item.image == null}  ">
+                        <img th:src="@{assets/placeholder.png}"  alt="">
+                    </th:block>
                     <span th:text="${item.price} + ' €'"> price</span>
                     <p th:text="${item.name}">name</p>
                 </a>
@@ -51,7 +56,12 @@
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Entrées'">
                 <a class="link-product" th:href="@{'/items/' + ${item.id}}">
-                    <img th:src="@{'/images/' +${item.image.getPath()}}" alt="">
+                    <th:block th:if="${item.image != null}">
+                        <img  th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
+                    </th:block>
+                    <th:block th:if="${item.image == null}  ">
+                        <img th:src="@{assets/placeholder.png}"  alt="">
+                    </th:block>
                     <span th:text="${item.price} + ' €'"> price</span>
                     <p th:text="${item.name}">name</p>
                 </a>
@@ -66,7 +76,12 @@
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Bases'">
                 <a class="link-product" th:href="@{'/items/' + ${item.id}}">
-                    <img th:src="@{'/images/' +${item.image.getPath()}}" alt="">
+                    <th:block th:if="${item.image != null}">
+                        <img  th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
+                    </th:block>
+                    <th:block th:if="${item.image == null}  ">
+                        <img th:src="@{assets/placeholder.png}"  alt="">
+                    </th:block>
                     <span th:text="${item.price} + ' €'"> price</span>
                     <p th:text="${item.name}">name</p>
                 </a>
@@ -81,7 +96,12 @@
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Protéines'">
                 <a class="link-product" th:href="@{'/items/' + ${item.id}}">
-                    <img th:src="@{'/images/' +${item.image.getPath()}}" alt="">
+                    <th:block th:if="${item.image != null}">
+                        <img  th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
+                    </th:block>
+                    <th:block th:if="${item.image == null}  ">
+                        <img th:src="@{assets/placeholder.png}"  alt="">
+                    </th:block>
                     <span th:text="${item.price} + ' €'"> price</span>
                     <p th:text="${item.name}">name</p>
                 </a>
@@ -96,7 +116,12 @@
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Garnitures'">
                 <a class="link-product" th:href="@{'/items/' + ${item.id}}">
-                    <img th:src="@{'/images/' +${item.image.getPath()}}" alt="">
+                    <th:block th:if="${item.image != null}">
+                        <img  th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
+                    </th:block>
+                    <th:block th:if="${item.image == null}  ">
+                        <img th:src="@{assets/placeholder.png}"  alt="">
+                    </th:block>
                     <span th:text="${item.price} + ' €'"> price</span>
                     <p th:text="${item.name}">name</p>
                 </a>
@@ -111,7 +136,12 @@
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Graines'">
                 <a class="link-product" th:href="@{'/items/' + ${item.id}}">
-                    <img th:src="@{'/images/' +${item.image.getPath()}}" alt="">
+                    <th:block th:if="${item.image != null}">
+                        <img  th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
+                    </th:block>
+                    <th:block th:if="${item.image == null}  ">
+                        <img th:src="@{assets/placeholder.png}"  alt="">
+                    </th:block>
                     <span th:text="${item.price} + ' €'"> price</span>
                     <p th:text="${item.name}">name</p>
                 </a>
@@ -126,7 +156,12 @@
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Marinades'">
                 <a class="link-product" th:href="@{'/items/' + ${item.id}}">
-                    <img th:src="@{'/images/' +${item.image.getPath()}}" alt="">
+                    <th:block th:if="${item.image != null}">
+                        <img  th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
+                    </th:block>
+                    <th:block th:if="${item.image == null}  ">
+                        <img th:src="@{assets/placeholder.png}"  alt="">
+                    </th:block>
                     <span th:text="${item.price} + ' €'"> price</span>
                     <p th:text="${item.name}">name</p>
                 </a>
@@ -141,7 +176,12 @@
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Sauces'">
                 <a class="link-product" th:href="@{'/items/' + ${item.id}}">
-                    <img th:src="@{'/images/' +${item.image.getPath()}}" alt="">
+                    <th:block th:if="${item.image != null}">
+                        <img  th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
+                    </th:block>
+                    <th:block th:if="${item.image == null}  ">
+                        <img th:src="@{assets/placeholder.png}"  alt="">
+                    </th:block>
                     <span th:text="${item.price} + ' €'"> price</span>
                     <p th:text="${item.name}">name</p>
                 </a>
@@ -156,7 +196,12 @@
         <th:block th:each="item : ${items}">
             <div class="card" th:if="${item.category} == 'Desserts'">
                 <a class="link-product" th:href="@{'/items/' + ${item.id}}">
-                    <img th:src="@{'/images/' +${item.image.getPath()}}" alt="">
+                    <th:block th:if="${item.image != null}">
+                        <img  th:src="@{'/images/' + ${item.image.getPath()}}" alt="">
+                    </th:block>
+                    <th:block th:if="${item.image == null}  ">
+                        <img th:src="@{assets/placeholder.png}"  alt="">
+                    </th:block>
                     <span th:text="${item.price} + ' €'"> price</span>
                     <p th:text="${item.name}">name</p>
                 </a>
