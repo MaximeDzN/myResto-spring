@@ -36,7 +36,7 @@ resource "aws_volume_attachment" "ebs_to_ec2" {
       "sudo yum update -y",
       "sudo yum install -y git",
       "sudo amazon-linux-extras install -y ansible2",
-      "git clone -b DevOps https://github.com/${var.git_proprietaire}/${var.git_projet}.git",
+      "git clone -b security https://github.com/${var.git_proprietaire}/${var.git_projet}.git",
       "cd ${var.git_projet}/ansible/", 
       "ansible-playbook -i hosts.yml myresto.yml"
     ] 
